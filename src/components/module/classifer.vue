@@ -1,6 +1,6 @@
 <template>
     <div class="classifer">
-      <el-row>
+      <el-row :gutter="20">
         <el-col :span="8">
           <el-input>
             <template slot="prepend">源ip地址</template>
@@ -28,6 +28,12 @@
           </el-table-column>
         </el-table>
       </el-row>
+      <div class="block">
+        <el-pagination large
+                       layout="prev, pager, next"
+                       :total="1000">
+        </el-pagination>
+      </div>
     </div>
 </template>
 
@@ -71,19 +77,9 @@ export default {
   .classifer{
     .el-row {
       margin-bottom: 20px;
-      /*.el-input{*/
-        /*width:80%;*/
-        /*.el-button{*/
-          /*width:20%;*/
-        /*}*/
-    /*}*/
-      /deep/.el-table{
-        font-size:60px;
-        /deep/.cell{
-          background:red;
-          text-align:center;
-        }
-      }
   }
+    .block{
+      text-align: center;
+    }
 }
 </style>

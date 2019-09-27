@@ -19,19 +19,19 @@ export default {
       option: [{
         index: '1',
         icon: 'el-icon-message',
-        value: 'SF'
+        name: 'sf'
       }, {
         index: '2',
         icon: 'el-icon-menu',
-        value: 'SFC'
+        name: 'sfc'
       }, {
         index: '3',
         icon: 'el-icon-setting',
-        value: 'RSP'
+        name: 'rsp'
       }, {
         index: '4',
         icon: 'el-icon-menu',
-        value: 'Classifer'
+        name: 'classifer'
       }]
     }
   }

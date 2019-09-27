@@ -2,8 +2,8 @@
   <div class="aside">
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
       <el-menu default-active="1">
-        <el-menu-item @click="Click(item.index)" :index="item.index" v-for="item in option" :key="item.index">
-          <span><i :class="item.icon"></i>{{item.value}}</span>
+        <el-menu-item @click="Click(item.name)" :index="item.index" v-for="item in option" :key="item.index">
+          <span><i :class="item.icon"></i>{{item.name}}</span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -19,8 +19,8 @@ export default {
     }
   },
   methods: {
-    Click (id) {
-      this.bus.$emit('sendId', id)
+    Click (name) {
+      this.bus.$emit('sendName', name)
     }
   }
 }

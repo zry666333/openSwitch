@@ -1,5 +1,6 @@
 <template>
-    <div class="rsp">
+    <div class="rspClass">
+      <div>
       <el-table :data="tableData" border>
         <el-table-column prop="name" label="服务功能链名称" width="140">
         </el-table-column>
@@ -19,6 +20,13 @@
           </template>
         </el-table-column>
       </el-table>
+    </div>
+      <div class="block">
+      <el-pagination large
+                     layout="prev, pager, next"
+                     :total="1000">
+      </el-pagination>
+    </div>
     </div>
 </template>
 
@@ -61,6 +69,13 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.rspClass{
+  .block{
+    text-align: center;
+  }
+  div{
+    margin-bottom: 20px;
+  }
+}
 </style>
