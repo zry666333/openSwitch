@@ -33,6 +33,9 @@ export default {
   },
   created () {
     this.initMain()
+  },
+  beforeDestroy () {
+    this.bus.$off('sendName', name)
   }
 }
 </script>

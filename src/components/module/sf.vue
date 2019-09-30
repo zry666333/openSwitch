@@ -52,47 +52,47 @@ export default {
   name: 'sf.vue',
   data () {
     return {
-      staticId: 1,
+      tableData: this.$store.state.sfTableData,
       dialogFormVisible: false,
       form: {
         name: '',
         safeSort: '',
         ipAddress: ''
       },
-      formLabelWidth: '120px',
-      tableData: [{
-        name: '2016-05-03',
-        safeSort: '王小虎',
-        ipAddress: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        name: '2016-05-02',
-        safeSort: '王小虎',
-        ipAddress: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        name: '2016-05-04',
-        safeSort: '王小虎',
-        ipAddress: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        name: '2016-05-01',
-        safeSort: '王小虎',
-        ipAddress: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        name: '2016-05-08',
-        safeSort: '王小虎',
-        ipAddress: '上海市普陀区金沙江路 1518 弄'
-      }]
+      formLabelWidth: '120px'
+      // tableData: [{
+      //   name: '主机1',
+      //   safeSort: '防火墙',
+      //   ipAddress: '127.0.0.1'
+      // }, {
+      //   name: '主机2',
+      //   safeSort: '入侵检测',
+      //   ipAddress: '127.0.0.2'
+      // }, {
+      //   name: '主机3',
+      //   safeSort: '防火墙',
+      //   ipAddress: '127.0.0.3'
+      // }, {
+      //   name: '主机4',
+      //   safeSort: '入侵检测',
+      //   ipAddress: '127.0.0.4'
+      // }, {
+      //   name: '主机5',
+      //   safeSort: '防火墙',
+      //   ipAddress: '127.0.0.5'
+      // }]
     }
   },
   methods: {
     add () {
-      setTimeout(() => {
-        this.dialogFormVisible = false
-        this.tableData.push({
-          name: this.form.name,
-          safeSort: this.form.safeSort,
-          ipAddress: this.form.ipAddress
-        })
-      }, 1000)
+      this.tableData.push({
+        name: this.form.name,
+        safeSort: this.form.safeSort,
+        ipAddress: this.form.ipAddress
+      })
+      console.log(this.$store)
+      this.$store.commit('receiveSfData', {tableData: this.tableData})
+      this.dialogFormVisible = false
     },
     handleEdit (index, row) {
       console.log('-index-', index, '=row=', row)
@@ -102,6 +102,8 @@ export default {
     },
     handleRemove (index, row) {
       console.log('-index-', index, '=row=', row)
+      console.log('-this-', this)
+      this.$alertMsgBox().then().catch()
     },
     init () {
       console.log('-sf-挂载')

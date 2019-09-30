@@ -1,16 +1,18 @@
 <template>
   <div class="sfc">
-    <el-row>
+    <div class="sfcLayout">
       <el-transfer
       :titles="['主机', '安全池']"
       filterable
-      :filter-method="filterMethod"
       filter-placeholder="请输入城市拼音"
       v-model="value"
-      :data="data">
+      :data="data"
+      >
     </el-transfer>
-      <el-button>应用</el-button>
-    </el-row>
+    </div>
+    <div  class="sfcLayout">
+      <el-button @click="addRsp">应用</el-button>
+    </div>
   </div>
 </template>
 
@@ -20,13 +22,11 @@ export default {
   data () {
     const generateData = _ => {
       const data = []
-      const cities = ['上海', '北京', '广州', '深圳', '南京', '西安', '成都']
-      const pinyin = ['shanghai', 'beijing', 'guangzhou', 'shenzhen', 'nanjing', 'xian', 'chengdu']
-      cities.forEach((city, index) => {
+      const tableDatas = this.$store.state.sfTableData
+      tableDatas.forEach((item) => {
         data.push({
-          label: city,
-          key: index,
-          pinyin: pinyin[index]
+          label: item.name,
+          key: JSON.stringify({name: item.name, safeSort: item.safeSort, ip: item.ipAddress})
         })
       })
       return data
@@ -34,32 +34,40 @@ export default {
     return {
       data: generateData(),
       value: [],
-      filterMethod (query, item) {
-        return item.pinyin.indexOf(query) > -1
-      }
+      temp: [],
+      tableData: []
+      // filterMethod (query, item) {
+      //   return item.pinyin.indexOf(query) > -1
+      // }
     }
   },
+  computed: {
+    // data () {
+    //   return this.$store.state.sfTableData
+    // }
+  },
   methods: {
-    init () {
-      console.log('-sfc-挂载')
+    addRsp () {
+      console.log('=value=', this.value)
+      this.value.forEach((item) => {
+        this.tableData.push(JSON.parse(item))
+      })
+      // this.temp.push(JSON.parse(this.value))
+      // console.log('==temp==', this.temp)
+      this.$store.commit('receiveSfcData', {tableData: this.tableData})
     }
   },
   mounted () {
-    this.init()
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  /*.sfc{*/
-    /*/deep/ .el-checkbox__input{*/
-      /*left:20px;*/
-    /*}*/
-    /*/deep/ .el-checkbox-group.el-transfer-panel__list.is-filterable{*/
-      /*label{*/
-      /*width:136px;*/
-    /*}*/
-    /*}*/
-  /*}*/
+.sfc{
+  .sfcLayout{
+    display: flex;
+    justify-content: center;
+  }
+}
 
 </style>

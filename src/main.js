@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './utils/pml-msgBox.js'
+import store from './store/vuex.js'
 
 Vue.config.productionTip = false
 
@@ -17,6 +19,9 @@ Vue.prototype.bus = bus
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  store,
+  components: {
+    App
+  },
   template: '<App/>'
 })
