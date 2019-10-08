@@ -1,33 +1,48 @@
 <template>
   <div class="main">
     <h2 class="title" >网络功能配置</h2>
-    <el-row>
+    <el-row :gutter="20">
       <el-col :span="8">
-        <el-form :model="form" class="formClass">
-        <el-form-item label="service id" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="false"></el-input>
-        </el-form-item>
-        <el-button type="primary" size="small" class="createBtn">创建</el-button>
-      </el-form>
+        <div class="common_block">
+          <h4>路由器</h4>
+          <el-form :model="form" class="formClass">
+            <el-form-item label="service id" :label-width="formLabelWidth">
+              <el-input v-model="form.name" autocomplete="false"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">创建</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </el-col>
       <el-col :span="8">
-        <el-form :model="form"  class="formClass">
-          <el-form-item label="service id" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="false"></el-input>
-          </el-form-item>
-          <el-form-item label="nexthop id" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="false"></el-input>
-          </el-form-item>
-          <el-button type="primary" class="createBtn" size="small">创建</el-button>
-        </el-form>
+        <div class="common_block">
+          <h4>防火墙</h4>
+          <el-form :model="form"  class="formClass">
+            <el-form-item label="service id" :label-width="formLabelWidth">
+              <el-input v-model="form.name" autocomplete="false"></el-input>
+            </el-form-item>
+            <el-form-item label="nexthop id" :label-width="formLabelWidth">
+              <el-input v-model="form.name" autocomplete="false"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">创建</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </el-col>
       <el-col :span="8">
-        <el-form :model="form"  class="formClass">
-          <el-form-item label="service id" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="false"></el-input>
-          </el-form-item>
-          <el-button type="primary" class="createBtn" size="small">创建</el-button>
-        </el-form>
+        <div class="common_block">
+          <h4>桥</h4>
+          <el-form :model="form"  class="formClass">
+            <el-form-item label="service id" :label-width="formLabelWidth">
+              <el-input v-model="form.name" autocomplete="false"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">创建</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </el-col>
     </el-row>
     <h2 class="subtitle">已创建网络功能</h2>
@@ -95,6 +110,17 @@ export default {
 </style>
 
 <style lang="scss">
+  .main{
+    .common_block{
+      background:#ccc;
+      height:260px;
+      padding:6px;
+      h4{
+        text-align:center;
+        padding:15px 0;
+      }
+    }
+  }
   .title{
     text-align: center;
     margin-top: 20px;

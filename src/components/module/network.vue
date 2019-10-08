@@ -1,9 +1,9 @@
 <template>
   <div class="networkClass">
     <el-row :gutter="20">
-      <el-col :span="8"><NetworkFunction></NetworkFunction></el-col>
-      <el-col :span="8"><RouteOption></RouteOption></el-col>
-      <el-col :span="8"><FireWall></FireWall></el-col>
+      <el-col :span="10"><NetworkFunction></NetworkFunction></el-col>
+      <el-col :span="7"><RouteOption></RouteOption></el-col>
+      <el-col :span="7"><FireWall></FireWall></el-col>
     </el-row>
   </div>
 </template>

@@ -1,39 +1,50 @@
 <template>
   <div class="main">
     <h2 class="title">防火墙配置</h2>
-    <el-form :model="form"  class="formClass">
-      <el-form-item label="规则名" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="false"></el-input>
-      </el-form-item>
-      <el-form-item label="src_ip" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="false"></el-input>
-      </el-form-item>
-      <el-form-item label="depth" :label-width="formLabelWidth">
-        <el-input v-model="form.ipAddress" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="action" :label-width="formLabelWidth">
-        <el-input v-model="form.ipAddress" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-button type="primary" size="small"  class="createBtn">创建</el-button>
-    </el-form>
+    <div class="common_block">
+      <el-form :model="form"  class="formClass">
+        <el-form-item label="规则名" :label-width="formLabelWidth">
+          <el-input v-model="form.name" autocomplete="false"></el-input>
+        </el-form-item>
+        <el-form-item label="src_ip" :label-width="formLabelWidth">
+          <el-input v-model="form.src_ip" autocomplete="false"></el-input>
+        </el-form-item>
+        <el-form-item label="depth" :label-width="formLabelWidth">
+          <el-input v-model="form.depth" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="action" :label-width="formLabelWidth">
+          <el-input v-model="form.action" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="createfireWall()">创建</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <h2 class="subtitle">已添加的防火墙配置</h2>
     <el-table
       :data="tableData"
       border
       style="width: 100%">
       <el-table-column
-        prop="date"
-        label="日期"
-        width="180">
-      </el-table-column>
-      <el-table-column
         prop="name"
-        label="姓名"
-        width="180">
+        label="规则名"
+      >
       </el-table-column>
       <el-table-column
-        prop="address"
-        label="地址">
+        prop="src_ip"
+        label="src_ip"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="depth"
+        label="depth">
+      </el-table-column>
+      <el-table-column
+        prop="action"
+        label="action"
+       >
+      </el-table-column>
+      <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button>删除</el-button>
         </template>
@@ -50,32 +61,28 @@ export default {
       dialogFormVisible: false,
       form: {
         name: '',
-        safeSort: '',
-        ipAddress: ''
+        src_ip: '',
+        depth: '',
+        action: ''
       },
       formLabelWidth: '120px',
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      tableData: [
+        {
+          name: ''
+        }
+      ]
+    }
+  },
+  methods: {
+    createfireWall () {
+
     }
   }
 }
 </script>
 
 <style scoped>
-
+.common_block{
+  height:320px;
+}
 </style>

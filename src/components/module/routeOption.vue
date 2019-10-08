@@ -1,15 +1,19 @@
 <template>
   <div class="main">
     <h2 class="title">路由配置</h2>
-    <el-form :model="form"  class="formClass">
-      <el-form-item label="dst_ip" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="false"></el-input>
-      </el-form-item>
-      <el-form-item label="to service Id" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="false"></el-input>
-      </el-form-item>
-      <el-button type="primary" size="small"  class="createBtn">创建</el-button>
-    </el-form>
+    <div class="common_block">
+      <el-form :model="form"  class="formClass">
+        <el-form-item label="dst_ip" :label-width="formLabelWidth">
+          <el-input v-model="form.name" autocomplete="false"></el-input>
+        </el-form-item>
+        <el-form-item label="to service Id" :label-width="formLabelWidth">
+          <el-input v-model="form.name" autocomplete="false"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">创建</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <h2 class="subtitle">已添加的路由配置</h2>
     <el-table
       :data="tableData"
