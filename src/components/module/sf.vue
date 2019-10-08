@@ -48,6 +48,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'sf.vue',
   data () {
@@ -60,27 +61,6 @@ export default {
         ipAddress: ''
       },
       formLabelWidth: '120px'
-      // tableData: [{
-      //   name: '主机1',
-      //   safeSort: '防火墙',
-      //   ipAddress: '127.0.0.1'
-      // }, {
-      //   name: '主机2',
-      //   safeSort: '入侵检测',
-      //   ipAddress: '127.0.0.2'
-      // }, {
-      //   name: '主机3',
-      //   safeSort: '防火墙',
-      //   ipAddress: '127.0.0.3'
-      // }, {
-      //   name: '主机4',
-      //   safeSort: '入侵检测',
-      //   ipAddress: '127.0.0.4'
-      // }, {
-      //   name: '主机5',
-      //   safeSort: '防火墙',
-      //   ipAddress: '127.0.0.5'
-      // }]
     }
   },
   methods: {
@@ -92,6 +72,7 @@ export default {
       })
       console.log(this.$store)
       this.$store.commit('receiveSfData', {tableData: this.tableData})
+
       this.dialogFormVisible = false
     },
     handleEdit (index, row) {
