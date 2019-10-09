@@ -2,15 +2,15 @@
   <div class="main">
     <h2 class="title">路由配置</h2>
     <div class="common_block">
-      <el-form :model="form"  class="formClass">
-        <el-form-item label="dst_ip" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="false"></el-input>
+      <el-form :model="form"  ref="form" :rules="rule">
+        <el-form-item label="dst_ip" :label-width="formLabelWidth" prop="dst_ip">
+          <el-input v-model.number="form.dst_ip" autocomplete="false" placeholder="输入1至32整数"></el-input>
         </el-form-item>
-        <el-form-item label="to service Id" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="false"></el-input>
+        <el-form-item label="to_service_Id" :label-width="formLabelWidth" prop="to_service_Id">
+          <el-input v-model.number="form.to_service_Id" autocomplete="false" placeholder="输入1至32整数"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">创建</el-button>
+        <el-form-item class="newBtn">
+          <el-button type="primary" @click="newRouteOp('form')">创建</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -20,20 +20,20 @@
       border
       style="width: 100%">
       <el-table-column
-        prop="date"
-        label="日期"
+        prop="dst_ip"
+        label="dst_ip"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="name"
-        label="姓名"
+        prop="to_service_Id"
+        label="to_service_Id"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="address"
-        label="地址">
+        prop="operation"
+        label="操作">
         <template slot-scope="scope">
-          <el-button>删除</el-button>
+          <el-button @click="deleteData">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -45,35 +45,43 @@ export default {
   name: 'routeOption',
   data () {
     return {
-      dialogFormVisible: false,
-      form: {
-        name: '',
-        safeSort: '',
-        ipAddress: ''
-      },
+      form: {},
       formLabelWidth: '120px',
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      tableData: [],
+      rule: {
+        dst_ip: [
+          {required: true, message: '请输入dst_ip', trigger: 'blur'},
+          { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
+        ],
+        to_service_Id: [
+          {required: true, message: '请输入to_service_Id', trigger: 'blur'},
+          { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    newRouteOp (formname) {
+      this.$refs[formname].validate(valid => {
+        if (valid) {
+          this.tableData.push({
+            dst_ip: this.form.dst_ip,
+            to_service_Id: this.form.to_service_Id
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    deleteData (index) {
+      this.$alertMsgBox().then(() => {
+        this.tableData.splice(index, 1)
+      })
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
