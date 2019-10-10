@@ -94,7 +94,7 @@
         prop="operation"
         label="操作">
         <template slot-scope="scope">
-          <el-button @click="deleteData">删除</el-button>
+          <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -165,10 +165,14 @@ export default {
         }
       })
     },
-    deleteData (index) {
-      this.$alertMsgBox().then(() => {
+    deleteData (index, row) {
+      let res
+      console.log('-row-', row)
+      this.$alertMsgBox().then(async () => {
         this.tableData.splice(index, 1)
+        res = await this.$Http.deleteNf(row)
       })
+      console.log('=res=', res)
     }
   }
 }

@@ -14,6 +14,11 @@ const NETWORK_API = {
     method: 'post',
     url: '/bridge'
   },
+  // 网络功能删除接口
+  deleteNf: {
+    method: 'post',
+    url: '/del_nf'
+  },
   // 新建路由配置
   newRouteOp: {
     method: 'post',
