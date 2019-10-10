@@ -33,7 +33,7 @@
         prop="operation"
         label="操作">
         <template slot-scope="scope">
-          <el-button @click="deleteData">删除</el-button>
+          <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,9 +62,14 @@ export default {
   },
   methods: {
     newRouteOp (formname) {
-      this.$refs[formname].validate(valid => {
+      let res
+      this.$refs[formname].validate(async valid => {
         if (valid) {
           this.tableData.push({
+            dst_ip: this.form.dst_ip,
+            to_service_Id: this.form.to_service_Id
+          })
+          res = await this.$Http.newRouteOp({
             dst_ip: this.form.dst_ip,
             to_service_Id: this.form.to_service_Id
           })
@@ -72,11 +77,15 @@ export default {
           return false
         }
       })
+      console.log(res)
     },
-    deleteData (index) {
-      this.$alertMsgBox().then(() => {
+    deleteData (index, row) {
+      let res
+      this.$alertMsgBox().then(async () => {
         this.tableData.splice(index, 1)
+        res = await this.$Http.deleteRouteOP(row)
       })
+      console.log(res)
     }
   }
 }

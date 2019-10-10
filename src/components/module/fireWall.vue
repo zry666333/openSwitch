@@ -3,8 +3,8 @@
     <h2 class="title">防火墙配置</h2>
     <div class="common_block">
       <el-form :model="form" ref="form" :rules="rule">
-        <el-form-item label="规则名" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.name" autocomplete="false" placeholder="例：rule1"></el-input>
+        <el-form-item label="规则名" :label-width="formLabelWidth" prop="rule_name">
+          <el-input v-model="form.rule_name" autocomplete="false" placeholder="例：rule1"></el-input>
         </el-form-item>
         <el-form-item label="src_ip" :label-width="formLabelWidth" prop="src_ip">
           <el-input v-model.number="form.src_ip" autocomplete="false" placeholder="例：10.0.0.1"></el-input>
@@ -38,7 +38,7 @@
       border
       style="width: 100%">
       <el-table-column
-        prop="name"
+        prop="rule_name"
         label="规则名"
       >
       </el-table-column>
@@ -58,7 +58,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button @click="deleteData">删除</el-button>
+          <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -81,7 +81,7 @@ export default {
       formLabelWidth: '120px',
       tableData: [],
       rule: {
-        name: [
+        rule_name: [
           {required: true, message: '请输入规则名', trigger: 'blur'}
         ],
         src_ip: [
@@ -100,10 +100,17 @@ export default {
   },
   methods: {
     newfireWallOp (formname) {
-      this.$refs[formname].validate(valid => {
+      let res
+      this.$refs[formname].validate(async valid => {
         if (valid) {
           this.tableData.push({
-            name: this.form.name,
+            rule_name: this.form.rule_name,
+            src_ip: this.form.src_ip,
+            depth: this.form.depth,
+            action: this.form.action
+          })
+          res = await this.$Http.deleteFireWallOp({
+            rule_name: this.form.rule_name,
             src_ip: this.form.src_ip,
             depth: this.form.depth,
             action: this.form.action
@@ -113,11 +120,15 @@ export default {
           return false
         }
       })
+      console.log(res)
     },
-    deleteData (index) {
-      this.$alertMsgBox().then(() => {
+    deleteData (index, row) {
+      let res
+      this.$alertMsgBox().then(async () => {
         this.tableData.splice(index, 1)
+        res = await this.$Http.deleteFireWallOp(row)
       })
+      console.log(res)
     }
   }
 }
