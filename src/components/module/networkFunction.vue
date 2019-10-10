@@ -109,11 +109,11 @@ export default {
   data () {
     return {
       url1: require('../../assets/route.png'),
-      url2: require('../../assets/bridge.png'),
-      url3: require('../../assets/firewall.png'),
+      url3: require('../../assets/bridge.png'),
+      url2: require('../../assets/firewall.png'),
       routeForm: {state: '路由器'},
       fireWallForm: {state: '防火墙'},
-      brigdeForm: {state: '路由器'},
+      brigdeForm: {state: '网桥'},
       formLabelWidth: '80px',
       tableData: [],
       rule1: {
@@ -143,20 +143,23 @@ export default {
   methods: {
     newNetworkFun (formname) {
       let copy
-      this.$refs[formname].validate(valid => {
+      this.$refs[formname].validate(async valid => {
         // 数据校验
         if (valid) {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
           this.tableData.push(copy)
           this.$refs[formname].resetFields()
-          console.log(this.tableData)
-
-          // let data = {"code":"1234","name":"yyyy"};
-          // axios.post(`${this.$url}/test/testRequest`,data)
-          //   .then(res=>{
-          //     console.log('res=>',res);
-          //   })
+          console.log('-copy-', copy)
+          let res
+          if (copy.state === '路由器') {
+            res = await this.$Http.newNetWork(copy)
+          } else if (copy.state === '防火墙') {
+            res = await this.$Http.newFireWall(copy)
+          } else {
+            res = await this.$Http.newBridge(copy)
+          }
+          console.log(res)
         } else {
           return false
         }
