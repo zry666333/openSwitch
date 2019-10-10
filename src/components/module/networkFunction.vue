@@ -5,6 +5,14 @@
       <el-col :span="8">
         <div class="common_block">
           <h4>路由器</h4>
+          <div class="demo-image">
+            <div class="block">
+              <el-image
+                style="width: 80px; height: 80px"
+                :src="url1"
+              ></el-image>
+            </div>
+          </div>
           <el-form :model="routeForm" ref="routeForm" :rules="rule1">
             <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
               <el-input type="number" v-model.number="routeForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
@@ -18,6 +26,14 @@
       <el-col :span="8">
         <div class="common_block">
           <h4>防火墙</h4>
+          <div class="demo-image">
+            <div class="block">
+              <el-image
+                style="width: 80px; height: 80px"
+                :src="url2"
+              ></el-image>
+            </div>
+          </div>
           <el-form :model="fireWallForm"  ref="fireWallForm" :rules="rule2">
             <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
               <el-input v-model.number="fireWallForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
@@ -34,6 +50,14 @@
       <el-col :span="8">
         <div class="common_block">
           <h4>桥</h4>
+          <div class="demo-image">
+            <div class="block">
+              <el-image
+                style="width: 80px; height: 80px"
+                :src="url3"
+              ></el-image>
+            </div>
+          </div>
           <el-form :model="brigdeForm" ref="brigdeForm" :rules="rule3">
             <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
               <el-input v-model.number="brigdeForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
@@ -78,10 +102,15 @@
 </template>
 
 <script>
+// import axios from 'axios'
+
 export default {
   name: 'networkFunction',
   data () {
     return {
+      url1: require('../../assets/route.png'),
+      url2: require('../../assets/bridge.png'),
+      url3: require('../../assets/firewall.png'),
       routeForm: {state: '路由器'},
       fireWallForm: {state: '防火墙'},
       brigdeForm: {state: '路由器'},
@@ -113,11 +142,21 @@ export default {
   },
   methods: {
     newNetworkFun (formname) {
+      let copy
       this.$refs[formname].validate(valid => {
+        // 数据校验
         if (valid) {
-          const copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
+          // 数据深拷贝
+          copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
           this.tableData.push(copy)
           this.$refs[formname].resetFields()
+          console.log(this.tableData)
+
+          // let data = {"code":"1234","name":"yyyy"};
+          // axios.post(`${this.$url}/test/testRequest`,data)
+          //   .then(res=>{
+          //     console.log('res=>',res);
+          //   })
         } else {
           return false
         }
@@ -142,6 +181,7 @@ export default {
     border: 0.8px solid gray;
     padding:10px;
     .common_block{
+      border: 1px solid ;
       height:300px;
       padding:6px 20px 6px 6px;
       text-align: center;

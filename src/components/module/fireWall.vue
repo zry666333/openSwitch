@@ -7,7 +7,7 @@
           <el-input v-model="form.name" autocomplete="false" placeholder="例：rule1"></el-input>
         </el-form-item>
         <el-form-item label="src_ip" :label-width="formLabelWidth" prop="src_ip">
-          <el-input v-model.number="form.src_ip" autocomplete="false" placeholder="输入1至32整数"></el-input>
+          <el-input v-model.number="form.src_ip" autocomplete="false" placeholder="例：10.0.0.1"></el-input>
         </el-form-item>
         <el-form-item label="depth" :label-width="formLabelWidth" prop="depth">
           <el-input v-model.number="form.depth" autocomplete="off" placeholder="输入1至32整数"></el-input>
@@ -85,8 +85,8 @@ export default {
           {required: true, message: '请输入规则名', trigger: 'blur'}
         ],
         src_ip: [
-          {required: true, message: '请输入src_ip', trigger: 'blur'},
-          { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
+          {required: true, message: '请输入src_ip', trigger: 'blur'}
+          // { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
         ],
         depth: [
           {required: true, message: '请输入depth', trigger: 'blur'},
