@@ -153,11 +153,14 @@ export default {
     },
     async getFireWallOp () {
       const res = this.$Http.getFireWallOp()
+      for (let i in res) {
+        console.log(i)
+      }
       console.log(res)
     }
   },
   mounted () {
-    this.getFireWallOp();
+    this.getFireWallOp()
   }
 }
 </script>
