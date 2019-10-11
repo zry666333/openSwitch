@@ -152,8 +152,6 @@ export default {
         if (valid) {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          this.tableData.push(copy)
-          this.$refs[formname].resetFields()
           console.log('-copy-', copy)
           console.log('-tableData-', this.tableData)
           let res
@@ -164,7 +162,19 @@ export default {
           } else {
             res = await this.$Http.newBridge(copy, true)
           }
-          console.log(res)
+          if (res.Result === 'success') {
+            this.$message({
+              message: res.Message,
+              type: 'success'
+            })
+            this.tableData.push(copy)
+            this.$refs[formname].resetFields()
+          } else if (res.Result === 'false') {
+            this.$message({
+              message: res.Message,
+              type: 'error'
+            })
+          }
         } else {
           return false
         }
@@ -174,10 +184,25 @@ export default {
       let res
       console.log('-row-', row)
       this.$alertMsgBox().then(async () => {
-        this.tableData.splice(index, 1)
         res = await this.$Http.deleteNf(row, true)
+        if (res.Result === 'success') {
+          this.$message({
+            message: res.Message,
+            type: 'success'
+          })
+          this.tableData.splice(index, 1)
+        } else if (res.Result === 'false') {
+          this.$message({
+            message: res.Message,
+            type: 'error'
+          })
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
-      console.log('=res=', res)
     },
     // 校验service_id的唯一性
     validate (serviceId, array) {

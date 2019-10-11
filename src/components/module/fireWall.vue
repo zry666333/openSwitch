@@ -7,8 +7,8 @@
           <el-form-item label="规则名" :label-width="formLabelWidth" prop="rule_name">
             <el-input v-model="form.rule_name" autocomplete="false" placeholder="例：rule1"></el-input>
           </el-form-item>
-          <el-form-item label="src_ip" :label-width="formLabelWidth" prop="src_ip">
-            <el-input v-model.number="form.src_ip" autocomplete="false" placeholder="例：10.0.0.1"></el-input>
+          <el-form-item label="src_ip" :label-width="formLabelWidth" prop="src_ip" >
+            <el-input v-model="form.src_ip" autocomplete="false" placeholder="例：10.0.0.1"  @keyup.native="form.src_ip=form.src_ip.replace(/[^0-9\.]/g,'')"></el-input>
           </el-form-item>
           <el-form-item label="depth" :label-width="formLabelWidth" prop="depth">
             <el-input v-model.number="form.depth" autocomplete="off" placeholder="输入1至32整数"></el-input>
@@ -109,32 +109,47 @@ export default {
       let res
       this.$refs[formname].validate(async valid => {
         if (valid) {
-          this.tableData.push({
-            rule_name: this.form.rule_name,
-            src_ip: this.form.src_ip,
-            depth: this.form.depth,
-            action: this.form.action
-          })
-          res = await this.$Http.deleteFireWallOp({
-            rule_name: this.form.rule_name,
-            src_ip: this.form.src_ip,
-            depth: this.form.depth,
-            action: this.form.action
-          }, true)
+          res = await this.$Http.newFireWallOp(this.form, true)
+          if (res.Result === 'success') {
+            this.$message({
+              message: res.Message,
+              type: 'success'
+            })
+            this.tableData.push(this.form)
+          } else if (res.Result === 'false') {
+            this.$message({
+              message: res.Message,
+              type: 'error'
+            })
+          }
           this.form = {}
         } else {
           return false
         }
       })
-      console.log(res)
     },
     deleteData (index, row) {
       let res
       this.$alertMsgBox().then(async () => {
-        this.tableData.splice(index, 1)
         res = await this.$Http.deleteFireWallOp(row, true)
+        if (res.Result === 'success') {
+          this.$message({
+            message: res.Message,
+            type: 'success'
+          })
+          this.tableData.splice(index, 1)
+        } else if (res.Result === 'false') {
+          this.$message({
+            message: res.Message,
+            type: 'error'
+          })
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
-      console.log(res)
     }
   }
 }
