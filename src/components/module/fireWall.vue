@@ -8,7 +8,7 @@
             <el-input v-model="form.rule_name" autocomplete="false" placeholder="例：rule1"></el-input>
           </el-form-item>
           <el-form-item label="src_ip" :label-width="formLabelWidth" prop="src_ip">
-            <el-input v-model.number="form.src_ip" autocomplete="false" placeholder="例：10.0.0.1"></el-input>
+            <el-input v-model="form.src_ip" autocomplete="false" placeholder="例：10.0.0.1"></el-input>
           </el-form-item>
           <el-form-item label="depth" :label-width="formLabelWidth" prop="depth">
             <el-input v-model.number="form.depth" autocomplete="off" placeholder="输入1至32整数"></el-input>
