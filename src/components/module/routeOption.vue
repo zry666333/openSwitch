@@ -68,30 +68,47 @@ export default {
   },
   methods: {
     newRouteOp (formname) {
-      let res
       this.$refs[formname].validate(async valid => {
         if (valid) {
-          this.tableData.push({
-            dst_ip: this.form.dst_ip,
-            to_service_Id: this.form.to_service_Id
-          })
-          res = await this.$Http.newRouteOp({
-            dst_ip: this.form.dst_ip,
-            to_service_Id: this.form.to_service_Id
-          }, true)
+          let res = await this.$Http.newRouteOp(this.form, true)
+          if (res.Result === 'success') {
+            this.$message({
+              message: res.Message,
+              type: 'success'
+            })
+            this.tableData.push(this.form)
+          } else if (res.Result === 'false') {
+            this.$message({
+              message: res.Message,
+              type: 'error'
+            })
+          }
         } else {
           return false
         }
       })
-      console.log(res)
     },
     deleteData (index, row) {
-      let res
       this.$alertMsgBox().then(async () => {
-        this.tableData.splice(index, 1)
-        res = await this.$Http.deleteRouteOP(row, true)
+        let res = await this.$Http.deleteRouteOP(row, true)
+        if (res.Result === 'success') {
+          this.$message({
+            message: res.Message,
+            type: 'success'
+          })
+          this.tableData.splice(index, 1)
+        } else if (res.Result === 'false') {
+          this.$message({
+            message: res.Message,
+            type: 'error'
+          })
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
-      console.log(res)
     }
   }
 }
