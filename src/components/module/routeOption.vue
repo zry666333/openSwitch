@@ -109,7 +109,14 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    async getRouteOp () {
+      let res = await this.$Http.getRouteOp()
+      console.log(res)
     }
+  },
+  mounted () {
+    this.getRouteOp()
   }
 }
 </script>

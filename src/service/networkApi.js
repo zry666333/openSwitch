@@ -19,6 +19,11 @@ const NETWORK_API = {
     method: 'post',
     url: '/del_nf/'
   },
+  // 获取路由配置
+  getRouteOp: {
+    method: 'get',
+    url: 'read_nf_router_conf'
+  },
   // 新建路由配置
   newRouteOp: {
     method: 'post',
