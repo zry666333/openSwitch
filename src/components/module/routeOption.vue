@@ -78,7 +78,7 @@ export default {
           res = await this.$Http.newRouteOp({
             dst_ip: this.form.dst_ip,
             to_service_Id: this.form.to_service_Id
-          })
+          }, true)
         } else {
           return false
         }
@@ -89,7 +89,7 @@ export default {
       let res
       this.$alertMsgBox().then(async () => {
         this.tableData.splice(index, 1)
-        res = await this.$Http.deleteRouteOP(row)
+        res = await this.$Http.deleteRouteOP(row, true)
       })
       console.log(res)
     }

@@ -120,7 +120,7 @@ export default {
             src_ip: this.form.src_ip,
             depth: this.form.depth,
             action: this.form.action
-          })
+          }, true)
           this.form = {}
         } else {
           return false
@@ -132,7 +132,7 @@ export default {
       let res
       this.$alertMsgBox().then(async () => {
         this.tableData.splice(index, 1)
-        res = await this.$Http.deleteFireWallOp(row)
+        res = await this.$Http.deleteFireWallOp(row, true)
       })
       console.log(res)
     }

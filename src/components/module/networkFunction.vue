@@ -155,13 +155,14 @@ export default {
           this.tableData.push(copy)
           this.$refs[formname].resetFields()
           console.log('-copy-', copy)
+          console.log('-tableData-', this.tableData)
           let res
           if (copy.state === '路由器') {
-            res = await this.$Http.newNetWork(copy)
+            res = await this.$Http.newNetWork(copy, true)
           } else if (copy.state === '防火墙') {
-            res = await this.$Http.newFireWall(copy)
+            res = await this.$Http.newFireWall(copy, true)
           } else {
-            res = await this.$Http.newBridge(copy)
+            res = await this.$Http.newBridge(copy, true)
           }
           console.log(res)
         } else {
@@ -174,9 +175,13 @@ export default {
       console.log('-row-', row)
       this.$alertMsgBox().then(async () => {
         this.tableData.splice(index, 1)
-        res = await this.$Http.deleteNf(row)
+        res = await this.$Http.deleteNf(row, true)
       })
       console.log('=res=', res)
+    },
+    // 校验service_id的唯一性
+    validate (serviceId, array) {
+
     }
   }
 }
