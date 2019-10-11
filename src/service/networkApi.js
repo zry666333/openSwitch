@@ -43,6 +43,11 @@ const NETWORK_API = {
   deleteFireWallOp: {
     method: 'post',
     url: '/del_firewall_conf/'
+  },
+  // 获取防火墙配置
+  getFireWallOp: {
+    method: 'get',
+    url: 'read_firewall_conf'
   }
 }
 export default NETWORK_API

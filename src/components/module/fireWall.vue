@@ -150,9 +150,14 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    async getFireWallOp () {
+      const res = this.$Http.getFireWallOp()
+      console.log(res)
     }
   },
   mounted () {
+    this.getFireWallOp();
   }
 }
 </script>
