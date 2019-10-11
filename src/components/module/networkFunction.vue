@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <h2 class="title" >网络功能配置</h2>
-    <el-row :gutter="20">
+    <el-row :gutter="10">
       <el-col :span="8">
         <div class="common_block">
           <h4>路由器</h4>
@@ -35,10 +35,10 @@
             </div>
           </div>
           <el-form :model="fireWallForm"  ref="fireWallForm" :rules="rule2">
-            <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
+            <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id" class="input">
               <el-input v-model.number="fireWallForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
             </el-form-item>
-            <el-form-item label="nexthop_id" :label-width="formLabelWidth" prop="nexthop_id">
+            <el-form-item label="nexthop_id" :label-width="formLabelWidth" prop="nexthop_id" class="input">
               <el-input v-model.number="fireWallForm.nexthop_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
             </el-form-item>
             <el-form-item class="newBtn">
@@ -69,35 +69,39 @@
         </div>
       </el-col>
     </el-row>
-    <h2 class="subtitle">已创建网络功能</h2>
-    <el-table
-      :data="tableData"
-      border
-      style="width: 100%">
-      <el-table-column
-        prop="state"
-        label="类型"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="service_id"
-        label="service_id"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="nexthop_id"
-        label="nexthop_id"
-        width="180"
-      >
-      </el-table-column>
-      <el-table-column
-        prop="operation"
-        label="操作">
-        <template slot-scope="scope">
-          <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <el-row class="card">
+      <div class="card-header">
+        <strong>已创建网络功能</strong>
+      </div>
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%">
+        <el-table-column
+          prop="state"
+          label="类型"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="service_id"
+          label="service_id"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="nexthop_id"
+          label="nexthop_id"
+          width="180"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="operation"
+          label="操作">
+          <template slot-scope="scope">
+            <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-row>
   </div>
 </template>
 
@@ -178,17 +182,29 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .title{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom:20px;
+  }
 </style>
 
 <style lang="scss">
   .main{
-    background:#ccc;
-    border: 0.8px solid gray;
+    background:#ffffff;
+    border-left: 1px solid #eee;
+    border-top: 1px solid #eee;
+    border-right: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+    border-radius: 10px;
     padding:10px;
     .common_block{
-      border: 1px solid ;
+      border-left: 1px solid #eee;
+      border-top: 1px solid #eee;
+      border-right: 2px solid #eee;
+      border-bottom: 2px solid #eee;
+      border-radius: 10px;
       height:300px;
       padding:6px 20px 6px 6px;
       text-align: center;
@@ -206,15 +222,18 @@ export default {
   input[type="number"]{
     -moz-appearance: textfield;
   }
-  .title{
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom:20px;
-  }
-  .subtitle{
-    margin-top:30px;
-    margin-bottom: 20px;
-    font-weight: bold;
+  .card{
+    border: 1px solid rgba(0,0,0,.125);
+    .card-header{
+      /*margin-top:30px;*/
+      /*margin-bottom: 20px;*/
+      /*font-weight: bold;*/
+      padding:12px 20px;
+      background: rgba(0,0,0,.03);
+    }
+    strong{
+      font-weight: bolder;
+    }
   }
   .newBtn{
     position: absolute;
@@ -223,4 +242,22 @@ export default {
     right: 50%;
     margin-left: -35px;
   }
+  .el-row{
+    margin-bottom: 20px;
+  }
+  .el-button--primary{
+    background-color: #428bca;
+    border-color:#357ebd;
+  }
+  /*.el-form-item__content{*/
+    /*margin-left:90px !important;*/
+  /*}*/
+  .el-input__inner{
+    padding:0 6px;
+  }
+    .el-form-item__content{
+      .el-input{
+        margin-left:10px;
+      }
+    }
 </style>

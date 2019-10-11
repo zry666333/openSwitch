@@ -13,13 +13,15 @@ center, u, b, i {
   outline: 0;
   font-weight: normal;
   font-style: normal;
-  font-size: 100%;
-  font-family: inherit;
+  // font-size: 100%;
+  // font-family: inherit;
   vertical-align: baseline
 }
 body {
   line-height: 1;
-  background:#fff;
+  background:#f1f2f7;
+  font-family: Open Sans,sans-serif;
+  font-size: 16px;
 }
 :focus {
   outline: 0

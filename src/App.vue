@@ -13,15 +13,18 @@ export default {
 
 <style lang="scss" scoped>
 .app{
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  // font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
   .title{
-  font-size: 60px;
-  margin-bottom:20px;
+    color: #fff;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 30px;
     text-align: center;
+    height:50px;
+    background-color:#2c3742;
+    line-height:50px;
   }
 }
 </style>

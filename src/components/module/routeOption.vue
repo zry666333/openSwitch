@@ -1,42 +1,48 @@
 <template>
   <div class="main">
     <h2 class="title">路由配置</h2>
-    <div class="common_block">
-      <el-form :model="form"  ref="form" :rules="rule">
-        <el-form-item label="dst_ip" :label-width="formLabelWidth" prop="dst_ip">
-          <el-input v-model.number="form.dst_ip" autocomplete="false" placeholder="输入1至32整数"></el-input>
-        </el-form-item>
-        <el-form-item label="to_service_Id" :label-width="formLabelWidth" prop="to_service_Id">
-          <el-input v-model.number="form.to_service_Id" autocomplete="false" placeholder="输入1至32整数"></el-input>
-        </el-form-item>
-        <el-form-item class="newBtn">
-          <el-button type="primary" @click="newRouteOp('form')">创建</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-    <h2 class="subtitle">已添加的路由配置</h2>
-    <el-table
-      :data="tableData"
-      border
-      style="width: 100%">
-      <el-table-column
-        prop="dst_ip"
-        label="dst_ip"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="to_service_Id"
-        label="to_service_Id"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="operation"
-        label="操作">
-        <template slot-scope="scope">
-          <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <el-row>
+      <div class="common_block">
+        <el-form :model="form"  ref="form" :rules="rule">
+          <el-form-item label="dst_ip" :label-width="formLabelWidth" prop="dst_ip">
+            <el-input v-model.number="form.dst_ip" autocomplete="false" placeholder="输入1至32整数"></el-input>
+          </el-form-item>
+          <el-form-item label="to_service_Id" :label-width="formLabelWidth" prop="to_service_Id">
+            <el-input v-model.number="form.to_service_Id" autocomplete="false" placeholder="输入1至32整数"></el-input>
+          </el-form-item>
+          <el-form-item class="newBtn">
+            <el-button type="primary" @click="newRouteOp('form')">创建</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-row>
+    <el-row class="card">
+      <div class="card-header">
+        <strong>已添加的路由配置</strong>
+      </div>
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%">
+        <el-table-column
+          prop="dst_ip"
+          label="dst_ip"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="to_service_Id"
+          label="to_service_Id"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="operation"
+          label="操作">
+          <template slot-scope="scope">
+            <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-row>
   </div>
 </template>
 
@@ -91,6 +97,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .title{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom:20px;
+  }
 </style>
