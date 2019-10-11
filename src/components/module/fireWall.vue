@@ -7,8 +7,8 @@
           <el-form-item label="规则名" :label-width="formLabelWidth" prop="rule_name">
             <el-input v-model="form.rule_name" autocomplete="false" placeholder="例：rule1"></el-input>
           </el-form-item>
-          <el-form-item label="src_ip" :label-width="formLabelWidth" prop="src_ip">
-            <el-input v-model="form.src_ip" autocomplete="false" placeholder="例：10.0.0.1"></el-input>
+          <el-form-item label="src_ip" :label-width="formLabelWidth" prop="src_ip" >
+            <el-input v-model="form.src_ip" autocomplete="false" placeholder="例：10.0.0.1"  @keyup.native="form.src_ip=form.src_ip.replace(/[^0-9\.]/g,'')"></el-input>
           </el-form-item>
           <el-form-item label="depth" :label-width="formLabelWidth" prop="depth">
             <el-input v-model.number="form.depth" autocomplete="off" placeholder="输入1至32整数"></el-input>
