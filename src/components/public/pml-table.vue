@@ -3,8 +3,8 @@
     <h2 class="title">{{title}}</h2>
     <el-row>
       <div class="common_block">
-        <el-form :model="form" ref="form" :rules="rule">
-          <el-form-item label="{{item.label}}" v-for="item in items" label-width="{{formLabelWidth}}" prop="item.value" :key="item.label">
+        <el-form>
+          <el-form-item :label="item.label" v-for="item in items" :label-width="formLabelWidth" :prop="item.value" :key="item.label">
             <el-input v-model="item.value" autocomplete="false" placeholder="item.placeholder"></el-input>
           </el-form-item>
           <el-form-item class="newBtn">
@@ -25,10 +25,10 @@
         border
         style="width: 100%">
         <el-table-column
-          prop="{{}}"
-          label="item.label"
+          :prop="item.name"
+          :label="item.label"
           :key="item.label"
-          v-for="item in columns"
+          v-for="item in items"
         >
         </el-table-column>
         <el-table-column label="操作">
@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import array from '../module/js/commonData'
 
 export default {
   name: 'pml-table',
@@ -63,8 +62,15 @@ export default {
       default: '120px'
     },
     items: {
-      type: array,
-      required: true
+      type: Array,
+      required: true,
+      default: () => {
+        return []
+      }
+    },
+    tableTitle: {
+      type: String,
+      default: '表格标题'
     }
   },
   methods: {

@@ -7,6 +7,9 @@
       <el-col :span="12">
         <ClassiferOp></ClassiferOp>
       </el-col>
+      <!--<el-col :span="8">-->
+        <!--<Test></Test>-->
+      <!--</el-col>-->
     </el-row>
   </div>
 </template>
@@ -14,12 +17,14 @@
 <script>
 import AclOp from './acl-op'
 import ClassiferOp from './classifer-op'
+// import Test from './test'
 
 export default {
   name: 'classifer',
   components: {
     AclOp,
     ClassiferOp
+    // Test
   }
 }
 </script>
