@@ -1,48 +1,137 @@
 <template>
-  <div>
-    <el-row :gutter="20">
-      <el-col :span="8">
-        <el-input>
-          <template slot="prepend">{{input1.label}}</template>
-        </el-input>
-      </el-col>
-      <el-col :span="8">
-        <el-input>
-          <template slot="prepend">{{input2.label}}</template>
-        </el-input>
-      </el-col>
-      <el-col :span="8">
-        <el-button>{{button.label}}</el-button>
-      </el-col>
-    </el-row>
+  <div class="main">
+    <h2 class="title">{{title}}</h2>
     <el-row>
-      <el-table :data="tableData" border>
-        <el-table-column prop="name" label="已下发Classifer" width="280">
-        </el-table-column>
-        <el-table-column prop="safeSort" label="源ip" width="280">
+      <div class="common_block">
+        <el-form :model="form" ref="form" :rules="rule">
+          <el-form-item label="{{item.label}}" v-for="item in items" label-width="{{formLabelWidth}}" prop="item.value" :key="item.label">
+            <el-input v-model="item.value" autocomplete="false" placeholder="item.placeholder"></el-input>
+          </el-form-item>
+          <el-form-item class="newBtn">
+            <template slot-scope="scope">
+              <el-button type="primary" @click="newData('form')">创建</el-button>
+            </template>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-row>
+    <el-row class="card">
+      <div class="card-header"  style="position: relative;">
+        <strong>{{tableTitle}}</strong>
+        <el-button style="position: absolute;right:5%;top:10%;bottom:10%;" size="small">刷新</el-button>
+      </div>
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%">
+        <el-table-column
+          prop="{{}}"
+          label="item.label"
+          :key="item.label"
+          v-for="item in columns"
+        >
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button @click="handleRemove(scope.$index, scope.row)">删除</el-button>
+            <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-row>
-    <div class="block">
-      <el-pagination large
-                     layout="prev, pager, next"
-                     :total="1000">
-      </el-pagination>
-    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'pml-table'
+import array from '../module/js/commonData'
+
+export default {
+  name: 'pml-table',
+  data () {
+    return {
+      form: {},
+      tableData: []
+    }
+  },
+  props: {
+    title: {
+      type: String,
+      required: true,
+      default: '标题'
+    },
+    formLabelWidth: {
+      type: String,
+      default: '120px'
+    },
+    items: {
+      type: array,
+      required: true
+    }
+  },
+  methods: {
+    // 新建
+    newData (formname) {
+      let res
+      this.$refs[formname].validate(async valid => {
+        if (valid) {
+          res = await this.$Http.newData(this.form, true)
+          if (res.Result === 'success') {
+            this.$message({
+              message: res.Message,
+              type: 'success'
+            })
+            this.getData()
+          } else if (res.Result === 'false') {
+            this.$message({
+              message: res.Message,
+              type: 'error'
+            })
+          }
+          this.form = {}
+        } else {
+          return false
+        }
+      })
+    },
+    // 删除
+    deleteData (index, row) {
+      let res
+      this.$alertMsgBox().then(async () => {
+        res = await this.$Http.deleteData(row, true)
+        if (res.Result === 'success') {
+          this.$message({
+            message: res.Message,
+            type: 'success'
+          })
+          this.getData()
+        } else if (res.Result === 'false') {
+          this.$message({
+            message: res.Message,
+            type: 'error'
+          })
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    // 查询
+    async getData () {
+      const res = await this.$Http.getData()
+      this.tableData = res
+    }
+  },
+  mounted () {
+    this.getData()
   }
+}
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  .title{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom:20px;
+  }
 </style>

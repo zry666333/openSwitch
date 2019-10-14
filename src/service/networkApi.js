@@ -48,6 +48,26 @@ const NETWORK_API = {
   getFireWallOp: {
     method: 'get',
     url: 'read_firewall_conf'
+  },
+  // 新建ACL配置
+  newAclOp: {
+    method: 'post',
+    url: 'set_acl'
+  },
+  // 删除ACL配置
+  deleteAclOp: {
+    method: 'post',
+    url: 'del_acl'
+  },
+  // 新建Classifer配置
+  newClassiferOp: {
+    method: 'post',
+    url: 'set_classifer'
+  },
+  // 删除Classifer配置
+  deleteClassiferOp: {
+    method: 'post',
+    url: 'del_classifer'
   }
 }
 export default NETWORK_API
