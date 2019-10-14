@@ -17,8 +17,9 @@
       </div>
     </el-row>
     <el-row class="card">
-      <div class="card-header">
+      <div class="card-header" style="position: relative;">
         <strong>已添加的路由配置</strong>
+        <el-button style="position: absolute;right:5%;top:10%;bottom:10%;" size="small" @click="getRouteOp ()">刷新</el-button>
       </div>
       <el-table
         :data="tableData"
@@ -76,7 +77,8 @@ export default {
               message: res.Message,
               type: 'success'
             })
-            this.tableData.push(this.form)
+            this.getRouteOp()
+            // this.tableData.push(this.form)
           } else if (res.Result === 'false') {
             this.$message({
               message: res.Message,
@@ -96,7 +98,8 @@ export default {
             message: res.Message,
             type: 'success'
           })
-          this.tableData.splice(index, 1)
+          // this.tableData.splice(index, 1)
+          this.getRouteOp()
         } else if (res.Result === 'false') {
           this.$message({
             message: res.Message,
@@ -109,7 +112,22 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    async getRouteOp () {
+      // const res = [{
+      //   'dst_ip': '11.0.0.17',
+      //   'to_service_Id': '2'
+      // }, {
+      //   'dst_ip': '11.0.0.18',
+      //   'to_service_Id': '3'
+      // }]
+      let res = await this.$Http.getRouteOp()
+      this.tableData = res
+      // console.log(res)
     }
+  },
+  mounted () {
+    this.getRouteOp()
   }
 }
 </script>

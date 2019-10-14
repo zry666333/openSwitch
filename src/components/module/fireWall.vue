@@ -35,8 +35,9 @@
       </div>
     </el-row>
     <el-row class="card">
-      <div class="card-header">
+      <div class="card-header"  style="position: relative;">
         <strong>已添加的防火墙配置</strong>
+        <el-button style="position: absolute;right:5%;top:10%;bottom:10%;" size="small" @click="getFireWallOp ()">刷新</el-button>
       </div>
       <el-table
         :data="tableData"
@@ -59,6 +60,7 @@
         <el-table-column
           prop="action"
           label="action"
+          :formatter="format"
         >
         </el-table-column>
         <el-table-column label="操作">
@@ -105,6 +107,7 @@ export default {
     }
   },
   methods: {
+    // 新建
     newfireWallOp (formname) {
       let res
       this.$refs[formname].validate(async valid => {
@@ -115,7 +118,8 @@ export default {
               message: res.Message,
               type: 'success'
             })
-            this.tableData.push(this.form)
+            // this.tableData.push(this.form)
+            this.getFireWallOp()
           } else if (res.Result === 'false') {
             this.$message({
               message: res.Message,
@@ -128,6 +132,7 @@ export default {
         }
       })
     },
+    // 删除
     deleteData (index, row) {
       let res
       this.$alertMsgBox().then(async () => {
@@ -137,7 +142,8 @@ export default {
             message: res.Message,
             type: 'success'
           })
-          this.tableData.splice(index, 1)
+          // this.tableData.splice(index, 1)
+          this.getFireWallOp()
         } else if (res.Result === 'false') {
           this.$message({
             message: res.Message,
@@ -150,7 +156,35 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    // 查询
+    async getFireWallOp () {
+      // const res = [{
+      //   'rule_name': '11.0.0.17',
+      //   'src_ip': '2',
+      //   'depth': '1.0.0.1',
+      //   'action': '0'
+      // }, {
+      //   'rule_name': '11.0.0.18',
+      //   'src_ip': '3',
+      //   'depth': '1.0.0.2',
+      //   'action': '1'
+      // }]
+      const res = await this.$Http.getFireWallOp()
+      this.tableData = res
+      // console.log(res)
+    },
+    // 格式化action
+    format (row, column, cellValue, index) {
+      if (cellValue === '0') {
+        return '通过'
+      } else if (cellValue === '1') {
+        return '丢弃'
+      }
     }
+  },
+  mounted () {
+    this.getFireWallOp()
   }
 }
 </script>
