@@ -187,7 +187,6 @@ export default {
     },
     deleteData (index, row) {
       let res
-      console.log('-row-', row)
       this.$alertMsgBox().then(async () => {
         res = await this.$Http.deleteNf(row, true)
         if (res.Result === 'success') {

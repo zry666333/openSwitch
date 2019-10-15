@@ -60,10 +60,8 @@ export default {
   },
   methods: {
     handleOperation (index, row) {
-      console.log('-index-', index, '=row=', row)
     },
     handleRemove (index, row) {
-      console.log('-index-', index, '=row=', row)
     }
   }
 }

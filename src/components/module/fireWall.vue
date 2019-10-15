@@ -51,6 +51,7 @@
         <el-table-column
           prop="src_ip"
           label="src_ip"
+          min-width="110"
         >
         </el-table-column>
         <el-table-column
@@ -94,7 +95,6 @@ export default {
         ],
         src_ip: [
           {required: true, message: '请输入src_ip', trigger: 'blur'}
-          // { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
         ],
         depth: [
           {required: true, message: '请输入depth', trigger: 'blur'},
@@ -112,13 +112,13 @@ export default {
       let res
       this.$refs[formname].validate(async valid => {
         if (valid) {
-          res = await this.$Http.newFireWallOp(this.form, true)
+          // res = await this.$Http.newFireWallOp(this.form, true)
           if (res.Result === 'success') {
             this.$message({
               message: res.Message,
               type: 'success'
             })
-            // this.tableData.push(this.form)
+            this.tableData.push(this.form)
             this.getFireWallOp()
           } else if (res.Result === 'false') {
             this.$message({
@@ -160,19 +160,18 @@ export default {
     // 查询
     async getFireWallOp () {
       // const res = [{
-      //   'rule_name': '11.0.0.17',
-      //   'src_ip': '2',
-      //   'depth': '1.0.0.1',
+      //   'rule_name': '规则1',
+      //   'src_ip': '211.113.323.232',
+      //   'depth': '34',
       //   'action': '0'
       // }, {
-      //   'rule_name': '11.0.0.18',
+      //   'rule_name': '规则1',
       //   'src_ip': '3',
       //   'depth': '1.0.0.2',
       //   'action': '1'
       // }]
       const res = await this.$Http.getFireWallOp()
       this.tableData = res
-      // console.log(res)
     },
     // 格式化action
     format (row, column, cellValue, index) {

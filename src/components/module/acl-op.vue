@@ -18,10 +18,10 @@
             </el-select>
 
           </el-form-item>
-          <el-form-item label="源ip" :label-width="formLabelWidth" prop="ip">
+          <el-form-item label="源ip" :label-width="formLabelWidth" prop="ip" v-show="form.rule == 'ip'">
             <el-input v-model ="form.ip" autocomplete="off" placeholder="例：192.168.1.0" @keyup.native="form.ip=form.ip.replace(/[^0-9\.]/g,'')"></el-input>
           </el-form-item>
-          <el-form-item label="通配符" :label-width="formLabelWidth" prop="mask">
+          <el-form-item label="通配符" :label-width="formLabelWidth" prop="mask" v-show="form.rule == 'ip'">
             <el-input v-model ="form.mask" autocomplete="off" placeholder="例：0.0.0.255" @keyup.native="form.mask=form.mask.replace(/[^0-9\.]/g,'')"></el-input>
           </el-form-item>
           <el-form-item class="newBtn">
@@ -88,18 +88,10 @@ export default {
       rule: {
         acl_name: [
           {required: true, message: '请输入ACL名', trigger: 'blur'},
-          { type: 'number', max: 2999, min: 2000, message: '请输入小于2000-2999的整数', trigger: 'blur' }
+          { type: 'number', max: 2999, min: 2000, message: '请输入2000-2999的整数', trigger: 'blur' }
         ],
         rule: [
           {required: true, message: '请输入规则', trigger: 'blur'}
-          // { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
-        ],
-        ip: [
-          {required: true, message: '请输入源ip', trigger: 'blur'}
-          // { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
-        ],
-        mask: [
-          {required: true, message: '请输入通配符', trigger: 'blur'}
         ]
       }
     }
@@ -108,6 +100,10 @@ export default {
     // 新建
     newAclOp (formname) {
       let res
+      if (this.form.rule === 'ip') {
+        this.rule['ip'] = [{required: true, message: '请输入源ip', trigger: 'blur'}]
+        this.rule['mask'] = [{required: true, message: '请输入通配符', trigger: 'blur'}]
+      }
       this.$refs[formname].validate(async valid => {
         if (valid) {
           res = await this.$Http.newAclOp(this.form, true)
@@ -117,7 +113,6 @@ export default {
               type: 'success'
             })
             this.tableData.push(this.form)
-            // this.getFireWallOp()
           } else if (res.Result === 'false') {
             this.$message({
               message: res.Message,
@@ -141,7 +136,6 @@ export default {
             type: 'success'
           })
           this.tableData.splice(index, 1)
-          // this.getFireWallOp()
         } else if (res.Result === 'false') {
           this.$message({
             message: res.Message,
@@ -155,14 +149,8 @@ export default {
         })
       })
     }
-    // 查询
-    // async getFireWallOp () {
-    //   const res = await this.$Http.getFireWallOp()
-    //   this.tableData = res
-    // }
   },
   mounted () {
-    // this.getFireWallOp()
   }
 }
 </script>

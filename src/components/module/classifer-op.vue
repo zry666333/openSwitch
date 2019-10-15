@@ -86,7 +86,7 @@ export default {
         ],
         acl_name: [
           {required: true, message: '请输入ACL名', trigger: 'blur'},
-          { type: 'number', max: 2999, min: 2000, message: '请输入小于2000-2999的整数', trigger: 'blur' }
+          { type: 'number', max: 2999, min: 2000, message: '请输入2000-2999的整数', trigger: 'blur' }
         ],
         out_port: [
           {required: true, message: '请输入出端口', trigger: 'blur'}
