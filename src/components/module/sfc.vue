@@ -36,24 +36,15 @@ export default {
       value: [],
       temp: [],
       tableData: []
-      // filterMethod (query, item) {
-      //   return item.pinyin.indexOf(query) > -1
-      // }
     }
   },
   computed: {
-    // data () {
-    //   return this.$store.state.sfTableData
-    // }
   },
   methods: {
     addRsp () {
-      console.log('=value=', this.value)
       this.value.forEach((item) => {
         this.tableData.push(JSON.parse(item))
       })
-      // this.temp.push(JSON.parse(this.value))
-      // console.log('==temp==', this.temp)
       this.$store.commit('receiveSfcData', {tableData: this.tableData})
     }
   },

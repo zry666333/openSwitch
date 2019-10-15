@@ -70,24 +70,18 @@ export default {
         safeSort: this.form.safeSort,
         ipAddress: this.form.ipAddress
       })
-      console.log(this.$store)
       this.$store.commit('receiveSfData', {tableData: this.tableData})
 
       this.dialogFormVisible = false
     },
     handleEdit (index, row) {
-      console.log('-index-', index, '=row=', row)
     },
     handleClose (index, row) {
-      console.log('-index-', index, '=row=', row)
     },
     handleRemove (index, row) {
-      console.log('-index-', index, '=row=', row)
-      console.log('-this-', this)
       this.$alertMsgBox().then().catch()
     },
     init () {
-      console.log('-sf-挂载')
     }
 
   },

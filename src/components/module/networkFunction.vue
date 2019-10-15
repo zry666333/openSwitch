@@ -106,7 +106,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import {isRepeat} from '../../utils/validate'
 
 export default {
   name: 'networkFunction',
@@ -152,27 +152,32 @@ export default {
         if (valid) {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          console.log('-copy-', copy)
-          console.log('-tableData-', this.tableData)
-          let res
-          if (copy.state === '路由器') {
-            res = await this.$Http.newNetWork(copy, true)
-          } else if (copy.state === '防火墙') {
-            res = await this.$Http.newFireWall(copy, true)
+          if (!isRepeat(copy, this.tableData, 'service_id')) {
+            let res
+            if (copy.state === '路由器') {
+              res = await this.$Http.newNetWork(copy, true)
+            } else if (copy.state === '防火墙') {
+              res = await this.$Http.newFireWall(copy, true)
+            } else {
+              res = await this.$Http.newBridge(copy, true)
+            }
+            if (res.Result === 'success') {
+              this.$message({
+                message: res.Message,
+                type: 'success'
+              })
+              this.tableData.push(copy)
+              this.$refs[formname].resetFields()
+            } else if (res.Result === 'false') {
+              this.$message({
+                message: res.Message,
+                type: 'error'
+              })
+            }
           } else {
-            res = await this.$Http.newBridge(copy, true)
-          }
-          if (res.Result === 'success') {
             this.$message({
-              message: res.Message,
-              type: 'success'
-            })
-            this.tableData.push(copy)
-            this.$refs[formname].resetFields()
-          } else if (res.Result === 'false') {
-            this.$message({
-              message: res.Message,
-              type: 'error'
+              message: 'service_id已存在',
+              type: 'warning'
             })
           }
         } else {
@@ -182,7 +187,6 @@ export default {
     },
     deleteData (index, row) {
       let res
-      console.log('-row-', row)
       this.$alertMsgBox().then(async () => {
         res = await this.$Http.deleteNf(row, true)
         if (res.Result === 'success') {

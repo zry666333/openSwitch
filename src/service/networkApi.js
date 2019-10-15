@@ -22,7 +22,7 @@ const NETWORK_API = {
   // 获取路由配置
   getRouteOp: {
     method: 'get',
-    url: 'read_nf_router_conf'
+    url: '/read_nf_router_conf'
   },
   // 新建路由配置
   newRouteOp: {
@@ -47,7 +47,27 @@ const NETWORK_API = {
   // 获取防火墙配置
   getFireWallOp: {
     method: 'get',
-    url: 'read_firewall_conf'
+    url: '/read_firewall_conf'
+  },
+  // 新建ACL配置
+  newAclOp: {
+    method: 'post',
+    url: '/set_acl/'
+  },
+  // 删除ACL配置
+  deleteAclOp: {
+    method: 'post',
+    url: '/del_acl/'
+  },
+  // 新建Classifer配置
+  newClassiferOp: {
+    method: 'post',
+    url: '/set_classifer/'
+  },
+  // 删除Classifer配置
+  deleteClassiferOp: {
+    method: 'post',
+    url: '/del_classifer/'
   }
 }
 export default NETWORK_API

@@ -123,7 +123,6 @@ export default {
       // }]
       let res = await this.$Http.getRouteOp()
       this.tableData = res
-      // console.log(res)
     }
   },
   mounted () {
