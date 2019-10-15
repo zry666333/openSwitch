@@ -1,5 +1,17 @@
 import axios from 'axios'
 import service from './networkApi'
+import {Loading} from 'element-ui'
+
+let loading
+
+function startLoading () {
+  loading = Loading.service({
+    fullscreen: true,
+    lock: true,
+    text: '加载中',
+    background: 'rgba(0,0,0,.7)'
+  })
+}
 
 // service 循环遍历输出不同的请求方法
 let instance = axios.create({
@@ -48,6 +60,7 @@ for (let key in service) {
 // 拦截器的添加
 instance.interceptors.request.use(config => {
   // 发起请求前做些什么
+  startLoading()
   return config
 }, () => {
   // 请求错误
@@ -56,9 +69,11 @@ instance.interceptors.request.use(config => {
 // 响应拦截器
 instance.interceptors.response.use(res => {
   // 请求成功
+  loading.close()
   return res.data
 }, () => {
   // 响应失败
+  loading.close()
 })
 
 export default Http
