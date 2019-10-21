@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <h2 class="title">防火墙配置</h2>
-    <el-row>
+    <el-row  v-if="false">
       <div class="common_block">
         <el-form :model="form" ref="form" :rules="rule">
           <el-form-item label="规则名" :label-width="formLabelWidth" prop="rule_name">

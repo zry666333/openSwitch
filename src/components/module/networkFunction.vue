@@ -1,120 +1,134 @@
 <template>
   <div class="main">
     <h2 class="title" >网络功能配置</h2>
-    <el-row :gutter="10">
-      <el-col :span="8">
-        <div class="common_block">
-          <h4>路由器</h4>
-          <div class="demo-image">
-            <div class="block">
-              <el-image
-                style="width: 80px; height: 80px"
-                :src="url1"
-              ></el-image>
+    <el-row :gutter="10" id="network">
+      <el-collapse v-model="activeNames">
+          <el-col :span="8">
+            <el-collapse-item  title="路由器"  name="1">
+            <div class="common_block">
+              <h4>路由器</h4>
+              <div class="demo-image">
+                <div class="block">
+                  <el-image
+                    style="width: 80px; height: 80px"
+                    :src="url1"
+                  ></el-image>
+                </div>
+              </div>
+              <el-form :model="routeForm" ref="routeForm" :rules="rule1">
+                <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
+                  <el-input type="number" v-model.number="routeForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
+                </el-form-item>
+                <el-form-item label="dst_ip" :label-width="formLabelWidth" prop="dst_ip">
+                  <el-input type="number" v-model.number="routeForm.dst_ip" autocomplete="false" placeholder="输入1至32整数"></el-input>
+                </el-form-item>
+                <el-form-item label="to_service_id" :label-width="formLabelWidth" prop="to_service_id">
+                  <el-input type="number" v-model.number="routeForm.to_service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
+                </el-form-item>
+                <el-form-item class="newBtn">
+                  <el-button type="primary" @click="newNetworkFun('routeForm')">创建</el-button>
+                </el-form-item>
+              </el-form>
             </div>
-          </div>
-          <el-form :model="routeForm" ref="routeForm" :rules="rule1">
-            <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
-              <el-input type="number" v-model.number="routeForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
-            </el-form-item>
-            <el-form-item class="newBtn">
-              <el-button type="primary" @click="newNetworkFun('routeForm')">创建</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="common_block">
-          <h4>防火墙</h4>
-          <div class="demo-image">
-            <div class="block">
-              <el-image
-                style="width: 80px; height: 80px"
-                :src="url2"
-              ></el-image>
+            </el-collapse-item>
+          </el-col>
+          <el-col :span="8">
+            <el-collapse-item   title="防火墙" name="2">
+            <div class="common_block">
+              <h4>防火墙</h4>
+              <div class="demo-image">
+                <div class="block">
+                  <el-image
+                    style="width: 80px; height: 80px"
+                    :src="url2"
+                  ></el-image>
+                </div>
+              </div>
+              <el-form :model="fireWallForm"  ref="fireWallForm" :rules="rule2">
+                <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id" class="input">
+                  <el-input v-model.number="fireWallForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
+                </el-form-item>
+                <el-form-item label="规则名" :label-width="formLabelWidth" prop="rule_name">
+                  <el-input v-model="fireWallForm.rule_name" autocomplete="false" placeholder="例：rule1"></el-input>
+                </el-form-item>
+                <el-form-item label="src_ip" :label-width="formLabelWidth" prop="src_ip" >
+                  <el-input v-model="fireWallForm.src_ip" autocomplete="false" placeholder="例：10.0.0.1"  @keyup.native="fireWallForm.src_ip=fireWallForm.src_ip.replace(/[^0-9\.]/g,'')"></el-input>
+                </el-form-item>
+                <el-form-item label="depth" :label-width="formLabelWidth" prop="depth">
+                  <el-input v-model.number="fireWallForm.depth" autocomplete="off" placeholder="输入1至32整数"></el-input>
+                </el-form-item>
+                <el-form-item label="action" :label-width="formLabelWidth" prop="action">
+                  <el-select v-model="fireWallForm.action" clearable placeholder="请选择" style="width: 100%;">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+
+                </el-form-item>
+                <el-form-item class="newBtn">
+                  <el-button type="primary" @click="newNetworkFun('fireWallForm')">创建</el-button>
+                </el-form-item>
+              </el-form>
             </div>
-          </div>
-          <el-form :model="fireWallForm"  ref="fireWallForm" :rules="rule2">
-            <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id" class="input">
-              <el-input v-model.number="fireWallForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
-            </el-form-item>
-            <el-form-item label="nexthop_id" :label-width="formLabelWidth" prop="nexthop_id" class="input">
-              <el-input v-model.number="fireWallForm.nexthop_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
-            </el-form-item>
-            <el-form-item class="newBtn">
-              <el-button type="primary" @click="newNetworkFun('fireWallForm')">创建</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="common_block">
-          <h4>桥</h4>
-          <div class="demo-image">
-            <div class="block">
-              <el-image
-                style="width: 80px; height: 80px"
-                :src="url3"
-              ></el-image>
+            </el-collapse-item>
+          </el-col>
+
+        <el-col :span="8">
+          <el-collapse-item  title="桥" name="3">
+          <div class="common_block">
+            <h4>桥</h4>
+            <div class="demo-image">
+              <div class="block">
+                <el-image
+                  style="width: 80px; height: 80px"
+                  :src="url3"
+                ></el-image>
+              </div>
             </div>
+            <el-form :model="brigdeForm" ref="brigdeForm" :rules="rule3">
+              <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
+                <el-input v-model.number="brigdeForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
+              </el-form-item>
+              <el-form-item  class="newBtn">
+                <el-button type="primary" @click="newNetworkFun('brigdeForm')">创建</el-button>
+              </el-form-item>
+            </el-form>
           </div>
-          <el-form :model="brigdeForm" ref="brigdeForm" :rules="rule3">
-            <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
-              <el-input v-model.number="brigdeForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
-            </el-form-item>
-            <el-form-item  class="newBtn">
-              <el-button type="primary" @click="newNetworkFun('brigdeForm')">创建</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </el-col>
+          </el-collapse-item>
+        </el-col>
+      </el-collapse>
     </el-row>
-    <el-row class="card">
-      <div class="card-header">
-        <strong>已创建网络功能</strong>
-      </div>
-      <el-table
-        :data="tableData"
-        border
-        style="width: 100%">
-        <el-table-column
-          prop="state"
-          label="类型"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="service_id"
-          label="service_id"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="nexthop_id"
-          label="nexthop_id"
-          width="180"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="operation"
-          label="操作">
-          <template slot-scope="scope">
-            <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+    <el-row>
+      <Panel></Panel>
     </el-row>
   </div>
 </template>
 
 <script>
 import {isRepeat} from '../../utils/validate'
+import Panel from './panel'
 
 export default {
   name: 'networkFunction',
+  components: {
+    Panel
+  },
   data () {
     return {
+      activeNames: ['1', '2', '3'],
       url1: require('../../assets/route.png'),
       url3: require('../../assets/bridge.png'),
       url2: require('../../assets/firewall.png'),
+      options: [{
+        value: '0',
+        label: '通过'
+      }, {
+        value: '1',
+        label: '丢弃'
+      }],
       routeForm: {state: '路由器'},
       fireWallForm: {state: '防火墙'},
       brigdeForm: {state: '网桥'},
@@ -239,7 +253,7 @@ export default {
       border-right: 2px solid #eee;
       border-bottom: 2px solid #eee;
       border-radius: 10px;
-      height:300px;
+      height:500px;
       padding:6px 20px 6px 6px;
       text-align: center;
       position:relative;

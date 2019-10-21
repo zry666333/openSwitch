@@ -2,6 +2,7 @@
 <div>
   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
     <el-menu-item index="network">网络功能</el-menu-item>
+    <el-menu-item index="config">路由器/防火墙配置</el-menu-item>
     <el-menu-item index="classifer">流分类</el-menu-item>
   </el-menu>
   <el-main>
