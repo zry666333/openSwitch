@@ -13,21 +13,21 @@ const state = {
 }
 
 const mutations = {
-  receiveSfData (state, data) {
-    state.sfTableData = data.tableData
-  },
-  receiveSfcData (state, data) {
-    state.sfcTableData = data.tableData
-  },
-  receiveRspData (state, data) {
-    state.rspTableData = data.tableData
-  },
-  receiveClassiferData (state, data) {
-    state.classiferTableData = data.tableData
-  },
   receiveTableData (state, data) {
     state.tableData.push(data.tableData)
     console.log('-tableData-', state.tableData)
+  },
+  removeTableData (state, data) {
+    state.tableData = state.tableData.filter(function (item) {
+      console.log('item', item)
+      console.log('service_id', data.tableData.service_id)
+      //
+      // this.data.lineList = this.data.lineList.filter(function (line) {
+      //   return line.from !== from && line.to !== to
+      // })
+
+      return item.service_id !== data.tableData.service_id
+    })
   }
 }
 

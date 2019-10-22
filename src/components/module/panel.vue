@@ -267,7 +267,6 @@ export default {
             list: nodeMenu.list
           }
           this.data.nodeList.push(node)
-          // debugger
           this.$nextTick(() => {
             for (var i = 0; i < this.data.nodeList.length; i++) {
               let item = this.data.nodeList[i]
@@ -290,6 +289,7 @@ export default {
           })
         })
       }
+      this.$store.commit('removeTableData', {tableData: node})
     },
     // 改变节点位置
     changeNodeSite (data) {

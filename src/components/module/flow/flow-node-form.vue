@@ -3,24 +3,24 @@
     <el-dialog title="节点信息" :visible.sync="dialogFormVisible">
       <el-form :model="node" label-width="80px">
         <el-form-item label="名称">
-          <el-input v-model="node.name"></el-input>
+          <el-input v-model="node.name" readonly></el-input>
         </el-form-item>
         <el-form-item label="service_id">
-          <el-input v-model="node.service_id"></el-input>
+          <el-input v-model="node.service_id" readonly></el-input>
         </el-form-item>
         <el-form-item label="规则名" v-show="node.name === '防火墙'">
-          <el-input v-model="node.rule_name" autocomplete="false" placeholder="例：rule1"></el-input>
+          <el-input v-model="node.rule_name" autocomplete="false" placeholder="例：rule1" readonly></el-input>
         </el-form-item>
         <el-form-item label="src_ip"  v-show="node.name === '防火墙'">
-          <el-input v-model="node.src_ip" autocomplete="false" placeholder="例：10.0.0.1"  @keyup.native="form.src_ip=form.src_ip.replace(/[^0-9\.]/g,'')"></el-input>
+          <el-input v-model="node.src_ip" autocomplete="false" placeholder="例：10.0.0.1" readonly  @keyup.native="form.src_ip=form.src_ip.replace(/[^0-9\.]/g,'')"></el-input>
         </el-form-item>
         <el-form-item label="depth"  v-show="node.name === '防火墙'">
-          <el-input v-model.number="node.depth" autocomplete="off" placeholder="输入1至32整数"></el-input>
+          <el-input v-model.number="node.depth" autocomplete="off" placeholder="输入1至32整数" readonly></el-input>
         </el-form-item>
         <el-form-item label="action"  v-show="node.name === '防火墙'">
           <!--<el-input v-model="form.action" autocomplete="off" placeholder="例：20.0.0.1"></el-input>-->
 
-          <el-select v-model="node.action" clearable placeholder="请选择" style="width: 100%;">
+          <el-select v-model="node.action" clearable placeholder="请选择" style="width: 100%;" readonly>
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -40,10 +40,10 @@
         <!--<el-input v-model="node.ico"></el-input>-->
         <!--</el-form-item>-->
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-      </div>
+      <!--<div slot="footer" class="dialog-footer">-->
+        <!--<el-button @click="dialogFormVisible = false">取 消</el-button>-->
+        <!--<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>-->
+      <!--</div>-->
     </el-dialog>
   </div>
 </template>
