@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import array from './js/commonData'
+import array from '../js/commonData'
 
 export default {
   name: 'classifer-op',

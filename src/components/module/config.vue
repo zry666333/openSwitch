@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import RouteOption from './routeOption'
-import FireWall from './fireWall'
+import RouteOption from './config/routeOption'
+import FireWall from './config/fireWallOption'
 
 export default {
   name: 'config',

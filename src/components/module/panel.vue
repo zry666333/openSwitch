@@ -5,12 +5,12 @@
         <FlowTool @addNode="addNode"></FlowTool>
       </el-col>
       <el-col :span="21">
-        <el-row>
-          <div>
-            <el-button type="primary" @click="dataInfo">流程信息</el-button>
-            <el-button type="primary" @click="changeLabel">设置线条</el-button>
-          </div>
-        </el-row>
+        <!--<el-row>-->
+          <!--<div>-->
+            <!--<el-button type="primary" @click="dataInfo">流程信息</el-button>-->
+            <!--<el-button type="primary" @click="changeLabel">设置线条</el-button>-->
+          <!--</div>-->
+        <!--</el-row>-->
         <el-row ref="flowContainer">
           <div id="flowContainer" class="container" ref="flowContainer">
             <template v-for="node in data.nodeList" >
@@ -237,12 +237,12 @@ export default {
         }
       }
     },
-    dataInfo () {
-      this.flowInfoVisable = true
-      this.$nextTick(() => {
-        this.$refs.flowInfo.init()
-      })
-    },
+    // dataInfo () {
+    //   this.flowInfoVisable = true
+    //   this.$nextTick(() => {
+    //     this.$refs.flowInfo.init()
+    //   })
+    // },
     deleteLine (from, to) {
       this.data.lineList = this.data.lineList.filter(function (line) {
         return line.from !== from && line.to !== to
@@ -277,17 +277,18 @@ export default {
         })
       }).catch()
       return true
-    },
-    changeLabel () {
-      var lines = this.jsPlumb.getConnections({
-        source: 'nodeA',
-        target: 'nodeB'
-      })
-      lines[0].setLabel({
-        label: 'admin',
-        cssClass: 'labelClass a b '
-      })
     }
+    // ,
+    // changeLabel () {
+    //   var lines = this.jsPlumb.getConnections({
+    //     source: 'nodeA',
+    //     target: 'nodeB'
+    //   })
+    //   lines[0].setLabel({
+    //     label: 'admin',
+    //     cssClass: 'labelClass a b '
+    //   })
+    // }
   },
   mounted () {
     this.jsPlumb = jsPlumb.getInstance()
