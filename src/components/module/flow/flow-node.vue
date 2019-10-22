@@ -1,14 +1,14 @@
 <template>
   <div ref="node" :style="flowNodeContainer" @mouseenter="showDelete" @mouseleave="hideDelete" @mouseup="changeNodeSite">
     <div class="flow-node-header" >
-      <i :class="nodeClass"></i>
+      <i :class="nodeClass"></i><span>{{node.name}}</span>
       <div v-show="mouseEnter" style="position:absolute;top:0px;right:0px;line-height:25px">
         <a @click="editNode"><img src="../../../assets/edit.png"></a>&nbsp;
         <a @click="deleteNode"><img src="../../../assets/delete.png"></a>&nbsp;
       </div>
     </div>
     <div class="flow-node-body">
-      {{node.name}}
+      service_id:{{node.service_id}}
     </div>
   </div>
 </template>

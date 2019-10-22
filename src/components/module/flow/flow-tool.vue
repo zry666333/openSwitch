@@ -62,8 +62,11 @@ export default {
     }
   },
   computed: {
-    list () {
-      return this.$store.state.tableData
+    list: {
+      get () {
+        return this.$store.state.tableData
+      },
+      set (data) {}
     }
   },
   methods: {

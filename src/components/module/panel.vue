@@ -14,7 +14,7 @@
         <el-row ref="flowContainer">
           <div id="flowContainer" class="container" ref="flowContainer">
             <template v-for="node in data.nodeList" >
-              <FlowNode :id="node.id" v-show="node.show" :key="node.id" :node="node" @changeNodeSite="changeNodeSite" @editNode="editNode" @deleteNode="deleteNode"></FlowNode>
+              <FlowNode :id="node.id" :title="node.name" :datatype="node.service_id" v-show="node.show" :key="node.id" :node="node" @changeNodeSite="changeNodeSite" @editNode="editNode" @deleteNode="deleteNode"></FlowNode>
             </template>
           </div>
         </el-row>
@@ -29,7 +29,7 @@
 import FlowTool from './flow/flow-tool'
 import FlowNode from './flow/flow-node'
 import {jsPlumb} from 'jsplumb'
-import {getDataA} from './flow/data_A.js'
+import {getData} from './flow/data_A.js'
 import FlowInfo from './flow/flow-info'
 import FlowNodeForm from './flow/flow-node-form'
 
@@ -116,14 +116,58 @@ export default {
           })
         })
         // 连线
-        _this.jsPlumb.bind('connection', function (evt) {
-          let from = evt.source.id
-          let to = evt.target.id
-          if (_this.loadEasyFlowFinish) {
-            _this.data.lineList.push({
-              from: from,
-              to: to
-            })
+        _this.jsPlumb.bind('connection', async function (evt) {
+          let fromId = evt.source.id
+          let toId = evt.target.id
+          const from = evt.source.innerText.split(/\n/g)
+          const to = evt.target.innerText.split(/\n/g)
+          if (evt.source.title === '防火墙' && evt.target.title === '网桥') {
+            // 格式化请求参数
+            const data = {
+              service_id: from[1].split(':')[1],
+              nexthop_id: to[1].split(':')[1]
+            }
+            let res = await _this.$Http.newFireWall(data, true)
+            if (res.Result === 'success') {
+              if (_this.loadEasyFlowFinish) {
+                _this.data.lineList.push({
+                  from: fromId,
+                  to: toId
+                })
+              }
+              this.$message({
+                message: res.Message,
+                type: 'success'
+              })
+            } else if (res.Result === 'false') {
+              this.$message({
+                message: res.Message,
+                type: 'error'
+              })
+            }
+          } else if (evt.source.title === '网桥' && evt.target.title === '出端口') {
+            // 格式化请求参数
+            const data = {
+              service_id: from[1].split(':')[1]
+            }
+            let res = await _this.$Http.newBridge(data, true)
+            if (res.Result === 'success') {
+              if (_this.loadEasyFlowFinish) {
+                _this.data.lineList.push({
+                  from: fromId,
+                  to: toId
+                })
+              }
+              this.$message({
+                message: res.Message,
+                type: 'success'
+              })
+            } else if (res.Result === 'false') {
+              this.$message({
+                message: res.Message,
+                type: 'error'
+              })
+            }
           }
         })
         _this.jsPlumb.bind('beforeDrop', function (evt) {
@@ -137,10 +181,6 @@ export default {
             _this.$message.error('不能重复连线')
             return false
           }
-          _this.$message({
-            message: '恭喜你，这是一条成功消息',
-            type: 'success'
-          })
           return true
         })
         // 删除连线
@@ -186,13 +226,12 @@ export default {
         }
         if (mousePosition.top < 0) {
           let network = document.getElementById('network')
-          console.log('-mouse-', evt.originalEvent)
-          console.log('---', network.scrollHeight)
           top = evt.originalEvent.pageY - network.scrollHeight - 50 - 61 - 40 - 11 - 44 - 20 - 60
         }
         var node = {
           id: 'node' + index,
           name: nodeMenu.name,
+          service_id: nodeMenu.service_id,
           left: left + 'px',
           top: top + 'px',
           ico: nodeMenu.ico,
@@ -208,25 +247,6 @@ export default {
         })
       }
     },
-    dataReload (data) {
-      this.easyFlowVisible = false
-      this.data.nodeList = []
-      this.data.lineList = []
-      this.$nextTick(() => {
-        this.easyFlowVisible = true
-        this.data = data
-        this.$nextTick(() => {
-          this.jsPlumb = jsPlumb.getInstance()
-          this.$nextTick(() => {
-            this.jsPlumbInit()
-          })
-        })
-      })
-    },
-    // 数据重新载入
-    dataReloadA () {
-      this.dataReload(getDataA())
-    },
     // 改变节点位置
     changeNodeSite (data) {
       for (var i = 0; i < this.data.nodeList.length; i++) {
@@ -237,12 +257,6 @@ export default {
         }
       }
     },
-    // dataInfo () {
-    //   this.flowInfoVisable = true
-    //   this.$nextTick(() => {
-    //     this.$refs.flowInfo.init()
-    //   })
-    // },
     deleteLine (from, to) {
       this.data.lineList = this.data.lineList.filter(function (line) {
         return line.from !== from && line.to !== to
@@ -277,23 +291,33 @@ export default {
         })
       }).catch()
       return true
+    },
+    async linkFireWallAndBridge (data) {
+      let res
+      res = await this.$Http.newFireWall(data, true)
+      if (res.Result === 'success') {
+        this.$message({
+          message: res.Message,
+          type: 'success'
+        })
+      } else if (res.Result === 'false') {
+        this.$message({
+          message: res.Message,
+          type: 'error'
+        })
+      }
+    },
+    dataLoad (data) {
+      this.data = data
+      this.$nextTick(() => {
+        this.jsPlumbInit()
+      })
     }
-    // ,
-    // changeLabel () {
-    //   var lines = this.jsPlumb.getConnections({
-    //     source: 'nodeA',
-    //     target: 'nodeB'
-    //   })
-    //   lines[0].setLabel({
-    //     label: 'admin',
-    //     cssClass: 'labelClass a b '
-    //   })
-    // }
   },
   mounted () {
     this.jsPlumb = jsPlumb.getInstance()
     this.$nextTick(() => {
-      this.dataReloadA()
+      this.dataLoad(getData())
     })
   }
 }

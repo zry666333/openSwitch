@@ -57,7 +57,6 @@ export default {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
           if (!isRepeat(copy, this.tableData, 'service_id')) {
-            console.log('-copy-', copy)
             this.$store.commit('receiveTableData', {tableData: copy})
             // let res
             // res = await this.$Http.newNetWork(copy, true)
