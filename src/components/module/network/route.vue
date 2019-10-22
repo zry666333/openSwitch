@@ -20,7 +20,9 @@
         <el-input type="number" v-model.number="routeForm.to_service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
       </el-form-item>
       <el-form-item class="newBtn">
-        <el-button type="primary" @click="newNetworkFun('routeForm')">创建</el-button>
+        <el-button type="primary" @click="newRouteOp('routeForm')">创建</el-button>
+        <div style="margin-bottom: 20px;"></div>
+        <el-button type="primary" @click="newNetworkFun('routeForm')">下发</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -33,6 +35,8 @@ export default {
   name: 'route',
   data () {
     return {
+      // 临时数据，模仿后台获得的路由配置文件
+      temp: [],
       url1: require('../../../assets/route.png'),
       routeForm: {
         name: '路由器',
@@ -49,40 +53,70 @@ export default {
     }
   },
   methods: {
-    newNetworkFun (formname) {
-      let copy
+    // 创建路由器配置
+    newRouteOp (formname) {
       this.$refs[formname].validate(async valid => {
-        // 数据校验
         if (valid) {
-          // 数据深拷贝
-          copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          if (!isRepeat(copy, this.tableData, 'service_id')) {
-            this.$store.commit('receiveTableData', {tableData: copy})
-            // let res
-            // res = await this.$Http.newNetWork(copy, true)
-            // if (res.Result === 'success') {
-            //   this.$message({
-            //     message: res.Message,
-            //     type: 'success'
-            //   })
-            //   this.tableData.push(copy)
-            //   this.$refs[formname].resetFields()
-            // } else if (res.Result === 'false') {
-            //   this.$message({
-            //     message: res.Message,
-            //     type: 'error'
-            //   })
-            // }
-          } else {
+          this.temp.push(JSON.parse(JSON.stringify(this.routeForm)))
+          let res = await this.$Http.newRouteOp(this.routeForm, true)
+          if (res.Result === 'success') {
             this.$message({
-              message: 'service_id已存在',
-              type: 'warning'
+              message: res.Message,
+              type: 'success'
+            })
+          } else if (res.Result === 'false') {
+            this.$message({
+              message: res.Message,
+              type: 'error'
             })
           }
+          this.$refs.routeForm.resetFields()
         } else {
           return false
         }
       })
+    },
+    // 启动路由器
+    async newNetworkFun (formname) {
+      let copy
+      // 数据深拷贝
+      copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
+      const list = this.getRouteOp()
+      copy.list = list
+      // copy.list = this.temp
+      console.log('==temp==', this.temp)
+      console.log('==list==', this.list)
+      if (!isRepeat(copy, this.tableData, 'service_id')) {
+        let res = await this.$Http.newNetWork(this.routeForm, true)
+        if (res.Result === 'success') {
+          this.$message({
+            message: res.Message,
+            type: 'success'
+          })
+          this.$store.commit('receiveTableData', {tableData: copy})
+        } else if (res.Result === 'false') {
+          this.$message({
+            message: res.Message,
+            type: 'error'
+          })
+        }
+        this.$refs.routeForm.resetFields()
+      } else {
+        this.$message({
+          message: 'service_id已存在',
+          type: 'warning'
+        })
+      }
+    },
+    // 获取路由配置
+    async getRouteOp () {
+      let res = await this.$Http.getRouteOp()
+      if (res.Result === 'success') {
+        console.log('获取路由配置成功')
+      } else if (res.Result === 'false') {
+        console.log('获取路由配置失败')
+      }
+      return res
     }
   }
 }

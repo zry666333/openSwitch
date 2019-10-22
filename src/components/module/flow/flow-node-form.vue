@@ -69,6 +69,7 @@ export default {
     init (data, id) {
       this.dialogFormVisible = true
       data.nodeList.filter((node) => {
+        console.log('==', node)
         if (node.id === id) {
           this.node = node
         }

@@ -68,28 +68,6 @@ export default {
     }
   },
   methods: {
-    newRouteOp (formname) {
-      this.$refs[formname].validate(async valid => {
-        if (valid) {
-          let res = await this.$Http.newRouteOp(this.form, true)
-          if (res.Result === 'success') {
-            this.$message({
-              message: res.Message,
-              type: 'success'
-            })
-            this.getRouteOp()
-            // this.tableData.push(this.form)
-          } else if (res.Result === 'false') {
-            this.$message({
-              message: res.Message,
-              type: 'error'
-            })
-          }
-        } else {
-          return false
-        }
-      })
-    },
     deleteData (index, row) {
       this.$alertMsgBox().then(async () => {
         let res = await this.$Http.deleteRouteOP(row, true)

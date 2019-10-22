@@ -177,10 +177,10 @@ export default {
             _this.$message.error('不能连接自己')
             return false
           }
-          if (_this.hasLine(from, to)) {
-            _this.$message.error('不能重复连线')
-            return false
-          }
+          // if (_this.hasLine(from, to)) {
+          //   _this.$message.error('不能重复连线')
+          //   return false
+          // }
           return true
         })
         // 删除连线
@@ -228,16 +228,60 @@ export default {
           let network = document.getElementById('network')
           top = evt.originalEvent.pageY - network.scrollHeight - 50 - 61 - 40 - 11 - 44 - 20 - 60
         }
-        var node = {
-          id: 'node' + index,
-          name: nodeMenu.name,
-          service_id: nodeMenu.service_id,
-          left: left + 'px',
-          top: top + 'px',
-          ico: nodeMenu.ico,
-          show: true
+        var node
+        if (nodeMenu.name === '网桥') {
+          node = {
+            id: 'node' + index,
+            name: nodeMenu.name,
+            service_id: nodeMenu.service_id,
+            left: left + 'px',
+            top: top + 'px',
+            ico: nodeMenu.ico,
+            show: true
+          }
+          this.data.nodeList.push(node)
+        } else if (nodeMenu.name === '防火墙') {
+          node = {
+            id: 'node' + index,
+            name: nodeMenu.name,
+            service_id: nodeMenu.service_id,
+            rule_name: nodeMenu.rule_name,
+            depth: nodeMenu.depth,
+            src_ip: nodeMenu.src_ip,
+            action: nodeMenu.action,
+            left: left + 'px',
+            top: top + 'px',
+            ico: nodeMenu.ico,
+            show: true
+          }
+          this.data.nodeList.push(node)
+        } else if (nodeMenu.name === '路由器') {
+          node = {
+            id: 'node' + index,
+            name: nodeMenu.name,
+            service_id: nodeMenu.service_id,
+            left: left + 'px',
+            top: top + 'px',
+            ico: nodeMenu.ico,
+            show: true,
+            list: nodeMenu.list
+          }
+          this.data.nodeList.push(node)
+          // debugger
+          this.$nextTick(() => {
+            for (var i = 0; i < this.data.nodeList.length; i++) {
+              let item = this.data.nodeList[i]
+              for (var j = 0; j < node.list.length; j++) {
+                if (node.list[j].to_service_id === item.service_id) {
+                  this.jsPlumb.connect({
+                    source: node.id,
+                    target: this.data.nodeList[i].id
+                  })
+                }
+              }
+            }
+          })
         }
-        this.data.nodeList.push(node)
         this.$nextTick(function () {
           this.jsPlumb.makeSource(nodeId, this.jsplumbSourceOptions)
           this.jsPlumb.makeTarget(nodeId, this.jsplumbTargetOptions)
