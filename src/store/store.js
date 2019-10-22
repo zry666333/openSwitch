@@ -8,7 +8,8 @@ const state = {
   sfTableData: [],
   sfcTableData: [],
   rspTableData: [],
-  classiferTableData: []
+  classiferTableData: [],
+  tableData: []
 }
 
 const mutations = {
@@ -23,6 +24,10 @@ const mutations = {
   },
   receiveClassiferData (state, data) {
     state.classiferTableData = data.tableData
+  },
+  receiveTableData (state, data) {
+    state.tableData.push(data.tableData)
+    console.log('-tableData-', state.tableData)
   }
 }
 

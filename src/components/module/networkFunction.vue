@@ -13,7 +13,6 @@
             <FireWall></FireWall>
             </el-collapse-item>
           </el-col>
-
         <el-col :span="8">
           <el-collapse-item  title="桥" name="3">
           <Bridge></Bridge>

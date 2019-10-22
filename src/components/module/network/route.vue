@@ -34,7 +34,10 @@ export default {
   data () {
     return {
       url1: require('../../../assets/route.png'),
-      routeForm: {state: '路由器'},
+      routeForm: {
+        name: '路由器',
+        ico: 'el-icon-location'
+      },
       formLabelWidth: '80px',
       tableData: [],
       rule1: {
@@ -54,21 +57,23 @@ export default {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
           if (!isRepeat(copy, this.tableData, 'service_id')) {
-            let res
-            res = await this.$Http.newNetWork(copy, true)
-            if (res.Result === 'success') {
-              this.$message({
-                message: res.Message,
-                type: 'success'
-              })
-              this.tableData.push(copy)
-              this.$refs[formname].resetFields()
-            } else if (res.Result === 'false') {
-              this.$message({
-                message: res.Message,
-                type: 'error'
-              })
-            }
+            console.log('-copy-', copy)
+            this.$store.commit('receiveTableData', {tableData: copy})
+            // let res
+            // res = await this.$Http.newNetWork(copy, true)
+            // if (res.Result === 'success') {
+            //   this.$message({
+            //     message: res.Message,
+            //     type: 'success'
+            //   })
+            //   this.tableData.push(copy)
+            //   this.$refs[formname].resetFields()
+            // } else if (res.Result === 'false') {
+            //   this.$message({
+            //     message: res.Message,
+            //     type: 'error'
+            //   })
+            // }
           } else {
             this.$message({
               message: 'service_id已存在',

@@ -55,7 +55,10 @@ export default {
         value: '1',
         label: '丢弃'
       }],
-      fireWallForm: {state: '防火墙'},
+      fireWallForm: {
+        name: '防火墙',
+        ico: 'el-icon-menu'
+      },
       formLabelWidth: '80px',
       tableData: [],
       rule2: {
@@ -79,21 +82,22 @@ export default {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
           if (!isRepeat(copy, this.tableData, 'service_id')) {
-            let res
-            res = await this.$Http.newFireWall(copy, true)
-            if (res.Result === 'success') {
-              this.$message({
-                message: res.Message,
-                type: 'success'
-              })
-              this.tableData.push(copy)
-              this.$refs[formname].resetFields()
-            } else if (res.Result === 'false') {
-              this.$message({
-                message: res.Message,
-                type: 'error'
-              })
-            }
+            this.$store.commit('receiveTableData', {tableData: copy})
+            // let res
+            // res = await this.$Http.newFireWall(copy, true)
+            // if (res.Result === 'success') {
+            //   this.$message({
+            //     message: res.Message,
+            //     type: 'success'
+            //   })
+            //   this.tableData.push(copy)
+            //   this.$refs[formname].resetFields()
+            // } else if (res.Result === 'false') {
+            //   this.$message({
+            //     message: res.Message,
+            //     type: 'error'
+            //   })
+            // }
           } else {
             this.$message({
               message: 'service_id已存在',

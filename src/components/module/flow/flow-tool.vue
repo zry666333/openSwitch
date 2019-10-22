@@ -8,6 +8,7 @@
         <el-menu-item :index="item.index"  v-for="item in list" :key="item.index">
           <i :class="item.ico"></i>
           <span>{{item.name}}</span>
+          <span>&nbsp;service_id:{{item.service_id}}</span>
         </el-menu-item>
       </draggable>
     </el-menu>
@@ -29,33 +30,40 @@ export default {
   },
   data () {
     return {
-      nodeMenu: {},
-      list: [{
-        index: '-1',
-        ico: 'el-icon-user-solid',
-        name: '入端口',
-        service_id: '-1'
-      }, {
-        index: '1',
-        ico: 'el-icon-location',
-        name: '路由器',
-        service_id: ''
-      }, {
-        index: '2',
-        ico: 'el-icon-menu',
-        name: '防火墙',
-        service_id: ''
-      }, {
-        index: '3',
-        ico: 'el-icon-document',
-        name: '桥',
-        service_id: ''
-      }, {
-        index: '0',
-        ico: 'el-icon-goods',
-        name: '出端口',
-        service_id: '0'
-      }]
+      nodeMenu: {}
+      // list: [
+      //   {
+      //   index: '-1',
+      //   ico: 'el-icon-user-solid',
+      //   name: '入端口',
+      //   service_id: '-1'
+      // }, {
+      //   index: '1',
+      //   ico: 'el-icon-location',
+      //   name: '路由器',
+      //   service_id: ''
+      // }, {
+      //   index: '2',
+      //   ico: 'el-icon-menu',
+      //   name: '防火墙',
+      //   service_id: ''
+      // }, {
+      //   index: '3',
+      //   ico: 'el-icon-document',
+      //   name: '桥',
+      //   service_id: ''
+      // }, {
+      //   index: '0',
+      //   ico: 'el-icon-goods',
+      //   name: '出端口',
+      //   service_id: '0'
+      // }
+      // ]
+    }
+  },
+  computed: {
+    list () {
+      return this.$store.state.tableData
     }
   },
   methods: {

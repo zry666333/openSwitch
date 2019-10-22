@@ -6,7 +6,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './utils/pml-msgBox.js'
-import store from './store/vuex.js'
+import store from './store/store.js'
 import Http from './service/http'
 
 Vue.config.productionTip = false
