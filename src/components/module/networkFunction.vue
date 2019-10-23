@@ -14,7 +14,7 @@
             </el-collapse-item>
           </el-col>
         <el-col :span="8">
-          <el-collapse-item  title="桥" name="3">
+          <el-collapse-item  title="网桥" name="3">
           <Bridge></Bridge>
           </el-collapse-item>
         </el-col>

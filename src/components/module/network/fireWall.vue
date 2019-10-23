@@ -1,12 +1,9 @@
 <template>
   <div class="common_block">
-    <h4>防火墙</h4>
+    <!--<h4>防火墙</h4>-->
     <div class="demo-image">
       <div class="block">
-        <el-image
-          style="width: 80px; height: 80px"
-          :src="url2"
-        ></el-image>
+        <span class="iconfont icon-fanghuoqiang" style="font-size: 80px;"></span>
       </div>
     </div>
     <el-form :model="fireWallForm"  ref="fireWallForm" :rules="rule2">
@@ -47,7 +44,7 @@ export default {
   name: 'fireWall',
   data () {
     return {
-      url2: require('../../../assets/firewall.png'),
+      // url2: require('../../../assets/firewall.png'),
       options: [{
         value: '0',
         label: '通过'
@@ -57,7 +54,7 @@ export default {
       }],
       fireWallForm: {
         name: '防火墙',
-        ico: 'el-icon-menu'
+        ico: 'iconfont icon-fanghuoqiang'
       },
       formLabelWidth: '80px',
       tableData: [],

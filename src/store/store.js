@@ -19,13 +19,6 @@ const mutations = {
   },
   removeTableData (state, data) {
     state.tableData = state.tableData.filter(function (item) {
-      console.log('item', item)
-      console.log('service_id', data.tableData.service_id)
-      //
-      // this.data.lineList = this.data.lineList.filter(function (line) {
-      //   return line.from !== from && line.to !== to
-      // })
-
       return item.service_id !== data.tableData.service_id
     })
   }

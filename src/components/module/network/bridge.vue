@@ -1,12 +1,9 @@
 <template>
   <div class="common_block">
-    <h4>桥</h4>
+    <!--<h4>网桥</h4>-->
     <div class="demo-image">
       <div class="block">
-        <el-image
-          style="width: 80px; height: 80px"
-          :src="url3"
-        ></el-image>
+        <span class="iconfont icon-qiao" style="font-size: 80px"></span>
       </div>
     </div>
     <el-form :model="brigdeForm" ref="brigdeForm" :rules="rule3">
@@ -30,7 +27,7 @@ export default {
       url3: require('../../../assets/bridge.png'),
       brigdeForm: {
         name: '网桥',
-        ico: 'el-icon-document'
+        ico: 'iconfont icon-qiao'
       },
       formLabelWidth: '80px',
       tableData: [],

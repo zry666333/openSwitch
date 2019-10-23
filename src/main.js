@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './utils/pml-msgBox.js'
 import store from './store/store.js'
 import Http from './service/http'
+import './css/iconfont.css'
 
 Vue.config.productionTip = false
 

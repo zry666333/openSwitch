@@ -1,12 +1,13 @@
 <template>
   <div class="common_block">
-    <h4>路由器</h4>
+    <!--<h4>路由器</h4>-->
     <div class="demo-image">
       <div class="block">
-        <el-image
-          style="width: 80px; height: 80px"
-          :src="url1"
-        ></el-image>
+        <!--<el-image-->
+          <!--style="width: 80px; height: 80px"-->
+          <!--:src="url1"-->
+        <!--&gt;</el-image>-->
+        <span class="iconfont icon-luyouqi" style="font-size: 80px;"></span>
       </div>
     </div>
     <el-form :model="routeForm" ref="routeForm" :rules="rule1">
@@ -40,7 +41,7 @@ export default {
       url1: require('../../../assets/route.png'),
       routeForm: {
         name: '路由器',
-        ico: 'el-icon-location'
+        ico: 'iconfont icon-luyouqi'
       },
       formLabelWidth: '80px',
       tableData: [],

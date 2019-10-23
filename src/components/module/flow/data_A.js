@@ -6,7 +6,7 @@ var dataA = {
       name: '入端口',
       left: '26px',
       top: '250px',
-      ico: 'el-icon-user-solid',
+      ico: 'iconfont icon-rukou',
       service_id: '-1',
       show: true
     },
@@ -15,7 +15,7 @@ var dataA = {
       name: '出端口',
       left: '1400px',
       top: '250px',
-      ico: 'el-icon-goods',
+      ico: 'iconfont icon-chukou',
       service_id: '0',
       show: true
     }

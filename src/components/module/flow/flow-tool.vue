@@ -6,7 +6,8 @@
       class="el-menu-vertical-demo">
       <draggable v-model="list" @end="addNode" @choose="move">
         <el-menu-item :index="item.index"  v-for="item in list" :key="item.index">
-          <i :class="item.ico"></i>
+          <!--<i :class="item.ico"></i>-->
+          <span :class="item.ico"></span>
           <span>{{item.name}}</span>
           <span>&nbsp;service_id:{{item.service_id}}</span>
         </el-menu-item>
