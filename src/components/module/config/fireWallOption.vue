@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <h2 class="title">防火墙配置</h2>
-    <el-row  v-if="false">
+    <el-row>
       <div class="common_block">
         <el-form :model="form" ref="form" :rules="rule">
           <el-form-item label="规则名" :label-width="formLabelWidth" prop="rule_name">
@@ -109,10 +109,9 @@ export default {
   methods: {
     // 新建
     newfireWallOp (formname) {
-      let res
       this.$refs[formname].validate(async valid => {
         if (valid) {
-          // res = await this.$Http.newFireWallOp(this.form, true)
+          const res = await this.$Http.newFireWallOp(this.form, true)
           if (res.Result === 'success') {
             this.$message({
               message: res.Message,

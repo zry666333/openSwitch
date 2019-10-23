@@ -24,7 +24,6 @@ export default {
   name: 'bridge',
   data () {
     return {
-      url3: require('../../../assets/bridge.png'),
       brigdeForm: {
         name: '网桥',
         ico: 'iconfont icon-qiao'
@@ -47,28 +46,27 @@ export default {
         if (valid) {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          if (!isRepeat(copy, this.tableData, 'service_id')) {
+          if (!isRepeat(copy, this.$store.state.tableData, 'service_id')) {
             this.$store.commit('receiveTableData', {tableData: copy})
-          //   let res
-          //   res = await this.$Http.newBridge(copy, true)
-          //   if (res.Result === 'success') {
-          //     this.$message({
-          //       message: res.Message,
-          //       type: 'success'
-          //     })
-          //     this.tableData.push(copy)
-          //     this.$refs[formname].resetFields()
-          //   } else if (res.Result === 'false') {
-          //     this.$message({
-          //       message: res.Message,
-          //       type: 'error'
-          //     })
-          //   }
-          // } else {
-          //   this.$message({
-          //     message: 'service_id已存在',
-          //     type: 'warning'
-          //   })
+            let res = await this.$Http.newBridge(copy, true)
+            if (res.Result === 'success') {
+              this.$message({
+                message: res.Message,
+                type: 'success'
+              })
+              this.tableData.push(copy)
+              this.$refs[formname].resetFields()
+            } else if (res.Result === 'false') {
+              this.$message({
+                message: res.Message,
+                type: 'error'
+              })
+            }
+          } else {
+            this.$message({
+              message: 'service_id已存在',
+              type: 'warning'
+            })
           }
         } else {
           return false

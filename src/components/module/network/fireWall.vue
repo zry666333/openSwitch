@@ -10,16 +10,19 @@
       <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id" class="input">
         <el-input v-model.number="fireWallForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
       </el-form-item>
-      <el-form-item label="规则名" :label-width="formLabelWidth" prop="rule_name">
+      <el-form-item label="nexthop_id" :label-width="formLabelWidth" prop="nexthop_id" class="input">
+        <el-input v-model.number="fireWallForm.nexthop_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
+      </el-form-item>
+      <el-form-item label="规则名" v-if="false" :label-width="formLabelWidth" prop="rule_name">
         <el-input v-model="fireWallForm.rule_name" autocomplete="false" placeholder="例：rule1"></el-input>
       </el-form-item>
-      <el-form-item label="src_ip" :label-width="formLabelWidth" prop="src_ip" >
+      <el-form-item label="src_ip" v-if="false" :label-width="formLabelWidth" prop="src_ip" >
         <el-input v-model="fireWallForm.src_ip" autocomplete="false" placeholder="例：10.0.0.1"  @keyup.native="fireWallForm.src_ip=fireWallForm.src_ip.replace(/[^0-9\.]/g,'')"></el-input>
       </el-form-item>
-      <el-form-item label="depth" :label-width="formLabelWidth" prop="depth">
+      <el-form-item label="depth" v-if="false" :label-width="formLabelWidth" prop="depth">
         <el-input v-model.number="fireWallForm.depth" autocomplete="off" placeholder="输入1至32整数"></el-input>
       </el-form-item>
-      <el-form-item label="action" :label-width="formLabelWidth" prop="action">
+      <el-form-item label="action" v-if="false" :label-width="formLabelWidth" prop="action">
         <el-select v-model="fireWallForm.action" clearable placeholder="请选择" style="width: 100%;">
           <el-option
             v-for="item in options"
@@ -44,7 +47,6 @@ export default {
   name: 'fireWall',
   data () {
     return {
-      // url2: require('../../../assets/firewall.png'),
       options: [{
         value: '0',
         label: '通过'
@@ -78,23 +80,21 @@ export default {
         if (valid) {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          if (!isRepeat(copy, this.tableData, 'service_id')) {
+          if (!isRepeat(copy, this.$store.state.tableData, 'service_id')) {
             this.$store.commit('receiveTableData', {tableData: copy})
-            // let res
-            // res = await this.$Http.newFireWall(copy, true)
-            // if (res.Result === 'success') {
-            //   this.$message({
-            //     message: res.Message,
-            //     type: 'success'
-            //   })
-            //   this.tableData.push(copy)
-            //   this.$refs[formname].resetFields()
-            // } else if (res.Result === 'false') {
-            //   this.$message({
-            //     message: res.Message,
-            //     type: 'error'
-            //   })
-            // }
+            let res = await this.$Http.newFireWall(copy, true)
+            if (res.Result === 'success') {
+              this.$message({
+                message: res.Message,
+                type: 'success'
+              })
+              this.$refs[formname].resetFields()
+            } else if (res.Result === 'false') {
+              this.$message({
+                message: res.Message,
+                type: 'error'
+              })
+            }
           } else {
             this.$message({
               message: 'service_id已存在',

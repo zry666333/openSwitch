@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <h2 class="title">路由配置</h2>
-    <el-row v-if="false">
+    <el-row>
       <div class="common_block">
         <el-form :model="form"  ref="form" :rules="rule">
           <el-form-item label="dst_ip" :label-width="formLabelWidth" prop="dst_ip">
@@ -90,6 +90,20 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    async newRouteOp () {
+      const res = await this.$Http.newRouteOp(this.form, true)
+      if (res.Result === 'success') {
+        this.$message({
+          message: res.Message,
+          type: 'success'
+        })
+      } else if (res.Result === 'false') {
+        this.$message({
+          message: res.Message,
+          type: 'error'
+        })
+      }
     },
     async getRouteOp () {
       // const res = [{

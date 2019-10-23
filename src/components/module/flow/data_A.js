@@ -22,7 +22,9 @@ var dataA = {
   ],
   lineList: []
 }
-
+// const _this = this
 export function getData () {
+  // console.log('-vue-', _this)
+  // data = this.$store.state.tableData
   return dataA
 }

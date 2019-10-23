@@ -5,22 +5,52 @@
       <el-collapse v-model="activeNames">
           <el-col :span="8">
             <el-collapse-item  title="路由器"  name="1">
-            <Route></Route>
+            <Route @newRoute="newNetWork()"></Route>
             </el-collapse-item>
           </el-col>
           <el-col :span="8">
             <el-collapse-item   title="防火墙" name="2">
-            <FireWall></FireWall>
+            <FireWall  @newRouteOp="newNetWork()"></FireWall>
             </el-collapse-item>
           </el-col>
         <el-col :span="8">
-          <el-collapse-item  title="网桥" name="3">
-          <Bridge></Bridge>
+          <el-collapse-item  title="桥" name="3">
+          <Bridge  @newRouteOp="newNetWork()"></Bridge>
           </el-collapse-item>
         </el-col>
       </el-collapse>
     </el-row>
-    <el-row>
+    <el-row class="card">
+      <div class="card-header"  style="position: relative;">
+        <strong>已创建网络功能</strong>
+      </div>
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%">
+        <el-table-column
+          prop="name"
+          label="类型"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="service_id"
+          label="service_id"
+          min-width="110"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="nexthop_id"
+          label="nexthop_id">
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-row>
+    <el-row v-if="false">
       <Panel></Panel>
     </el-row>
   </div>
@@ -40,6 +70,16 @@ export default {
     FireWall,
     Bridge
   },
+  computed: {
+    tableData: {
+      get () {
+        return this.$store.state.tableData
+      },
+      set (value) {
+
+      }
+    }
+  },
   data () {
     return {
       activeNames: ['1', '2', '3']
@@ -55,7 +95,7 @@ export default {
             message: res.Message,
             type: 'success'
           })
-          this.tableData.splice(index, 1)
+          this.$store.state.tableData.splice(index, 1)
         } else if (res.Result === 'false') {
           this.$message({
             message: res.Message,
@@ -96,7 +136,7 @@ export default {
       border-right: 2px solid #eee;
       border-bottom: 2px solid #eee;
       border-radius: 10px;
-      height:500px;
+      height:400px;
       padding:6px 20px 6px 6px;
       text-align: center;
       position:relative;

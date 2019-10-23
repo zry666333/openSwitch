@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-row  ref="panel">
-      <el-col :span="3" ref="flowTool">
-        <FlowTool @addNode="addNode"></FlowTool>
-      </el-col>
-      <el-col :span="21">
+      <!--<el-col :span="3" ref="flowTool">-->
+        <!--<FlowTool @addNode="addNode"></FlowTool>-->
+      <!--</el-col>-->
+      <el-col :span="24">
         <!--<el-row>-->
           <!--<div>-->
             <!--<el-button type="primary" @click="dataInfo">流程信息</el-button>-->
