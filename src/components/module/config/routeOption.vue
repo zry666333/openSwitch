@@ -114,6 +114,7 @@ export default {
       //   'to_service_Id': '3'
       // }]
       let res = await this.$Http.getRouteOp()
+      // let res = await this.$get('/read_nf_router_conf/')
       this.tableData = res
     }
   },
