@@ -15,7 +15,6 @@ const state = {
 const mutations = {
   receiveTableData (state, data) {
     state.tableData.push(data.tableData)
-    console.log('-tableData-', state.tableData)
   },
   removeTableData (state, data) {
     state.tableData = state.tableData.filter(function (item) {

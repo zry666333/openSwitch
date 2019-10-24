@@ -2,19 +2,19 @@ var dataA = {
   name: '流程A',
   nodeList: [
     {
-      id: 'node-enter',
+      id: '-1',
       name: '入端口',
       left: '26px',
-      top: '250px',
+      top: '200px',
       ico: 'iconfont icon-rukou',
       service_id: '-1',
       show: true
     },
     {
-      id: 'node-exit',
+      id: '0',
       name: '出端口',
-      left: '1400px',
-      top: '250px',
+      left: '1600px',
+      top: '200px',
       ico: 'iconfont icon-chukou',
       service_id: '0',
       show: true
@@ -22,9 +22,7 @@ var dataA = {
   ],
   lineList: []
 }
-// const _this = this
+
 export function getData () {
-  // console.log('-vue-', _this)
-  // data = this.$store.state.tableData
   return dataA
 }

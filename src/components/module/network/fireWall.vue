@@ -81,13 +81,13 @@ export default {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
           if (!isRepeat(copy, this.$store.state.tableData, 'service_id')) {
-            this.$store.commit('receiveTableData', {tableData: copy})
             let res = await this.$Http.newFireWall(copy, true)
             if (res.Result === 'success') {
               this.$message({
                 message: res.Message,
                 type: 'success'
               })
+              this.$store.commit('receiveTableData', {tableData: copy})
               this.$refs[formname].resetFields()
             } else if (res.Result === 'false') {
               this.$message({

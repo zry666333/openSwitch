@@ -41,6 +41,7 @@ export default {
       flowInfoVisable: false,
       jsPlumb: null,
       index: 1,
+      number: 1,
       // 是否加载完毕
       loadEasyFlowFinish: false,
       data: {},
@@ -356,13 +357,120 @@ export default {
       this.$nextTick(() => {
         this.jsPlumbInit()
       })
+    },
+    async getRouteOp () {
+      // const res = [{
+      //   'dst_ip': '11.0.0.17',
+      //   'to_service_Id': '2'
+      // }, {
+      //   'dst_ip': '11.0.0.18',
+      //   'to_service_Id': '3'
+      // }]
+      let res = await this.$Http.getRouteOp()
+      return res
+    },
+    initData () {
+      // 路由器节点
+      var routeNode = []
+      // 防火墙节点
+      var fireWallNode = []
+      // 网桥节点
+      var bridgeNode = []
+      // 初始路由器高度
+      var routeTop = 100
+      // 初始防火墙高度
+      var fireWallTop = 200
+      // 初始网桥高度
+      var bridgeTop = 200
+      // 路由器连接防火墙/网桥
+      var linkRoute = []
+      // 防火墙连接网桥
+      var linkFireWall = []
+      // 读取初始化数据
+      let defaultData = {}
+      // 读取网络功能节点
+      var data = JSON.parse(JSON.stringify(this.$store.state.tableData))
+      routeNode = data.filter(item => {
+        return item.name === '路由器'
+      })
+      fireWallNode = data.filter(item => {
+        return item.name === '防火墙'
+      })
+      bridgeNode = data.filter(item => {
+        return item.name === '网桥'
+      })
+      routeNode.forEach((item) => {
+        item.left = '430px'
+        item.top = routeTop + 'px'
+        item.show = true
+        item.id = item.service_id + ''
+        this.number++
+        routeTop += 150
+      })
+      fireWallNode.forEach((item) => {
+        item.left = '840px'
+        item.top = fireWallTop + 'px'
+        item.show = true
+        item.id = item.service_id + ''
+        this.number++
+        fireWallTop += 150
+      })
+      bridgeNode.forEach((item) => {
+        item.left = '1200px'
+        item.top = bridgeTop + 'px'
+        item.show = true
+        item.id = item.service_id + ''
+        this.number++
+        bridgeTop += 150
+      })
+      const res = this.getRouteOp()
+      for (let i = 0; i < routeNode.length; i++) {
+        if (routeNode[i].name === '路由器' && routeNode[i].service_id === 1) {
+          linkRoute.push({
+            from: '-1',
+            to: routeNode[i].service_id + ''
+          })
+        }
+        for (let j = 0; j < res.length; j++) {
+          linkRoute.push({
+            from: routeNode[i].service_id + '',
+            to: res[j].to_service_Id + ''
+          })
+        }
+      }
+      for (let i = 0; i < fireWallNode.length; i++) {
+        for (let j = 0; j < bridgeNode.length; j++) {
+          if (bridgeNode[j].name === '网桥') {
+            linkFireWall.push({
+              from: bridgeNode[j].service_id + '',
+              to: '0'
+            })
+          }
+          if (fireWallNode[i].name === '防火墙' && bridgeNode[j].name === '网桥') {
+            if (fireWallNode[i].nexthop_id === bridgeNode[j].service_id) {
+              linkFireWall.push({
+                from: fireWallNode[i].service_id + '',
+                to: bridgeNode[j].service_id + ''
+              })
+            }
+          }
+        }
+      }
+      defaultData = JSON.parse(JSON.stringify(getData()))
+      defaultData.nodeList = [...defaultData.nodeList, ...data]
+      defaultData.lineList = [...linkRoute, ...linkFireWall]
+      return defaultData
     }
   },
   mounted () {
     this.jsPlumb = jsPlumb.getInstance()
+    const data = this.initData()
     this.$nextTick(() => {
-      this.dataLoad(getData())
+      this.dataLoad(data)
     })
+  },
+  destroyed () {
+    this.jsPlumb = null
   }
 }
 </script>
