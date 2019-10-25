@@ -98,6 +98,7 @@ export default {
           message: res.Message,
           type: 'success'
         })
+        this.getRouteOp()
       } else if (res.Result === 'false') {
         this.$message({
           message: res.Message,
