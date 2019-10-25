@@ -193,6 +193,7 @@ export default {
     // 加载流程图
     loadEasyFlow () {
       // 初始化节点
+      console.log('-data-', this.data)
       for (var i = 0; i < this.data.nodeList.length; i++) {
         let node = this.data.nodeList[i]
         // 设置源点，可以拖出线连接其他节点
@@ -360,16 +361,19 @@ export default {
     },
     async getRouteOp () {
       // const res = [{
-      //   'dst_ip': '11.0.0.17',
+      //   'dst_ip': '12.0.0.1',
       //   'to_service_Id': '2'
       // }, {
-      //   'dst_ip': '11.0.0.18',
+      //   'dst_ip': '30.0.0.1',
+      //   'to_service_Id': '2'
+      // }, {
+      //   'dst_ip': '40.0.0.1',
       //   'to_service_Id': '3'
       // }]
       let res = await this.$Http.getRouteOp()
       return res
     },
-    initData () {
+    async initData () {
       // 路由器节点
       var routeNode = []
       // 防火墙节点
@@ -423,7 +427,7 @@ export default {
         this.number++
         bridgeTop += 150
       })
-      const res = this.getRouteOp()
+      const res = await this.getRouteOp()
       for (let i = 0; i < routeNode.length; i++) {
         if (routeNode[i].name === '路由器' && routeNode[i].service_id === 1) {
           linkRoute.push({
@@ -459,14 +463,15 @@ export default {
       defaultData = JSON.parse(JSON.stringify(getData()))
       defaultData.nodeList = [...defaultData.nodeList, ...data]
       defaultData.lineList = [...linkRoute, ...linkFireWall]
-      return defaultData
+      console.log('-defaultData-', defaultData)
+      this.dataLoad(defaultData)
+      // return defaultData
     }
   },
   mounted () {
     this.jsPlumb = jsPlumb.getInstance()
-    const data = this.initData()
     this.$nextTick(() => {
-      this.dataLoad(data)
+      this.initData()
     })
   },
   destroyed () {

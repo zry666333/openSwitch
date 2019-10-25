@@ -1,8 +1,32 @@
 import axios from 'axios'
+import {Loading} from 'element-ui'
 
 const instance = axios.create({
   baseURL: 'http://localhost:8080/',
   timeout: 3000
+})
+
+let loading
+
+function startLoading () {
+  loading = Loading.service({
+    fullscreen: true,
+    lock: true,
+    text: '加载中',
+    background: 'rgba(0,0,0,.7)'
+  })
+}
+
+instance.interceptors.request.use(config => {
+  startLoading()
+  return config
+}, () => {})
+
+instance.interceptors.response.use(res => {
+  loading.close()
+  return res.data
+}, () => {
+  loading.close()
 })
 
 export function post (url, data, isFormData = false, config = {}) {
@@ -24,7 +48,7 @@ export function post (url, data, isFormData = false, config = {}) {
   })
 }
 
-export function get (url, params, isFormData, config = {}) {
+export function get (url, params, isFormData = false, config = {}) {
   let newParams = {}
   if (params && isFormData) {
     newParams = new FormData()
