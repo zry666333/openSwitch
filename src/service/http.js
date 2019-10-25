@@ -1,6 +1,7 @@
 import axios from 'axios'
 import service from './networkApi'
-import {Loading, Message} from 'element-ui'
+import {Loading} from 'element-ui'
+// import {Loading, Message} from 'element-ui'
 
 let loading
 
