@@ -1,6 +1,6 @@
 import axios from 'axios'
 import service from './networkApi'
-import {Loading} from 'element-ui'
+import {Loading, Message} from 'element-ui'
 
 let loading
 
@@ -71,9 +71,12 @@ instance.interceptors.response.use(res => {
   // 请求成功
   loading.close()
   return res.data
-}, () => {
+}, (err) => {
+  console.log('-err-', err)
+  console.log('=err=', err.response.data.Message)
   // 响应失败
   loading.close()
+  // Message.error(err.response.data.Message)
 })
 
 export default Http
