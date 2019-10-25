@@ -42,7 +42,7 @@ export default {
       get () {
         var nodeclass = {}
         nodeclass[this.node.ico] = true
-        nodeclass['flow-node-drag'] = true
+        // nodeclass['flow-node-drag'] = true
         return nodeclass
       }
     }

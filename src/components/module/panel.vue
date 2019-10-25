@@ -14,7 +14,7 @@
         <el-row ref="flowContainer">
           <div id="flowContainer" class="container" ref="flowContainer">
             <template v-for="node in data.nodeList" >
-              <FlowNode :id="node.id" :title="node.name" :datatype="node.service_id" v-show="node.show" :key="node.id" :node="node" @changeNodeSite="changeNodeSite" @editNode="editNode" @deleteNode="deleteNode"></FlowNode>
+              <FlowNode :id="node.id" :title="node.name" :datatype="node.service_id" v-show="node.show" :key="node.id" :node="node" @changeNodeSite="changeNodeSite" @editNode="editNode"></FlowNode>
             </template>
           </div>
         </el-row>
@@ -106,94 +106,93 @@ export default {
         // 初始化节点
         _this.loadEasyFlow()
         // 当点击了连接线
-        _this.jsPlumb.bind('click', function (conn, originalEvent) {
-          _this.$confirm('确定删除所点击的连接线吗？', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            _this.jsPlumb.deleteConnection(conn)
-          }).catch(() => {
-          })
-        })
+        // _this.jsPlumb.bind('click', function (conn, originalEvent) {
+        //   _this.$confirm('确定删除所点击的连接线吗？', '提示', {
+        //     confirmButtonText: '确定',
+        //     cancelButtonText: '取消',
+        //     type: 'warning'
+        //   }).then(() => {
+        //     _this.jsPlumb.deleteConnection(conn)
+        //   }).catch(() => {
+        //   })
+        // })
         // 连线
-        _this.jsPlumb.bind('connection', async function (evt) {
-          let fromId = evt.source.id
-          let toId = evt.target.id
-          const from = evt.source.innerText.split(/\n/g)
-          const to = evt.target.innerText.split(/\n/g)
-          if (evt.source.title === '防火墙' && evt.target.title === '网桥') {
-            // 格式化请求参数
-            const data = {
-              service_id: from[1].split(':')[1],
-              nexthop_id: to[1].split(':')[1]
-            }
-            let res = await _this.$Http.newFireWall(data, true)
-            if (res.Result === 'success') {
-              if (_this.loadEasyFlowFinish) {
-                _this.data.lineList.push({
-                  from: fromId,
-                  to: toId
-                })
-              }
-              this.$message({
-                message: res.Message,
-                type: 'success'
-              })
-            } else if (res.Result === 'false') {
-              this.$message({
-                message: res.Message,
-                type: 'error'
-              })
-            }
-          } else if (evt.source.title === '网桥' && evt.target.title === '出端口') {
-            // 格式化请求参数
-            const data = {
-              service_id: from[1].split(':')[1]
-            }
-            let res = await _this.$Http.newBridge(data, true)
-            if (res.Result === 'success') {
-              if (_this.loadEasyFlowFinish) {
-                _this.data.lineList.push({
-                  from: fromId,
-                  to: toId
-                })
-              }
-              this.$message({
-                message: res.Message,
-                type: 'success'
-              })
-            } else if (res.Result === 'false') {
-              this.$message({
-                message: res.Message,
-                type: 'error'
-              })
-            }
-          }
-        })
-        _this.jsPlumb.bind('beforeDrop', function (evt) {
-          let from = evt.sourceId
-          let to = evt.targetId
-          if (from === to) {
-            _this.$message.error('不能连接自己')
-            return false
-          }
-          // if (_this.hasLine(from, to)) {
-          //   _this.$message.error('不能重复连线')
-          //   return false
-          // }
-          return true
-        })
+        // _this.jsPlumb.bind('connection', async function (evt) {
+        //   let fromId = evt.source.id
+        //   let toId = evt.target.id
+        //   const from = evt.source.innerText.split(/\n/g)
+        //   const to = evt.target.innerText.split(/\n/g)
+        //   if (evt.source.title === '防火墙' && evt.target.title === '网桥') {
+        //     // 格式化请求参数
+        //     const data = {
+        //       service_id: from[1].split(':')[1],
+        //       nexthop_id: to[1].split(':')[1]
+        //     }
+        //     let res = await _this.$Http.newFireWall(data, true)
+        //     if (res.Result === 'success') {
+        //       if (_this.loadEasyFlowFinish) {
+        //         _this.data.lineList.push({
+        //           from: fromId,
+        //           to: toId
+        //         })
+        //       }
+        //       this.$message({
+        //         message: res.Message,
+        //         type: 'success'
+        //       })
+        //     } else if (res.Result === 'false') {
+        //       this.$message({
+        //         message: res.Message,
+        //         type: 'error'
+        //       })
+        //     }
+        //   } else if (evt.source.title === '网桥' && evt.target.title === '出端口') {
+        //     // 格式化请求参数
+        //     const data = {
+        //       service_id: from[1].split(':')[1]
+        //     }
+        //     let res = await _this.$Http.newBridge(data, true)
+        //     if (res.Result === 'success') {
+        //       if (_this.loadEasyFlowFinish) {
+        //         _this.data.lineList.push({
+        //           from: fromId,
+        //           to: toId
+        //         })
+        //       }
+        //       this.$message({
+        //         message: res.Message,
+        //         type: 'success'
+        //       })
+        //     } else if (res.Result === 'false') {
+        //       this.$message({
+        //         message: res.Message,
+        //         type: 'error'
+        //       })
+        //     }
+        //   }
+        // })
+        // _this.jsPlumb.bind('beforeDrop', function (evt) {
+        //   let from = evt.sourceId
+        //   let to = evt.targetId
+        //   if (from === to) {
+        //     _this.$message.error('不能连接自己')
+        //     return false
+        //   }
+        //   if (_this.hasLine(from, to)) {
+        //     _this.$message.error('不能重复连线')
+        //     return false
+        //   }
+        //   return true
+        // })
         // 删除连线
-        _this.jsPlumb.bind('connectionDetached', function (evt) {
-          _this.deleteLine(evt.sourceId, evt.targetId)
-        })
+        // _this.jsPlumb.bind('connectionDetached', function (evt) {
+        //   _this.deleteLine(evt.sourceId, evt.targetId)
+        // })
       })
     },
     // 加载流程图
     loadEasyFlow () {
       // 初始化节点
-      console.log('-data-', this.data)
       for (var i = 0; i < this.data.nodeList.length; i++) {
         let node = this.data.nodeList[i]
         // 设置源点，可以拖出线连接其他节点
@@ -216,83 +215,83 @@ export default {
         this.loadEasyFlowFinish = true
       })
     },
-    addNode (evt, nodeMenu, mousePosition) {
-      let width = this.$refs.flowTool.$el.clientWidth
-      if (evt.originalEvent.layerX > width) {
-        const index = this.index++
-        let nodeId = 'node' + index
-        var left = mousePosition.left
-        var top = mousePosition.top
-        if (mousePosition.left < 0) {
-          left = evt.originalEvent.layerX - width
-        }
-        if (mousePosition.top < 0) {
-          let network = document.getElementById('network')
-          top = evt.originalEvent.pageY - network.scrollHeight - 50 - 61 - 40 - 11 - 44 - 20 - 60
-        }
-        var node
-        if (nodeMenu.name === '网桥') {
-          node = {
-            id: 'node' + index,
-            name: nodeMenu.name,
-            service_id: nodeMenu.service_id,
-            left: left + 'px',
-            top: top + 'px',
-            ico: nodeMenu.ico,
-            show: true
-          }
-          this.data.nodeList.push(node)
-        } else if (nodeMenu.name === '防火墙') {
-          node = {
-            id: 'node' + index,
-            name: nodeMenu.name,
-            service_id: nodeMenu.service_id,
-            rule_name: nodeMenu.rule_name,
-            depth: nodeMenu.depth,
-            src_ip: nodeMenu.src_ip,
-            action: nodeMenu.action,
-            left: left + 'px',
-            top: top + 'px',
-            ico: nodeMenu.ico,
-            show: true
-          }
-          this.data.nodeList.push(node)
-        } else if (nodeMenu.name === '路由器') {
-          node = {
-            id: 'node' + index,
-            name: nodeMenu.name,
-            service_id: nodeMenu.service_id,
-            left: left + 'px',
-            top: top + 'px',
-            ico: nodeMenu.ico,
-            show: true,
-            list: nodeMenu.list
-          }
-          this.data.nodeList.push(node)
-          this.$nextTick(() => {
-            for (var i = 0; i < this.data.nodeList.length; i++) {
-              let item = this.data.nodeList[i]
-              for (var j = 0; j < node.list.length; j++) {
-                if (node.list[j].to_service_id === item.service_id) {
-                  this.jsPlumb.connect({
-                    source: node.id,
-                    target: this.data.nodeList[i].id
-                  })
-                }
-              }
-            }
-          })
-        }
-        this.$nextTick(function () {
-          this.jsPlumb.makeSource(nodeId, this.jsplumbSourceOptions)
-          this.jsPlumb.makeTarget(nodeId, this.jsplumbTargetOptions)
-          this.jsPlumb.draggable(nodeId, {
-            containment: 'parent'
-          })
-        })
-      }
-      this.$store.commit('removeTableData', {tableData: node})
-    },
+    // addNode (evt, nodeMenu, mousePosition) {
+    //   let width = this.$refs.flowTool.$el.clientWidth
+    //   if (evt.originalEvent.layerX > width) {
+    //     const index = this.index++
+    //     let nodeId = 'node' + index
+    //     var left = mousePosition.left
+    //     var top = mousePosition.top
+    //     if (mousePosition.left < 0) {
+    //       left = evt.originalEvent.layerX - width
+    //     }
+    //     if (mousePosition.top < 0) {
+    //       let network = document.getElementById('network')
+    //       top = evt.originalEvent.pageY - network.scrollHeight - 50 - 61 - 40 - 11 - 44 - 20 - 60
+    //     }
+    //     var node
+    //     if (nodeMenu.name === '网桥') {
+    //       node = {
+    //         id: 'node' + index,
+    //         name: nodeMenu.name,
+    //         service_id: nodeMenu.service_id,
+    //         left: left + 'px',
+    //         top: top + 'px',
+    //         ico: nodeMenu.ico,
+    //         show: true
+    //       }
+    //       this.data.nodeList.push(node)
+    //     } else if (nodeMenu.name === '防火墙') {
+    //       node = {
+    //         id: 'node' + index,
+    //         name: nodeMenu.name,
+    //         service_id: nodeMenu.service_id,
+    //         rule_name: nodeMenu.rule_name,
+    //         depth: nodeMenu.depth,
+    //         src_ip: nodeMenu.src_ip,
+    //         action: nodeMenu.action,
+    //         left: left + 'px',
+    //         top: top + 'px',
+    //         ico: nodeMenu.ico,
+    //         show: true
+    //       }
+    //       this.data.nodeList.push(node)
+    //     } else if (nodeMenu.name === '路由器') {
+    //       node = {
+    //         id: 'node' + index,
+    //         name: nodeMenu.name,
+    //         service_id: nodeMenu.service_id,
+    //         left: left + 'px',
+    //         top: top + 'px',
+    //         ico: nodeMenu.ico,
+    //         show: true,
+    //         list: nodeMenu.list
+    //       }
+    //       this.data.nodeList.push(node)
+    //       this.$nextTick(() => {
+    //         for (var i = 0; i < this.data.nodeList.length; i++) {
+    //           let item = this.data.nodeList[i]
+    //           for (var j = 0; j < node.list.length; j++) {
+    //             if (node.list[j].to_service_id === item.service_id) {
+    //               this.jsPlumb.connect({
+    //                 source: node.id,
+    //                 target: this.data.nodeList[i].id
+    //               })
+    //             }
+    //           }
+    //         }
+    //       })
+    //     }
+    //     this.$nextTick(function () {
+    //       this.jsPlumb.makeSource(nodeId, this.jsplumbSourceOptions)
+    //       this.jsPlumb.makeTarget(nodeId, this.jsplumbTargetOptions)
+    //       this.jsPlumb.draggable(nodeId, {
+    //         containment: 'parent'
+    //       })
+    //     })
+    //   }
+    //   this.$store.commit('removeTableData', {tableData: node})
+    // },
     // 改变节点位置
     changeNodeSite (data) {
       for (var i = 0; i < this.data.nodeList.length; i++) {
@@ -303,11 +302,11 @@ export default {
         }
       }
     },
-    deleteLine (from, to) {
-      this.data.lineList = this.data.lineList.filter(function (line) {
-        return line.from !== from && line.to !== to
-      })
-    },
+    // deleteLine (from, to) {
+    //   this.data.lineList = this.data.lineList.filter(function (line) {
+    //     return line.from !== from && line.to !== to
+    //   })
+    // },
     hasLine (from, to) {
       for (var i = 0; i < this.data.lineList.length; i++) {
         let line = this.data.lineList[i]
@@ -323,21 +322,21 @@ export default {
         this.$refs.nodeForm.init(this.data, nodeId)
       })
     },
-    deleteNode (nodeId) {
-      this.$confirm(`确定要删除节点${nodeId}?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.data.nodeList = this.data.nodeList.filter((node) => {
-          return node.id !== nodeId
-        })
-        this.$nextTick(function () {
-          this.jsPlumb.removeAllEndpoints(nodeId)
-        })
-      }).catch()
-      return true
-    },
+    // deleteNode (nodeId) {
+    //   this.$confirm(`确定要删除节点${nodeId}?`, '提示', {
+    //     confirmButtonText: '确定',
+    //     cancelButtonText: '取消',
+    //     type: 'warning'
+    //   }).then(() => {
+    //     this.data.nodeList = this.data.nodeList.filter((node) => {
+    //       return node.id !== nodeId
+    //     })
+    //     this.$nextTick(function () {
+    //       this.jsPlumb.removeAllEndpoints(nodeId)
+    //     })
+    //   }).catch()
+    //   return true
+    // },
     async linkFireWallAndBridge (data) {
       let res
       res = await this.$Http.newFireWall(data, true)
@@ -463,9 +462,7 @@ export default {
       defaultData = JSON.parse(JSON.stringify(getData()))
       defaultData.nodeList = [...defaultData.nodeList, ...data]
       defaultData.lineList = [...linkRoute, ...linkFireWall]
-      console.log('-defaultData-', defaultData)
       this.dataLoad(defaultData)
-      // return defaultData
     }
   },
   mounted () {

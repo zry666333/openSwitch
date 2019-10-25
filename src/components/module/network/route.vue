@@ -54,7 +54,6 @@ export default {
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
           if (!isRepeat(copy, this.$store.state.tableData, 'service_id')) {
             let res = await this.$Http.newNetWork(this.routeForm, true)
-            // let res = await this.$post('/nf_router/', this.routeForm, true)
             if (res.Result === 'success') {
               this.$message({
                 message: res.Message,
