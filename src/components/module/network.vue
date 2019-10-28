@@ -1,32 +1,38 @@
 <template>
-  <div class="networkClass">
-    <el-row :gutter="10">
-      <el-col :span="10">
-        <NetworkFunction></NetworkFunction>
+    <div>
+      <el-col :span="8">
+        <el-collapse-item  title="路由器"  name="1">
+          <Route></Route>
+        </el-collapse-item>
       </el-col>
-      <el-col :span="7"><RouteOption></RouteOption></el-col>
-      <el-col :span="7"><FireWall></FireWall></el-col>
-    </el-row>
-  </div>
+      <el-col :span="8">
+        <el-collapse-item   title="防火墙" name="2">
+          <FireWall></FireWall>
+        </el-collapse-item>
+      </el-col>
+      <el-col :span="8">
+        <el-collapse-item  title="网桥" name="3">
+          <Bridge></Bridge>
+        </el-collapse-item>
+      </el-col>
+    </div>
 </template>
 
 <script>
-import NetworkFunction from './networkFunction'
-import RouteOption from './routeOption'
-import FireWall from './fireWall'
+import Route from './network/route'
+import FireWall from './network/fireWall'
+import Bridge from './network/bridge'
 
 export default {
   name: 'network',
   components: {
-    NetworkFunction,
-    RouteOption,
-    FireWall
+    Route,
+    FireWall,
+    Bridge
   }
 }
 </script>
 
-<style lang="scss" scoped>
-  .grid-content {
-    background-color: red;
-  }
+<style scoped>
+
 </style>

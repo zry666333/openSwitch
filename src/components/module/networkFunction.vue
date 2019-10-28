@@ -1,76 +1,27 @@
 <template>
   <div class="main">
     <h2 class="title" >网络功能配置</h2>
-    <el-row :gutter="10">
-      <el-col :span="8">
-        <div class="common_block">
-          <h4>路由器</h4>
-          <div class="demo-image">
-            <div class="block">
-              <el-image
-                style="width: 80px; height: 80px"
-                :src="url1"
-              ></el-image>
-            </div>
-          </div>
-          <el-form :model="routeForm" ref="routeForm" :rules="rule1">
-            <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
-              <el-input type="number" v-model.number="routeForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
-            </el-form-item>
-            <el-form-item class="newBtn">
-              <el-button type="primary" @click="newNetworkFun('routeForm')">创建</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="common_block">
-          <h4>防火墙</h4>
-          <div class="demo-image">
-            <div class="block">
-              <el-image
-                style="width: 80px; height: 80px"
-                :src="url2"
-              ></el-image>
-            </div>
-          </div>
-          <el-form :model="fireWallForm"  ref="fireWallForm" :rules="rule2">
-            <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id" class="input">
-              <el-input v-model.number="fireWallForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
-            </el-form-item>
-            <el-form-item label="nexthop_id" :label-width="formLabelWidth" prop="nexthop_id" class="input">
-              <el-input v-model.number="fireWallForm.nexthop_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
-            </el-form-item>
-            <el-form-item class="newBtn">
-              <el-button type="primary" @click="newNetworkFun('fireWallForm')">创建</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="common_block">
-          <h4>桥</h4>
-          <div class="demo-image">
-            <div class="block">
-              <el-image
-                style="width: 80px; height: 80px"
-                :src="url3"
-              ></el-image>
-            </div>
-          </div>
-          <el-form :model="brigdeForm" ref="brigdeForm" :rules="rule3">
-            <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
-              <el-input v-model.number="brigdeForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
-            </el-form-item>
-            <el-form-item  class="newBtn">
-              <el-button type="primary" @click="newNetworkFun('brigdeForm')">创建</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </el-col>
+    <el-row :gutter="10" id="network">
+      <el-collapse v-model="activeNames">
+          <el-col :span="8">
+            <el-collapse-item  title="路由器"  name="1">
+            <Route @newRoute="newNetWork()"></Route>
+            </el-collapse-item>
+          </el-col>
+          <el-col :span="8">
+            <el-collapse-item   title="防火墙" name="2">
+            <FireWall  @newRouteOp="newNetWork()"></FireWall>
+            </el-collapse-item>
+          </el-col>
+        <el-col :span="8">
+          <el-collapse-item  title="桥" name="3">
+          <Bridge  @newRouteOp="newNetWork()"></Bridge>
+          </el-collapse-item>
+        </el-col>
+      </el-collapse>
     </el-row>
     <el-row class="card">
-      <div class="card-header">
+      <div class="card-header"  style="position: relative;">
         <strong>已创建网络功能</strong>
       </div>
       <el-table
@@ -78,113 +29,63 @@
         border
         style="width: 100%">
         <el-table-column
-          prop="state"
+          prop="name"
           label="类型"
-          width="180">
+        >
         </el-table-column>
         <el-table-column
           prop="service_id"
           label="service_id"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="nexthop_id"
-          label="nexthop_id"
-          width="180"
+          min-width="110"
         >
         </el-table-column>
         <el-table-column
-          prop="operation"
-          label="操作">
+          prop="nexthop_id"
+          label="nexthop_id">
+        </el-table-column>
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-row>
+    <el-row v-if="false">
+      <Panel></Panel>
+    </el-row>
   </div>
 </template>
 
 <script>
-import {isRepeat} from '../../utils/validate'
+import Panel from './panel'
+import Route from './network/route'
+import FireWall from './network/fireWall'
+import Bridge from './network/bridge'
 
 export default {
   name: 'networkFunction',
-  data () {
-    return {
-      url1: require('../../assets/route.png'),
-      url3: require('../../assets/bridge.png'),
-      url2: require('../../assets/firewall.png'),
-      routeForm: {state: '路由器'},
-      fireWallForm: {state: '防火墙'},
-      brigdeForm: {state: '网桥'},
-      formLabelWidth: '80px',
-      tableData: [],
-      rule1: {
-        service_id: [
-          {required: true, message: '请输入service_id', trigger: 'blur'},
-          { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
-        ]
+  components: {
+    Panel,
+    Route,
+    FireWall,
+    Bridge
+  },
+  computed: {
+    tableData: {
+      get () {
+        return this.$store.state.tableData
       },
-      rule2: {
-        service_id: [
-          {required: true, message: '请输入service_id', trigger: 'blur'},
-          { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
-        ],
-        nexthop_id: [
-          {required: true, message: '请输入nexthop_id', trigger: 'blur'},
-          { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
-        ]
-      },
-      rule3: {
-        service_id: [
-          {required: true, message: '请输入service_id', trigger: 'blur'},
-          { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
-        ]
+      set (value) {
+
       }
     }
   },
+  data () {
+    return {
+      activeNames: ['1', '2', '3']
+    }
+  },
   methods: {
-    newNetworkFun (formname) {
-      let copy
-      this.$refs[formname].validate(async valid => {
-        // 数据校验
-        if (valid) {
-          // 数据深拷贝
-          copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          if (!isRepeat(copy, this.tableData, 'service_id')) {
-            let res
-            if (copy.state === '路由器') {
-              res = await this.$Http.newNetWork(copy, true)
-            } else if (copy.state === '防火墙') {
-              res = await this.$Http.newFireWall(copy, true)
-            } else {
-              res = await this.$Http.newBridge(copy, true)
-            }
-            if (res.Result === 'success') {
-              this.$message({
-                message: res.Message,
-                type: 'success'
-              })
-              this.tableData.push(copy)
-              this.$refs[formname].resetFields()
-            } else if (res.Result === 'false') {
-              this.$message({
-                message: res.Message,
-                type: 'error'
-              })
-            }
-          } else {
-            this.$message({
-              message: 'service_id已存在',
-              type: 'warning'
-            })
-          }
-        } else {
-          return false
-        }
-      })
-    },
     deleteData (index, row) {
       let res
       this.$alertMsgBox().then(async () => {
@@ -194,7 +95,7 @@ export default {
             message: res.Message,
             type: 'success'
           })
-          this.tableData.splice(index, 1)
+          this.$store.state.tableData.splice(index, 1)
         } else if (res.Result === 'false') {
           this.$message({
             message: res.Message,
@@ -207,10 +108,6 @@ export default {
           message: '已取消删除'
         })
       })
-    },
-    // 校验service_id的唯一性
-    validate (serviceId, array) {
-
     }
   }
 }
@@ -239,7 +136,7 @@ export default {
       border-right: 2px solid #eee;
       border-bottom: 2px solid #eee;
       border-radius: 10px;
-      height:300px;
+      height:400px;
       padding:6px 20px 6px 6px;
       text-align: center;
       position:relative;
@@ -259,9 +156,6 @@ export default {
   .card{
     border: 1px solid rgba(0,0,0,.125);
     .card-header{
-      /*margin-top:30px;*/
-      /*margin-bottom: 20px;*/
-      /*font-weight: bold;*/
       padding:12px 20px;
       background: rgba(0,0,0,.03);
     }
@@ -283,9 +177,6 @@ export default {
     background-color: #428bca;
     border-color:#357ebd;
   }
-  /*.el-form-item__content{*/
-    /*margin-left:90px !important;*/
-  /*}*/
   .el-input__inner{
     padding:0 6px;
   }

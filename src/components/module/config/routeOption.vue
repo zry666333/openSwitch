@@ -68,28 +68,6 @@ export default {
     }
   },
   methods: {
-    newRouteOp (formname) {
-      this.$refs[formname].validate(async valid => {
-        if (valid) {
-          let res = await this.$Http.newRouteOp(this.form, true)
-          if (res.Result === 'success') {
-            this.$message({
-              message: res.Message,
-              type: 'success'
-            })
-            this.getRouteOp()
-            // this.tableData.push(this.form)
-          } else if (res.Result === 'false') {
-            this.$message({
-              message: res.Message,
-              type: 'error'
-            })
-          }
-        } else {
-          return false
-        }
-      })
-    },
     deleteData (index, row) {
       this.$alertMsgBox().then(async () => {
         let res = await this.$Http.deleteRouteOP(row, true)
@@ -113,6 +91,21 @@ export default {
         })
       })
     },
+    async newRouteOp () {
+      const res = await this.$Http.newRouteOp(this.form, true)
+      if (res.Result === 'success') {
+        this.$message({
+          message: res.Message,
+          type: 'success'
+        })
+        this.getRouteOp()
+      } else if (res.Result === 'false') {
+        this.$message({
+          message: res.Message,
+          type: 'error'
+        })
+      }
+    },
     async getRouteOp () {
       // const res = [{
       //   'dst_ip': '11.0.0.17',
@@ -122,6 +115,7 @@ export default {
       //   'to_service_Id': '3'
       // }]
       let res = await this.$Http.getRouteOp()
+      // let res = await this.$get('/read_nf_router_conf/')
       this.tableData = res
     }
   },

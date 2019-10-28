@@ -22,7 +22,7 @@ const NETWORK_API = {
   // 获取路由配置
   getRouteOp: {
     method: 'get',
-    url: '/read_nf_router_conf'
+    url: '/read_nf_router_conf/'
   },
   // 新建路由配置
   newRouteOp: {

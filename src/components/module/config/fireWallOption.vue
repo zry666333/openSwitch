@@ -109,10 +109,9 @@ export default {
   methods: {
     // 新建
     newfireWallOp (formname) {
-      let res
       this.$refs[formname].validate(async valid => {
         if (valid) {
-          // res = await this.$Http.newFireWallOp(this.form, true)
+          const res = await this.$Http.newFireWallOp(this.form, true)
           if (res.Result === 'success') {
             this.$message({
               message: res.Message,
