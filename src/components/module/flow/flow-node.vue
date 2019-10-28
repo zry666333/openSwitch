@@ -1,15 +1,21 @@
 <template>
   <div ref="node" :style="flowNodeContainer" @mouseenter="showDelete" @mouseleave="hideDelete" @mouseup="changeNodeSite">
-    <div class="flow-node-header" >
-      <i :class="nodeClass"></i><span>{{node.name}}</span>
-      <div v-show="mouseEnter" style="position:absolute;top:0px;right:0px;line-height:25px">
-        <a @click="editNode"><img src="../../../assets/edit.png"></a>&nbsp;
-        <a @click="deleteNode"><img src="../../../assets/delete.png"></a>&nbsp;
+    <el-tooltip class="item" effect="dark"  placement="right">
+      <div id="div" slot="content" v-html="tooltipContent"></div>
+      <div>
+        <span :class="node.ico" style="font-size: 40px;"></span>
+    <!--<div class="flow-node-header" >-->
+      <!--<i :class="nodeClass"></i><span>{{node.name}}</span>-->
+      <!--&lt;!&ndash;<div v-show="mouseEnter" style="position:absolute;top:0px;right:0px;line-height:25px">&ndash;&gt;-->
+        <!--&lt;!&ndash;<a @click="editNode"><img src="../../../assets/edit.png"></a>&nbsp;&ndash;&gt;-->
+        <!--&lt;!&ndash;<a @click="deleteNode"><img src="../../../assets/delete.png"></a>&nbsp;&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div class="flow-node-body">-->
+      <!--service_id:{{node.service_id}}-->
+    <!--</div>-->
       </div>
-    </div>
-    <div class="flow-node-body">
-      service_id:{{node.service_id}}
-    </div>
+    </el-tooltip>
   </div>
 </template>
 
@@ -18,6 +24,7 @@ export default {
   name: 'flow-node',
   data () {
     return {
+      tooltipContent: '',
       mouseEnter: false
     }
   },
@@ -30,7 +37,7 @@ export default {
       get () {
         return {
           position: 'absolute',
-          width: '200px',
+          // width: '200px',
           top: this.node.top,
           left: this.node.left,
           backgroundColor: 'transparent',
@@ -49,6 +56,10 @@ export default {
   },
   methods: {
     showDelete () {
+      this.tooltipContent = ''
+      for (let i in this.node) {
+        this.tooltipContent += `${i}:${this.node[i]}<br/>`
+      }
       this.mouseEnter = true
     },
     hideDelete () {
