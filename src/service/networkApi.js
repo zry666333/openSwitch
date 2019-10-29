@@ -68,6 +68,16 @@ const NETWORK_API = {
   deleteClassiferOp: {
     method: 'post',
     url: '/del_classifer/'
+  },
+  // AES加密创建接口
+  aesEncrypt: {
+    method: 'post',
+    url: '/aes_encrypt/'
+  },
+  // AES解密创建接口
+  aesDecrypt: {
+    method: 'post',
+    url: '/aes_decrypt/'
   }
 }
 export default NETWORK_API

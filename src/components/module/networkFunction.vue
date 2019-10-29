@@ -3,19 +3,29 @@
     <h2 class="title" >网络功能配置</h2>
     <el-row :gutter="10" id="network">
       <el-collapse v-model="activeNames">
-          <el-col :span="8">
+          <el-col :span="5">
             <el-collapse-item  title="路由器"  name="1">
-            <Route @newRoute="newNetWork()"></Route>
+            <Route></Route>
             </el-collapse-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="5">
             <el-collapse-item   title="防火墙" name="2">
-            <FireWall  @newRouteOp="newNetWork()"></FireWall>
+            <FireWall></FireWall>
             </el-collapse-item>
           </el-col>
-        <el-col :span="8">
-          <el-collapse-item  title="桥" name="3">
-          <Bridge  @newRouteOp="newNetWork()"></Bridge>
+        <el-col :span="5">
+          <el-collapse-item  title="AES加密" name="3">
+            <AESCode></AESCode>
+          </el-collapse-item>
+        </el-col>
+        <el-col :span="5">
+          <el-collapse-item  title="AES解密" name="4">
+            <AESDecode></AESDecode>
+          </el-collapse-item>
+        </el-col>
+        <el-col :span="4">
+          <el-collapse-item  title="桥" name="5">
+          <Bridge></Bridge>
           </el-collapse-item>
         </el-col>
       </el-collapse>
@@ -61,6 +71,8 @@ import Panel from './panel'
 import Route from './network/route'
 import FireWall from './network/fireWall'
 import Bridge from './network/bridge'
+import AESCode from './network/aesCode'
+import AESDecode from './network/aesDecode'
 
 export default {
   name: 'networkFunction',
@@ -68,7 +80,9 @@ export default {
     Panel,
     Route,
     FireWall,
-    Bridge
+    Bridge,
+    AESCode,
+    AESDecode
   },
   computed: {
     tableData: {
@@ -82,7 +96,7 @@ export default {
   },
   data () {
     return {
-      activeNames: ['1', '2', '3']
+      activeNames: ['1', '2', '3', '4', '5']
     }
   },
   methods: {
