@@ -170,11 +170,11 @@ export default {
       })
     },
     async getRouteOp () {
-      const res = [{
-        'dst_ip': '40.0.0.1',
-        'to_service_Id': '3'
-      }]
-      // let res = await this.$Http.getRouteOp()
+      // const res = [{
+      //   'dst_ip': '40.0.0.1',
+      //   'to_service_Id': '3'
+      // }]
+      let res = await this.$Http.getRouteOp()
       return res
     },
     classifyNode (data, str) {
