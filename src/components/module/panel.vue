@@ -296,7 +296,6 @@ export default {
       defaultData.nodeList = [...defaultData.nodeList, ...data]
       defaultData.lineList = [...linkRoute, ...linkBridge]
       this.dataLoad(defaultData)
-      console.log('==', defaultData)
     },
     link (list1, list2) {
       let arr = []
