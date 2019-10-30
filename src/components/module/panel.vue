@@ -5,7 +5,7 @@
         <el-row ref="flowContainer">
           <div id="flowContainer" class="container" ref="flowContainer">
             <template v-for="node in data.nodeList" >
-              <FlowNode :id="node.id" :title="node.name" :datatype="node.service_id" v-show="node.show" :key="node.id" :node="node" @changeNodeSite="changeNodeSite" @editNode="editNode"></FlowNode>
+              <FlowNode :id="node.id" :title="node.name" :datatype="node.service_id" v-show="node.show" :key="node.id" :node="node" @changeNodeSite="changeNodeSite"></FlowNode>
             </template>
           </div>
         </el-row>
@@ -33,8 +33,6 @@ export default {
       jsPlumb: null,
       index: 1,
       number: 1,
-      // 是否加载完毕
-      loadEasyFlowFinish: false,
       data: {},
       // 默认设置参数
       jsplumbSetting: {
@@ -119,9 +117,6 @@ export default {
           target: line.to
         }, this.jsplumbConnectOptions)
       }
-      this.$nextTick(function () {
-        this.loadEasyFlowFinish = true
-      })
     },
     // 改变节点位置
     changeNodeSite (data) {
@@ -141,12 +136,6 @@ export default {
         }
       }
       return false
-    },
-    editNode (nodeId) {
-      this.nodeFormVisible = true
-      this.$nextTick(function () {
-        this.$refs.nodeForm.init(this.data, nodeId)
-      })
     },
     async linkFireWallAndBridge (data) {
       let res
@@ -280,7 +269,7 @@ export default {
       })
       const res = await this.getRouteOp()
       for (let i = 0; i < routeNode.length; i++) {
-        if (routeNode[i].name === '路由器' && routeNode[i].service_id === 1) {
+        if (routeNode[i].name === '路由器' && routeNode[i].service_id === 1 + '') {
           linkRoute.push({
             from: '-1',
             to: routeNode[i].service_id + ''
