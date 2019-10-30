@@ -85,20 +85,20 @@ export default {
     AESCode,
     AESDecode
   },
-  // computed: {
-  //   tableData: {
-  //     get () {
-  //       return this.$store.state.tableData
-  //     },
-  //     set (value) {
-  //
-  //     }
-  //   }
-  // },
+  computed: {
+    tableData: {
+      get () {
+        return this.$store.state.tableData
+      },
+      set (value) {
+
+      }
+    }
+  },
   data () {
     return {
       activeNames: ['1', '2', '3', '4', '5'],
-      tableData: []
+      // tableData: []
     }
   },
   methods: {
