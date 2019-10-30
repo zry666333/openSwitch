@@ -33,6 +33,7 @@
     <el-row class="card">
       <div class="card-header"  style="position: relative;">
         <strong>已创建网络功能</strong>
+        <el-button style="position: absolute;right:5%;top:10%;bottom:10%;" size="small" @click="getNetwork ()">刷新</el-button>
       </div>
       <el-table
         :data="tableData"
@@ -84,19 +85,20 @@ export default {
     AESCode,
     AESDecode
   },
-  computed: {
-    tableData: {
-      get () {
-        return this.$store.state.tableData
-      },
-      set (value) {
-
-      }
-    }
-  },
+  // computed: {
+  //   tableData: {
+  //     get () {
+  //       return this.$store.state.tableData
+  //     },
+  //     set (value) {
+  //
+  //     }
+  //   }
+  // },
   data () {
     return {
-      activeNames: ['1', '2', '3', '4', '5']
+      activeNames: ['1', '2', '3', '4', '5'],
+      tableData: []
     }
   },
   methods: {
@@ -109,7 +111,8 @@ export default {
             message: res.Message,
             type: 'success'
           })
-          this.$store.state.tableData.splice(index, 1)
+          this.getNetwork()
+          // this.$store.state.tableData.splice(index, 1)
         } else if (res.Result === 'false') {
           this.$message({
             message: res.Message,
@@ -122,7 +125,15 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    // 查询
+    async getNetwork () {
+      const res = await this.$Http.readNf()
+      this.tableData = res
     }
+  },
+  mounted () {
+    this.getNetwork()
   }
 }
 </script>

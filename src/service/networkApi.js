@@ -19,6 +19,11 @@ const NETWORK_API = {
     method: 'post',
     url: '/del_nf/'
   },
+  // 网络功能查询接口
+  readNf: {
+    method: 'get',
+    url: '/read_nf/'
+  },
   // 获取路由配置
   getRouteOp: {
     method: 'get',

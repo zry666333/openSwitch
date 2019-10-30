@@ -14,8 +14,6 @@
             <el-input v-model.number="form.depth" autocomplete="off" placeholder="输入1至32整数"></el-input>
           </el-form-item>
           <el-form-item label="action" :label-width="formLabelWidth" prop="action">
-            <!--<el-input v-model="form.action" autocomplete="off" placeholder="例：20.0.0.1"></el-input>-->
-
             <el-select v-model="form.action" clearable placeholder="请选择" style="width: 100%;">
               <el-option
                 v-for="item in options"
@@ -141,7 +139,6 @@ export default {
             message: res.Message,
             type: 'success'
           })
-          // this.tableData.splice(index, 1)
           this.getFireWallOp()
         } else if (res.Result === 'false') {
           this.$message({
