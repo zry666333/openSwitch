@@ -88,14 +88,14 @@ export default {
   },
   methods: {
     jsPlumbInit () {
-      const _this = this
-      this.jsPlumb.ready(function () {
+      // const _this = this
+      this.jsPlumb.ready(() => {
         // 导入默认配置
-        _this.jsPlumb.importDefaults(_this.jsplumbSetting)
+        this.jsPlumb.importDefaults(this.jsplumbSetting)
         // 会使整个jsPlumb立即重绘
-        _this.jsPlumb.setSuspendDrawing(false, true)
+        this.jsPlumb.setSuspendDrawing(false, true)
         // 初始化节点
-        _this.loadEasyFlow()
+        this.loadEasyFlow()
       })
     },
     // 加载流程图
@@ -163,12 +163,12 @@ export default {
         })
       }
     },
-    dataLoad (data) {
-      this.data = data
-      this.$nextTick(() => {
-        this.jsPlumbInit()
-      })
-    },
+    // dataLoad (data) {
+    //   this.data = data
+    //   this.$nextTick(() => {
+    //     this.jsPlumbInit()
+    //   })
+    // },
     async getNetwork () {
       const res = await this.$Http.readNf()
       return res
@@ -324,7 +324,11 @@ export default {
       defaultData.nodeList = [...defaultData.nodeList, ...data]
       defaultData.lineList = [...linkRoute, ...linkBridge]
       console.log('defaultData', defaultData)
-      this.dataLoad(defaultData)
+      // this.dataLoad(defaultData)
+      this.data = defaultData
+      this.$nextTick(() => {
+        this.jsPlumbInit()
+      })
     },
     link (list1, list2) {
       let arr = []
