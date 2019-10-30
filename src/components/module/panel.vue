@@ -218,8 +218,10 @@ export default {
       // 读取初始化数据
       let defaultData = {}
       // 读取网络功能节点
-      const result = await this.getNetwork()
-      let data = JSON.parse(JSON.stringify(result))
+      // const result = await this.getNetwork()
+      // let data = JSON.parse(JSON.stringify(result))
+      let data = JSON.parse(JSON.stringify(this.$store.state.tableData))
+      // console.log('-data2-', data2)
       routeNode = this.classifyNode(data, '路由器')
       fireWallNode = this.classifyNode(data, '防火墙')
       bridgeNode = this.classifyNode(data, '网桥')

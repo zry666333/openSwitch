@@ -61,7 +61,7 @@ export default {
                 type: 'success'
               })
               this.$emit('newData1', '1')
-              // this.$store.commit('receiveTableData', {tableData: copy})
+              this.$store.commit('receiveTableData', {tableData: copy})
               this.$refs[formname].resetFields()
             } else if (res.Result === 'false') {
               this.$message({
