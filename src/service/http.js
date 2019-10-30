@@ -16,7 +16,7 @@ function startLoading () {
 
 // service 循环遍历输出不同的请求方法
 let instance = axios.create({
-  baseURL: 'http://localhost:8080/',
+  baseURL: 'http://10.117.62.61:8000/',
   timeout: 3000
 })
 

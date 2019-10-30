@@ -52,7 +52,7 @@ const NETWORK_API = {
   // 获取防火墙配置
   getFireWallOp: {
     method: 'get',
-    url: '/read_firewall_conf'
+    url: '/read_firewall_conf/'
   },
   // 新建ACL配置
   newAclOp: {

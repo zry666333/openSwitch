@@ -5,27 +5,27 @@
       <el-collapse v-model="activeNames">
           <el-col :span="5">
             <el-collapse-item  title="路由器"  name="1">
-            <Route></Route>
+            <Route @newData1="getNetwork"></Route>
             </el-collapse-item>
           </el-col>
           <el-col :span="5">
             <el-collapse-item   title="防火墙" name="2">
-            <FireWall></FireWall>
+            <FireWall @newData2="getNetwork"></FireWall>
             </el-collapse-item>
           </el-col>
         <el-col :span="5">
           <el-collapse-item  title="AES加密" name="3">
-            <AESCode></AESCode>
+            <AESCode @newData3="getNetwork"></AESCode>
           </el-collapse-item>
         </el-col>
         <el-col :span="5">
           <el-collapse-item  title="AES解密" name="4">
-            <AESDecode></AESDecode>
+            <AESDecode @newData4="getNetwork"></AESDecode>
           </el-collapse-item>
         </el-col>
         <el-col :span="4">
           <el-collapse-item  title="桥" name="5">
-          <Bridge></Bridge>
+          <Bridge @newData5="getNetwork"></Bridge>
           </el-collapse-item>
         </el-col>
       </el-collapse>
@@ -85,20 +85,20 @@ export default {
     AESCode,
     AESDecode
   },
-  computed: {
-    tableData: {
-      get () {
-        return this.$store.state.tableData
-      },
-      set (value) {
-
-      }
-    }
-  },
+  // computed: {
+  //   tableData: {
+  //     get () {
+  //       return this.$store.state.tableData
+  //     },
+  //     set (value) {
+  //
+  //     }
+  //   }
+  // },
   data () {
     return {
-      activeNames: ['1', '2', '3', '4', '5']
-      // tableData: []
+      activeNames: ['1', '2', '3', '4', '5'],
+      tableData: []
     }
   },
   methods: {

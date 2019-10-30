@@ -53,7 +53,8 @@ export default {
                 message: res.Message,
                 type: 'success'
               })
-              this.$store.commit('receiveTableData', {tableData: copy})
+              this.$emit('newData5', '5')
+              // this.$store.commit('receiveTableData', {tableData: copy})
               this.$refs[formname].resetFields()
             } else if (res.Result === 'false') {
               this.$message({
