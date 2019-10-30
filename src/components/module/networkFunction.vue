@@ -97,7 +97,7 @@ export default {
   },
   data () {
     return {
-      activeNames: ['1', '2', '3', '4', '5'],
+      activeNames: ['1', '2', '3', '4', '5']
       // tableData: []
     }
   },
