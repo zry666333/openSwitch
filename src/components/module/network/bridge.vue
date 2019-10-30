@@ -29,12 +29,19 @@ export default {
         ico: 'iconfont icon-qiao'
       },
       formLabelWidth: '80px',
-      tableData: [],
       rule3: {
         service_id: [
           {required: true, message: '请输入service_id', trigger: 'blur'},
           { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
         ]
+      }
+    }
+  },
+  props: {
+    tableData: {
+      type: Array,
+      default: function () {
+        return []
       }
     }
   },
@@ -46,7 +53,7 @@ export default {
         if (valid) {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          if (!isRepeat(copy, this.$store.state.tableData, 'service_id')) {
+          if (!isRepeat(copy, this.tableData, 'service_id')) {
             let res = await this.$Http.newBridge(copy, true)
             if (res.Result === 'success') {
               this.$message({
@@ -54,7 +61,6 @@ export default {
                 type: 'success'
               })
               this.$emit('newData5', '5')
-              this.$store.commit('receiveTableData', {tableData: copy})
               this.$refs[formname].resetFields()
             } else if (res.Result === 'false') {
               this.$message({

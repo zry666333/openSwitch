@@ -35,12 +35,19 @@ export default {
         ico: 'iconfont icon-luyouqi'
       },
       formLabelWidth: '80px',
-      tableData: [],
       rule1: {
         service_id: [
           {required: true, message: '请输入service_id', trigger: 'blur'},
           { type: 'number', max: 32, min: 0, message: '请输入小于32的整数', trigger: 'blur' }
         ]
+      }
+    }
+  },
+  props: {
+    tableData: {
+      type: Array,
+      default: function () {
+        return []
       }
     }
   },
@@ -52,7 +59,7 @@ export default {
         if (valid) {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          if (!isRepeat(copy, this.$store.state.tableData, 'service_id')) {
+          if (!isRepeat(copy, this.tableData, 'service_id')) {
             let res = await this.$Http.newNetWork(this.routeForm, true)
             // let res = await this.$post('/nf_router/', this.routeForm, true)
             if (res.Result === 'success') {
@@ -61,7 +68,6 @@ export default {
                 type: 'success'
               })
               this.$emit('newData1', '1')
-              this.$store.commit('receiveTableData', {tableData: copy})
               this.$refs[formname].resetFields()
             } else if (res.Result === 'false') {
               this.$message({
@@ -76,45 +82,6 @@ export default {
         }
       })
     }
-    // // 启动路由器
-    // async newNetworkFun (formname) {
-    //   let copy
-    //   // 数据深拷贝
-    //   copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-    //   if (!isRepeat(copy, this.tableData, 'service_id')) {
-    //     let res = await this.$Http.newNetWork(this.routeForm, true)
-    //     if (res.Result === 'success') {
-    //       this.$notify({
-    //         title: '成功',
-    //         message: res.Message,
-    //         type: 'success'
-    //       })
-    //       this.$store.commit('receiveTableData', {tableData: copy})
-    //     } else if (res.Result === 'false') {
-    //       this.$message({
-    //         message: res.Message,
-    //         type: 'error'
-    //       })
-    //       this.value = false
-    //     }
-    //     this.$refs[formname].resetFields()
-    //   } else {
-    //     this.$message({
-    //       message: 'service_id已存在',
-    //       type: 'warning'
-    //     })
-    //   }
-    // },
-    // // 获取路由配置
-    // async getRouteOp () {
-    //   let res = await this.$Http.getRouteOp()
-    //   if (res.Result === 'success') {
-    //     console.log('获取路由配置成功')
-    //   } else if (res.Result === 'false') {
-    //     console.log('获取路由配置失败')
-    //   }
-    //   return res
-    // }
   }
 }
 </script>

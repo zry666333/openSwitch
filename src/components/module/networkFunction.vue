@@ -5,27 +5,27 @@
       <el-collapse v-model="activeNames">
           <el-col :span="5">
             <el-collapse-item  title="路由器"  name="1">
-            <Route @newData1="getNetwork"></Route>
+            <Route @newData1="getNetwork" :tableData="tableData"></Route>
             </el-collapse-item>
           </el-col>
           <el-col :span="5">
             <el-collapse-item   title="防火墙" name="2">
-            <FireWall @newData2="getNetwork"></FireWall>
+            <FireWall @newData2="getNetwork" :tableData="tableData"></FireWall>
             </el-collapse-item>
           </el-col>
         <el-col :span="5">
           <el-collapse-item  title="AES加密" name="3">
-            <AESCode @newData3="getNetwork"></AESCode>
+            <AESCode @newData3="getNetwork" :tableData="tableData"></AESCode>
           </el-collapse-item>
         </el-col>
         <el-col :span="5">
           <el-collapse-item  title="AES解密" name="4">
-            <AESDecode @newData4="getNetwork"></AESDecode>
+            <AESDecode @newData4="getNetwork" :tableData="tableData"></AESDecode>
           </el-collapse-item>
         </el-col>
         <el-col :span="4">
           <el-collapse-item  title="桥" name="5">
-          <Bridge @newData5="getNetwork"></Bridge>
+          <Bridge @newData5="getNetwork" :tableData="tableData"></Bridge>
           </el-collapse-item>
         </el-col>
       </el-collapse>
