@@ -65,6 +65,7 @@ instance.interceptors.request.use(config => {
   return config
 }, () => {
   // 请求错误
+  loading.close()
 })
 
 // 响应拦截器
