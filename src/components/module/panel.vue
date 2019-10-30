@@ -171,7 +171,7 @@ export default {
     },
     async getNetwork () {
       const res = await this.$Http.readNf()
-      this.tableData = res
+      return res
     },
     async getRouteOp () {
       // const res = [{
@@ -218,10 +218,21 @@ export default {
       // 读取初始化数据
       let defaultData = {}
       // 读取网络功能节点
-      // const result = await this.getNetwork()
-      // let data = JSON.parse(JSON.stringify(result))
-      let data = JSON.parse(JSON.stringify(this.$store.state.tableData))
-      // console.log('-data2-', data2)
+      const result = await this.getNetwork()
+      let data = JSON.parse(JSON.stringify(result))
+      data.forEach(item => {
+        if (item.name === '路由器') {
+          item['ico'] = 'iconfont icon-luyouqi'
+        } else if (item.name === '防火墙') {
+          item['ico'] = 'iconfont icon-fanghuoqiang'
+        } else if (item.name === '网桥') {
+          item['ico'] = 'iconfont icon-qiao'
+        } else if (item.name === 'AES加密') {
+          item['ico'] = 'iconfont icon-jiami'
+        } else if (item.name === 'AES解密') {
+          item['ico'] = 'iconfont icon-jiemi'
+        }
+      })
       routeNode = this.classifyNode(data, '路由器')
       fireWallNode = this.classifyNode(data, '防火墙')
       bridgeNode = this.classifyNode(data, '网桥')
