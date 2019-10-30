@@ -169,6 +169,10 @@ export default {
         this.jsPlumbInit()
       })
     },
+    async getNetwork () {
+      const res = await this.$Http.readNf()
+      this.tableData = res
+    },
     async getRouteOp () {
       // const res = [{
       //   'dst_ip': '40.0.0.1',
@@ -214,7 +218,8 @@ export default {
       // 读取初始化数据
       let defaultData = {}
       // 读取网络功能节点
-      let data = JSON.parse(JSON.stringify(this.$store.state.tableData))
+      const result = await this.getNetwork()
+      let data = JSON.parse(JSON.stringify(result))
       routeNode = this.classifyNode(data, '路由器')
       fireWallNode = this.classifyNode(data, '防火墙')
       bridgeNode = this.classifyNode(data, '网桥')
