@@ -269,12 +269,12 @@ export default {
       })
       const res = await this.getRouteOp()
       for (let i = 0; i < routeNode.length; i++) {
-        if (routeNode[i].name === '路由器' && routeNode[i].service_id === 1 + '') {
-          linkRoute.push({
-            from: '-1',
-            to: routeNode[i].service_id + ''
-          })
-        }
+        // if (routeNode[i].name === '路由器' && routeNode[i].service_id === 1 + '') {
+        //   linkRoute.push({
+        //     from: '-1',
+        //     to: routeNode[i].service_id + ''
+        //   })
+        // }
         for (let j = 0; j < res.length; j++) {
           linkRoute.push({
             from: routeNode[i].service_id + '',
@@ -305,6 +305,12 @@ export default {
       let arr = []
       if (list1 instanceof Array && list2 instanceof Array) {
         for (let i = 0; i < list1.length; i++) {
+          if (list1[i].service_id === 1 + '') {
+            arr.push({
+              from: '-1',
+              to: list1[i].service_id + ''
+            })
+          }
           for (let j = 0; j < list2.length; j++) {
             if (list1[i].nexthop_id === list2[j].service_id) {
               arr.push({
