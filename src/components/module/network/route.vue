@@ -30,6 +30,7 @@ export default {
   name: 'route',
   data () {
     return {
+      validateTable: [],
       routeForm: {
         name: '路由器',
         ico: 'iconfont icon-luyouqi'
@@ -51,6 +52,14 @@ export default {
       }
     }
   },
+  watch: {
+    tableData: {
+      handle (newValue, oldValue) {
+        this.validateTable = newValue
+      },
+      deep: true
+    }
+  },
   methods: {
     // 创建路由器配置
     newRoute (formname) {
@@ -59,7 +68,7 @@ export default {
         if (valid) {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          if (!isRepeat(copy, this.tableData, 'service_id')) {
+          if (!isRepeat(copy, this.validateTable, 'service_id')) {
             let res = await this.$Http.newNetWork(this.routeForm, true)
             // let res = await this.$post('/nf_router/', this.routeForm, true)
             if (res.Result === 'success') {

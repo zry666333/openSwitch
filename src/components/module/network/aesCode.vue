@@ -27,6 +27,7 @@ export default {
   name: 'aesCode',
   data () {
     return {
+      validateTable: [],
       codeForm: {
         name: 'AES加密',
         ico: 'iconfont icon-jiami'
@@ -52,6 +53,14 @@ export default {
       }
     }
   },
+  watch: {
+    tableData: {
+      handle (newValue, oldValue) {
+        this.validateTable = newValue
+      },
+      deep: true
+    }
+  },
   methods: {
     newNetworkFun (formname) {
       let copy
@@ -60,7 +69,7 @@ export default {
         if (valid) {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          if (!isRepeat(copy, this.tableData, 'service_id')) {
+          if (!isRepeat(copy, this.validateTable, 'service_id')) {
             let res = await this.$Http.aesEncrypt(copy, true)
             if (res.Result === 'success') {
               this.$message({
