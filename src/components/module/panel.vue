@@ -282,8 +282,6 @@ export default {
           })
         }
       }
-      // 网桥连接防火墙
-      // linkBridge = this.link(fireWallNode, bridgeNode)
       linkBridge = this.link(data, data)
       for (let j = 0; j < bridgeNode.length; j++) {
         if (bridgeNode[j].name === '网桥') {
@@ -293,22 +291,6 @@ export default {
           })
         }
       }
-
-      // for (let i = 0; i < fireWallNode.length; i++) {
-      //   for (let j = 0; j < bridgeNode.length; j++) {
-      //     if (bridgeNode[j].name === '网桥') {
-      //       linkBridge.push({
-      //         from: bridgeNode[j].service_id + '',
-      //         to: '0'
-      //       })
-      //     }
-      //   }
-      // }
-      // 网桥连接aes加密
-      // linkBridgeAesCode = this.link(aescodeNode, bridgeNode)
-      // // 网桥连接aes解密
-      // linkBridgeAesDeCode = this.link(aesdecodeNode, bridgeNode)
-      // linkBridge = [...linkBridge, ...linkBridgeAesCode, ...linkBridgeAesDeCode]
       defaultData = JSON.parse(JSON.stringify(getData()))
       defaultData.nodeList = [...defaultData.nodeList, ...data]
       defaultData.lineList = [...linkRoute, ...linkBridge]

@@ -24,7 +24,7 @@
           </el-collapse-item>
         </el-col>
         <el-col :span="4">
-          <el-collapse-item  title="桥" name="5">
+          <el-collapse-item  title="网桥" name="5">
           <Bridge @newData5="getNetwork" :tableData="tableData"></Bridge>
           </el-collapse-item>
         </el-col>
