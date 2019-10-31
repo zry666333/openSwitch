@@ -48,7 +48,7 @@ export default {
   },
   watch: {
     tableData: {
-      handle (newValue, oldValue) {
+      handler (newValue, oldValue) {
         this.validateTable = newValue
       },
       deep: true
