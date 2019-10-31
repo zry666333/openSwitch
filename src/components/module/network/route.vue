@@ -10,12 +10,6 @@
       <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
         <el-input type="number" v-model.number="routeForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
       </el-form-item>
-      <el-form-item label="dst_ip" :label-width="formLabelWidth" prop="dst_ip" v-if="false">
-        <el-input type="number" v-model.number="routeForm.dst_ip" autocomplete="false" placeholder="输入1至32整数"></el-input>
-      </el-form-item>
-      <el-form-item label="to_service_id" :label-width="formLabelWidth" prop="to_service_id" v-if="false">
-        <el-input type="number" v-model.number="routeForm.to_service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
-      </el-form-item>
       <el-form-item class="newBtn">
         <el-button type="primary" @click="newRoute('routeForm')">创建</el-button>
       </el-form-item>
