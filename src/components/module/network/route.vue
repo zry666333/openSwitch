@@ -81,8 +81,8 @@ export default {
             this.$refs[formname].resetFields()
           } else {
             this.$message({
-              message: '存在重复的service_id',
-              type: 'warn'
+              message: 'service_id已存在',
+              type: 'warning'
             })
           }
         } else {
