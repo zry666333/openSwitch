@@ -3,7 +3,7 @@ export function isRepeat (obj, array, key) {
   let flag = false
   if (array instanceof Array && array.length !== 0) {
     array.forEach((item, index) => {
-      if (item[key] === obj[key]) {
+      if (item[key] === obj[key] + '') {
         flag = true
       }
     })

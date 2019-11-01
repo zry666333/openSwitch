@@ -79,6 +79,11 @@ export default {
               })
             }
             this.$refs[formname].resetFields()
+          } else {
+            this.$message({
+              message: '存在重复的service_id',
+              type: 'warn'
+            })
           }
         } else {
           return false
