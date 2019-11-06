@@ -1,69 +1,72 @@
 <template>
-  <div class="main">
-    <h2 class="title" >网络功能配置</h2>
-    <el-row :gutter="10" id="network">
-      <el-collapse v-model="activeNames">
-          <el-col :span="5">
-            <el-collapse-item  title="路由器"  name="1">
-            <Route @newData1="getNetwork" :tableData="tableData"></Route>
-            </el-collapse-item>
-          </el-col>
-          <el-col :span="5">
-            <el-collapse-item   title="防火墙" name="2">
-            <FireWall @newData2="getNetwork" :tableData="tableData"></FireWall>
-            </el-collapse-item>
-          </el-col>
-        <el-col :span="5">
-          <el-collapse-item  title="AES加密" name="3">
-            <AESCode @newData3="getNetwork" :tableData="tableData"></AESCode>
-          </el-collapse-item>
-        </el-col>
-        <el-col :span="5">
-          <el-collapse-item  title="AES解密" name="4">
-            <AESDecode @newData4="getNetwork" :tableData="tableData"></AESDecode>
-          </el-collapse-item>
-        </el-col>
-        <el-col :span="4">
-          <el-collapse-item  title="网桥" name="5">
-          <Bridge @newData5="getNetwork" :tableData="tableData"></Bridge>
-          </el-collapse-item>
-        </el-col>
-      </el-collapse>
+  <div>
+    <el-row :gutter="10">
+      <el-col :span="5">
+        <div class="main">
+          <h2 class="title" >网络功能配置</h2>
+          <el-collapse v-model="activeNames">
+              <el-collapse-item  title="路由器"  name="1">
+                <Route @newData1="getNetwork" :tableData="tableData"></Route>
+              </el-collapse-item>
+              <el-collapse-item   title="防火墙" name="2">
+                <FireWall @newData2="getNetwork" :tableData="tableData"></FireWall>
+              </el-collapse-item>
+              <el-collapse-item  title="AES加密" name="3">
+                <AESCode @newData3="getNetwork" :tableData="tableData"></AESCode>
+              </el-collapse-item>
+              <el-collapse-item  title="AES解密" name="4">
+                <AESDecode @newData4="getNetwork" :tableData="tableData"></AESDecode>
+              </el-collapse-item>
+              <el-collapse-item  title="网桥" name="5">
+                <Bridge @newData5="getNetwork" :tableData="tableData"></Bridge>
+              </el-collapse-item>
+          </el-collapse>
+          <el-button  type="text" @click="table = true">已创建网络功能</el-button>
+        </div>
+      </el-col>
+      <el-col :span="19">
+        <div class="main">
+          <el-row class="card">
+            <Panel></Panel>
+          </el-row>
+        </div>
+      </el-col>
     </el-row>
-    <el-row class="card">
-      <div class="card-header"  style="position: relative;">
-        <strong>已创建网络功能</strong>
-        <el-button style="position: absolute;right:5%;top:10%;bottom:10%;" size="small" @click="getNetwork ()">刷新</el-button>
-      </div>
-      <el-table
-        :data="tableData"
-        border
-        style="width: 100%">
-        <el-table-column
-          prop="name"
-          label="类型"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="service_id"
-          label="service_id"
-          min-width="110"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="nexthop_id"
-          label="nexthop_id">
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-row>
-    <el-row v-if="false">
-      <Panel></Panel>
-    </el-row>
+    <el-drawer
+      :visible.sync="table"
+      direction="rtl"
+      size="50%">
+      <el-row class="card">
+        <div class="card-header"  style="position: relative;">
+          <el-button style="position: absolute;right:5%;top:10%;bottom:10%;" size="small" @click="getNetwork ()">刷新</el-button>
+        </div>
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%">
+          <el-table-column
+            prop="name"
+            label="类型"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="service_id"
+            label="service_id"
+            min-width="110"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="nexthop_id"
+            label="nexthop_id">
+          </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button @click="deleteData(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-row>
+    </el-drawer>
   </div>
 </template>
 
@@ -97,6 +100,7 @@ export default {
   // },
   data () {
     return {
+      table: false,
       activeNames: ['1', '2', '3', '4', '5'],
       tableData: []
     }
@@ -161,7 +165,7 @@ export default {
       border-right: 2px solid #eee;
       border-bottom: 2px solid #eee;
       border-radius: 10px;
-      height:400px;
+      height:260px;
       padding:6px 20px 6px 6px;
       text-align: center;
       position:relative;
