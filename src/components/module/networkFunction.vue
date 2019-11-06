@@ -210,4 +210,7 @@ export default {
         margin-left:10px;
       }
     }
+  .el-menu-item.is-active,.el-menu-item:hover {
+      color:#409EFF!important;
+  }
 </style>
