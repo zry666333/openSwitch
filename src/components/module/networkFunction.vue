@@ -3,19 +3,29 @@
     <h2 class="title" >网络功能配置</h2>
     <el-row :gutter="10" id="network">
       <el-collapse v-model="activeNames">
-          <el-col :span="8">
+          <el-col :span="5">
             <el-collapse-item  title="路由器"  name="1">
-            <Route @newRoute="newNetWork()"></Route>
+            <Route @newData1="getNetwork" :tableData="tableData"></Route>
             </el-collapse-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="5">
             <el-collapse-item   title="防火墙" name="2">
-            <FireWall  @newRouteOp="newNetWork()"></FireWall>
+            <FireWall @newData2="getNetwork" :tableData="tableData"></FireWall>
             </el-collapse-item>
           </el-col>
-        <el-col :span="8">
-          <el-collapse-item  title="桥" name="3">
-          <Bridge  @newRouteOp="newNetWork()"></Bridge>
+        <el-col :span="5">
+          <el-collapse-item  title="AES加密" name="3">
+            <AESCode @newData3="getNetwork" :tableData="tableData"></AESCode>
+          </el-collapse-item>
+        </el-col>
+        <el-col :span="5">
+          <el-collapse-item  title="AES解密" name="4">
+            <AESDecode @newData4="getNetwork" :tableData="tableData"></AESDecode>
+          </el-collapse-item>
+        </el-col>
+        <el-col :span="4">
+          <el-collapse-item  title="网桥" name="5">
+          <Bridge @newData5="getNetwork" :tableData="tableData"></Bridge>
           </el-collapse-item>
         </el-col>
       </el-collapse>
@@ -23,6 +33,7 @@
     <el-row class="card">
       <div class="card-header"  style="position: relative;">
         <strong>已创建网络功能</strong>
+        <el-button style="position: absolute;right:5%;top:10%;bottom:10%;" size="small" @click="getNetwork ()">刷新</el-button>
       </div>
       <el-table
         :data="tableData"
@@ -61,6 +72,8 @@ import Panel from './panel'
 import Route from './network/route'
 import FireWall from './network/fireWall'
 import Bridge from './network/bridge'
+import AESCode from './network/aesCode'
+import AESDecode from './network/aesDecode'
 
 export default {
   name: 'networkFunction',
@@ -68,21 +81,24 @@ export default {
     Panel,
     Route,
     FireWall,
-    Bridge
+    Bridge,
+    AESCode,
+    AESDecode
   },
-  computed: {
-    tableData: {
-      get () {
-        return this.$store.state.tableData
-      },
-      set (value) {
-
-      }
-    }
-  },
+  // computed: {
+  //   tableData: {
+  //     get () {
+  //       return this.$store.state.tableData
+  //     },
+  //     set (value) {
+  //
+  //     }
+  //   }
+  // },
   data () {
     return {
-      activeNames: ['1', '2', '3']
+      activeNames: ['1', '2', '3', '4', '5'],
+      tableData: []
     }
   },
   methods: {
@@ -95,7 +111,8 @@ export default {
             message: res.Message,
             type: 'success'
           })
-          this.$store.state.tableData.splice(index, 1)
+          this.getNetwork()
+          // this.$store.state.tableData.splice(index, 1)
         } else if (res.Result === 'false') {
           this.$message({
             message: res.Message,
@@ -108,7 +125,15 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    // 查询
+    async getNetwork () {
+      const res = await this.$Http.readNf()
+      this.tableData = res
     }
+  },
+  mounted () {
+    this.getNetwork()
   }
 }
 </script>

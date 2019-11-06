@@ -19,6 +19,11 @@ const NETWORK_API = {
     method: 'post',
     url: '/del_nf/'
   },
+  // 网络功能查询接口
+  readNf: {
+    method: 'get',
+    url: '/read_nf/'
+  },
   // 获取路由配置
   getRouteOp: {
     method: 'get',
@@ -47,7 +52,7 @@ const NETWORK_API = {
   // 获取防火墙配置
   getFireWallOp: {
     method: 'get',
-    url: '/read_firewall_conf'
+    url: '/read_firewall_conf/'
   },
   // 新建ACL配置
   newAclOp: {
@@ -68,6 +73,16 @@ const NETWORK_API = {
   deleteClassiferOp: {
     method: 'post',
     url: '/del_classifer/'
+  },
+  // AES加密创建接口
+  aesEncrypt: {
+    method: 'post',
+    url: '/aes_encrypt/'
+  },
+  // AES解密创建接口
+  aesDecrypt: {
+    method: 'post',
+    url: '/aes_decrypt/'
   }
 }
 export default NETWORK_API

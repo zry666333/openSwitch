@@ -47,6 +47,7 @@ export default {
   name: 'fireWall',
   data () {
     return {
+      validateTable: [],
       options: [{
         value: '0',
         label: '通过'
@@ -59,7 +60,6 @@ export default {
         ico: 'iconfont icon-fanghuoqiang'
       },
       formLabelWidth: '80px',
-      tableData: [],
       rule2: {
         service_id: [
           {required: true, message: '请输入service_id', trigger: 'blur'},
@@ -72,6 +72,22 @@ export default {
       }
     }
   },
+  props: {
+    tableData: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
+  },
+  watch: {
+    tableData: {
+      handler (newValue, oldValue) {
+        this.validateTable = newValue
+      },
+      deep: true
+    }
+  },
   methods: {
     newNetworkFun (formname) {
       let copy
@@ -80,14 +96,14 @@ export default {
         if (valid) {
           // 数据深拷贝
           copy = JSON.parse(JSON.stringify(this.$refs[formname].model))
-          if (!isRepeat(copy, this.$store.state.tableData, 'service_id')) {
+          if (!isRepeat(copy, this.validateTable, 'service_id')) {
             let res = await this.$Http.newFireWall(copy, true)
             if (res.Result === 'success') {
               this.$message({
                 message: res.Message,
                 type: 'success'
               })
-              this.$store.commit('receiveTableData', {tableData: copy})
+              this.$emit('newData2', '2')
               this.$refs[formname].resetFields()
             } else if (res.Result === 'false') {
               this.$message({

@@ -3,13 +3,13 @@
     <h2 class="title">{{title}}</h2>
     <el-row>
       <div class="common_block">
-        <el-form>
-          <el-form-item :label="item.label" v-for="item in items" :label-width="formLabelWidth" :prop="item.value" :key="item.label">
-            <el-input v-model="item.value" autocomplete="false" placeholder="item.placeholder"></el-input>
+        <el-form :items="items" :form="form">
+          <el-form-item :label="item.label" v-for="item in items"  :label-width="formLabelWidth" :prop="item.value" :key="item.label">
+            <el-input v-model="form[item.value]" autocomplete="false"></el-input>
           </el-form-item>
           <el-form-item class="newBtn">
             <template slot-scope="scope">
-              <el-button type="primary" @click="newData('form')">创建</el-button>
+              <el-button type="primary" @click="newData(form)">创建</el-button>
             </template>
           </el-form-item>
         </el-form>
@@ -54,7 +54,6 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
       default: '标题'
     },
     formLabelWidth: {
@@ -76,27 +75,7 @@ export default {
   methods: {
     // 新建
     newData (formname) {
-      let res
-      this.$refs[formname].validate(async valid => {
-        if (valid) {
-          res = await this.$Http.newData(this.form, true)
-          if (res.Result === 'success') {
-            this.$message({
-              message: res.Message,
-              type: 'success'
-            })
-            this.getData()
-          } else if (res.Result === 'false') {
-            this.$message({
-              message: res.Message,
-              type: 'error'
-            })
-          }
-          this.form = {}
-        } else {
-          return false
-        }
-      })
+      console.log('-formname-', formname)
     },
     // 删除
     deleteData (index, row) {
@@ -129,7 +108,7 @@ export default {
     }
   },
   mounted () {
-    this.getData()
+    // this.getData()
   }
 }
 </script>
