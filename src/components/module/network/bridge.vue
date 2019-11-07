@@ -3,10 +3,9 @@
     <!--<h4>网桥</h4>-->
     <div class="demo-image">
       <div class="block">
-        <span class="iconfont icon-qiao" style="font-size: 80px"></span>
       </div>
     </div>
-    <el-form :model="brigdeForm" ref="brigdeForm" :rules="rule3">
+    <el-form :model="brigdeForm" ref="brigdeForm" :rules="rule3" label-position="top">
       <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id">
         <el-input v-model.number="brigdeForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
       </el-form-item>
@@ -92,6 +91,26 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  .common_block{
+    background-color: red;
+    height:157px;
+    position:relative;
+    padding:0px 20px 0px 20px;
+    .el-form-item{
+      /deep/ .el-form-item__label {
+        padding:0 0 0
+      }
+      .el-input{
+        margin-left:0px;
+      }
+    }
+    .newBtn{
+      .el-button {
+        width:96px;
+        height:35px;
+        background-color: #3996FF;
+      }
+    }
+  }
 </style>

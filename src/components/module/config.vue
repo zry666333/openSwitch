@@ -1,6 +1,6 @@
 <template>
     <div>
-      <el-row :gutter="10">
+      <el-row :gutter="20">
         <el-col :span="12">
           <RouteOption></RouteOption>
         </el-col>
@@ -24,6 +24,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

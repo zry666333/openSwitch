@@ -1,9 +1,10 @@
 <template>
-  <div class="main">
+  <div>
+    <div style="background-color: #ffffff;position: relative;">
     <h2 class="title">防火墙配置</h2>
-    <el-row>
+    <el-row style="height:444px;">
       <div class="common_block">
-        <el-form :model="form" ref="form" :rules="rule">
+        <el-form :model="form" ref="form" :rules="rule" label-position="top">
           <el-form-item label="规则名" :label-width="formLabelWidth" prop="rule_name">
             <el-input v-model="form.rule_name" autocomplete="false" placeholder="例：rule1"></el-input>
           </el-form-item>
@@ -32,14 +33,14 @@
         </el-form>
       </div>
     </el-row>
-    <el-row class="card">
+    </div>
+    <el-row class="card" style="background-color: #ffffff;margin-top: 15px;">
       <div class="card-header"  style="position: relative;">
         <strong>已添加的防火墙配置</strong>
-        <el-button style="position: absolute;right:5%;top:10%;bottom:10%;" size="small" @click="getFireWallOp ()">刷新</el-button>
+        <el-button style="position: absolute;right:2%;top:10%;bottom:10%;" size="small" @click="getFireWallOp ()">刷新</el-button>
       </div>
       <el-table
         :data="tableData"
-        border
         style="width: 100%">
         <el-table-column
           prop="rule_name"
@@ -185,9 +186,43 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .title{
+  .common_block{
+    padding-left:20px;
+    padding-right:30px;
+    border-top: 1px solid #D2D2D2;
     text-align: center;
-    margin-top: 20px;
-    margin-bottom:20px;
+    .title{
+      text-align:center;
+      padding:15px 0;
+    }
+    .el-form-item {
+      margin-bottom:0px;
+      /deep/ .el-form-item__label {
+        float: left;
+        display: inline-block;
+        padding: 0 0 0px;
+      }
+    }
+    .newBtn{
+      position: absolute;
+      bottom: 51px;
+      left: 50%;
+      right: 50%;
+      margin-left: -35px;
+      .el-button {
+        background-color: #3996FF;
+        width: 96px;
+        height: 35px;
+        /deep/ span {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  .title{
+    padding-left: 20px;
+    height: 56px;
+    line-height: 56px;
+    font-size: 16px;
   }
 </style>

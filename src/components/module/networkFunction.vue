@@ -1,37 +1,50 @@
 <template>
   <div>
-    <el-row :gutter="10">
-      <el-col :span="5">
-        <div class="main">
-          <h2 class="title" >网络功能配置</h2>
-          <el-collapse v-model="activeNames">
-              <el-collapse-item  title="路由器"  name="1">
-                <Route @newData1="getNetwork" :tableData="tableData"></Route>
-              </el-collapse-item>
-              <el-collapse-item   title="防火墙" name="2">
-                <FireWall @newData2="getNetwork" :tableData="tableData"></FireWall>
-              </el-collapse-item>
-              <el-collapse-item  title="AES加密" name="3">
-                <AESCode @newData3="getNetwork" :tableData="tableData"></AESCode>
-              </el-collapse-item>
-              <el-collapse-item  title="AES解密" name="4">
-                <AESDecode @newData4="getNetwork" :tableData="tableData"></AESDecode>
-              </el-collapse-item>
-              <el-collapse-item  title="网桥" name="5">
-                <Bridge @newData5="getNetwork" :tableData="tableData"></Bridge>
-              </el-collapse-item>
-          </el-collapse>
-          <el-button  type="text" @click="table = true">已创建网络功能</el-button>
-        </div>
-      </el-col>
-      <el-col :span="19">
-        <div class="main">
-          <el-row class="card">
-            <Panel></Panel>
-          </el-row>
-        </div>
-      </el-col>
-    </el-row>
+    <el-container>
+        <el-aside  style="height:500px;">
+            <div class="main" style="background-color: green">
+              <h2 class="title" >网络功能配置</h2>
+              <el-collapse v-model="activeNames">
+                <div style="position: relative;">
+                  <el-collapse-item  title="路由器"  name="1">
+                    <Route @newData1="getNetwork" :tableData="tableData"></Route>
+                  </el-collapse-item>
+                  <img src='../../assets/images/luyouqi.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
+                </div>
+                <div style="position: relative;">
+                  <el-collapse-item   title="防火墙" name="2">
+                    <FireWall @newData2="getNetwork" :tableData="tableData"></FireWall>
+                  </el-collapse-item>
+                  <img src='../../assets/images/fanghuoqiang.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
+                </div>
+                <div style="position: relative;">
+                  <el-collapse-item  title="AES加密" name="3">
+                    <AESCode @newData3="getNetwork" :tableData="tableData"></AESCode>
+                  </el-collapse-item>
+                  <img src='../../assets/images/jiami.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
+                </div>
+                <div style="position: relative;">
+                  <el-collapse-item  title="AES解密" name="4">
+                    <AESDecode @newData4="getNetwork" :tableData="tableData"></AESDecode>
+                  </el-collapse-item>
+                  <img src='../../assets/images/jiemi.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
+                </div>
+                <div style="position: relative;">
+                  <el-collapse-item  title="网桥" name="5">
+                    <Bridge @newData5="getNetwork" :tableData="tableData"></Bridge>
+                  </el-collapse-item>
+                  <img src='../../assets/images/wangqiao.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
+                </div>
+              </el-collapse>
+            </div>
+
+        </el-aside>
+      <div style="background-color:purple;">
+        <el-button  type="text" @click="table = true">已创建网络功能</el-button>
+      </div>
+      <el-container style="background-color:#ffffff;border: 1px solid #eee">
+        <Panel></Panel>
+      </el-container>
     <el-drawer
       :visible.sync="table"
       direction="rtl"
@@ -67,6 +80,7 @@
         </el-table>
       </el-row>
     </el-drawer>
+    </el-container>
   </div>
 </template>
 
@@ -88,16 +102,6 @@ export default {
     AESCode,
     AESDecode
   },
-  // computed: {
-  //   tableData: {
-  //     get () {
-  //       return this.$store.state.tableData
-  //     },
-  //     set (value) {
-  //
-  //     }
-  //   }
-  // },
   data () {
     return {
       table: false,
@@ -143,38 +147,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .title{
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom:20px;
-  }
-</style>
-
-<style lang="scss">
   .main{
+    line-height: 16px;
     background:#ffffff;
     border-left: 1px solid #eee;
     border-top: 1px solid #eee;
     border-right: 2px solid #eee;
     border-bottom: 2px solid #eee;
-    border-radius: 10px;
-    padding:10px;
-    .common_block{
-      border-left: 1px solid #eee;
-      border-top: 1px solid #eee;
-      border-right: 2px solid #eee;
-      border-bottom: 2px solid #eee;
-      border-radius: 10px;
-      height:260px;
-      padding:6px 20px 6px 6px;
-      text-align: center;
-      position:relative;
-      h4{
-        text-align:center;
-        padding:15px 0;
-      }
+    padding-bottom:10px;
+    .title {
+      height:58px;
+      background:yellow;
+      font-size:16px;
+      text-align: left;
+      line-height: 58px;
+      padding-left:20px;
     }
+    .el-collapse-item{
+      /deep/ .el-collapse-item__header{
+          margin-left:47px;
+        background-color: yellow;
+        }
+      /deep/ .el-collapse-item__content{
+        padding-bottom:0px !important;
+      }
+      }
   }
+</style>
+
+<style lang="scss">
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -191,13 +192,6 @@ export default {
     strong{
       font-weight: bolder;
     }
-  }
-  .newBtn{
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    right: 50%;
-    margin-left: -35px;
   }
   .el-row{
     margin-bottom: 20px;

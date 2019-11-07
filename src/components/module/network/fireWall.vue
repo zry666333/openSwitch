@@ -3,10 +3,9 @@
     <!--<h4>防火墙</h4>-->
     <div class="demo-image">
       <div class="block">
-        <span class="iconfont icon-fanghuoqiang" style="font-size: 80px;"></span>
       </div>
     </div>
-    <el-form :model="fireWallForm"  ref="fireWallForm" :rules="rule2">
+    <el-form :model="fireWallForm"  ref="fireWallForm" :rules="rule2" label-position="top">
       <el-form-item label="service_id" :label-width="formLabelWidth" prop="service_id" class="input">
         <el-input v-model.number="fireWallForm.service_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
       </el-form-item>
@@ -126,6 +125,28 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  .common_block{
+    background-color: red;
+    height:230px;
+    position:relative;
+    padding:0px 20px 0px 20px;
+    .el-form-item{
+      margin-bottom: 0px;
+      /deep/ .el-form-item__label {
+        padding:0 0 0
+      }
+      .el-input{
+        margin-left:0px;
+      }
+    }
+    .newBtn{
+      margin-top: 20px;
+      .el-button {
+        width:96px;
+        height:35px;
+        background-color: #3996FF;
+      }
+    }
+  }
 </style>

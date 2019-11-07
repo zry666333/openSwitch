@@ -4,7 +4,6 @@
     <el-menu-item index="networkFunction">网络功能</el-menu-item>
     <el-menu-item index="config">路由/防火墙配置</el-menu-item>
     <el-menu-item index="classifer">流分类</el-menu-item>
-    <el-menu-item index="panel">效果图</el-menu-item>
   </el-menu>
   <el-main>
     <component :is="currentView" ></component>

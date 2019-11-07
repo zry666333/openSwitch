@@ -207,8 +207,9 @@ export default {
       // 读取初始化数据
       let defaultData = {}
       // 读取网络功能节点
+      let data = []
       const result = await this.getNetwork()
-      let data = JSON.parse(JSON.stringify(result))
+      if (result !== undefined) data = JSON.parse(JSON.stringify(result))
       data.forEach(item => {
         if (item.name === '路由器') {
           item['ico'] = 'iconfont icon-luyouqi'

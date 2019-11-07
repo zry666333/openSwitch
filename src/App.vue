@@ -1,6 +1,8 @@
 <template>
   <div id="app" class="app">
-    <h2 class="title">PML网关安全系统</h2>
+    <h2 class="title" style="position:relative;line-height: 55px;">
+      <img src='./assets/images/logo.svg' style="position:absolute;left: 20px;top:50%;margin-top:-8px;"/>
+      PML网关安全系统</h2>
     <router-view/>
   </div>
 </template>
