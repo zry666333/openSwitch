@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-container>
-        <el-aside  style="height:500px;">
-            <div class="main" style="background-color: green">
+        <el-aside  style="height:650px;">
+            <div class="main" style="background-color: #ffffff">
               <h2 class="title" >网络功能配置</h2>
               <el-collapse v-model="activeNames">
                 <div style="position: relative;">
@@ -37,12 +37,8 @@
                 </div>
               </el-collapse>
             </div>
-
         </el-aside>
-      <div style="background-color:purple;">
-        <el-button  type="text" @click="table = true">已创建网络功能</el-button>
-      </div>
-      <el-container style="background-color:#ffffff;border: 1px solid #eee">
+      <el-container style="background-color:#ffffff;border: 1px solid #eee;height:740px;">
         <Panel></Panel>
       </el-container>
     <el-drawer
@@ -51,7 +47,8 @@
       size="50%">
       <el-row class="card">
         <div class="card-header"  style="position: relative;">
-          <el-button style="position: absolute;right:5%;top:10%;bottom:10%;" size="small" @click="getNetwork ()">刷新</el-button>
+          <strong>已添加网络功能</strong>
+          <el-button style="position: absolute;right:2%;top:10%;bottom:10%;" size="small" @click="getNetwork ()">刷新</el-button>
         </div>
         <el-table
           :data="tableData"
@@ -81,6 +78,12 @@
       </el-row>
     </el-drawer>
     </el-container>
+    <div class="netBtn"  @click="table = true">
+    <el-button  type="text">
+      已创建网络功能
+        <i class="el-collapse-item__arrow el-icon-arrow-right"></i>
+    </el-button>
+    </div>
   </div>
 </template>
 
@@ -157,7 +160,7 @@ export default {
     padding-bottom:10px;
     .title {
       height:58px;
-      background:yellow;
+      background:#ffffff;
       font-size:16px;
       text-align: left;
       line-height: 58px;
@@ -166,12 +169,30 @@ export default {
     .el-collapse-item{
       /deep/ .el-collapse-item__header{
           margin-left:47px;
-        background-color: yellow;
+        background-color: #ffffff;
         }
       /deep/ .el-collapse-item__content{
         padding-bottom:0px !important;
       }
       }
+  }
+  .netBtn {
+    background-color:#ffffff;
+    position:fixed;
+    width:280px;
+    height:63px;
+    bottom:60px;
+    left:20px;
+    line-height:63px;
+    .el-button {
+      padding-left:20px;
+      .el-collapse-item__arrow.el-icon-arrow-right {
+        position: absolute;
+        padding-right: 20px;
+        right: 0px;
+        padding-right: 0;
+      }
+    }
   }
 </style>
 

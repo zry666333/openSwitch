@@ -127,7 +127,7 @@ export default {
 
 <style lang="scss" scoped>
   .common_block{
-    background-color: red;
+    background-color: #ffffff;
     height:230px;
     position:relative;
     padding:0px 20px 0px 20px;

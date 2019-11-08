@@ -1,16 +1,13 @@
 <template>
-  <div>
-    <el-row  ref="panel">
-      <el-col :span="24">
-        <el-row ref="flowContainer">
+  <div id="panelClass">
+    <h2 class="header">服务功能链
+    <span class="generate" @click="generate()">生成</span>
+    </h2>
           <div id="flowContainer" class="container" ref="flowContainer">
             <template v-for="node in data.nodeList" >
               <FlowNode :id="node.id" :title="node.name" :datatype="node.service_id" v-show="node.show" :key="node.id" :node="node" @changeNodeSite="changeNodeSite"></FlowNode>
             </template>
           </div>
-        </el-row>
-      </el-col>
-    </el-row>
     <FlowInfo v-if="flowInfoVisable" ref="flowInfo" :data="data"></FlowInfo>
     <FlowNodeForm v-if="nodeFormVisible" ref="nodeForm"></FlowNodeForm>
   </div>
@@ -295,7 +292,6 @@ export default {
       defaultData = JSON.parse(JSON.stringify(getData()))
       defaultData.nodeList = [...defaultData.nodeList, ...data]
       defaultData.lineList = [...linkRoute, ...linkBridge]
-      console.log('defaultData', defaultData)
       // this.dataLoad(defaultData)
       this.data = defaultData
       this.$nextTick(() => {
@@ -323,14 +319,15 @@ export default {
         }
       }
       return arr
+    },
+    generate () {
+      this.jsPlumb = jsPlumb.getInstance()
+      this.$nextTick(() => {
+        this.initData()
+      })
     }
   },
-  mounted () {
-    this.jsPlumb = jsPlumb.getInstance()
-    this.$nextTick(() => {
-      this.initData()
-    })
-  },
+  mounted () {},
   destroyed () {
     this.jsPlumb = null
   }
@@ -338,9 +335,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#flowContainer{
-  height:700px;
-  position: relative;
-  background-color:rgb(251,251,251);
-}
+  #panelClass {
+    width: 100%;
+    height:100%;
+    .header {
+      position:relative;
+      .generate {
+        position:absolute;
+        font-size:12px;
+        color:#3FA2F7;
+        right:30px;
+        cursor:pointer;
+      }
+      width: 100%;
+      height:58px;
+      background-color:#ffffff;
+      padding-left:20px;
+      box-sizing: border-box;
+      line-height: 58px;
+      border-bottom:1px solid #EDEDED
+    }
+    #flowContainer{
+      width:100%;
+      position: relative;
+      background-color:rgb(251,251,251);
+    }
+  }
 </style>

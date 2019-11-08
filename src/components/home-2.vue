@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="z-index:100;">
   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
     <el-menu-item index="networkFunction">网络功能</el-menu-item>
     <el-menu-item index="config">路由/防火墙配置</el-menu-item>
