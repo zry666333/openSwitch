@@ -1,7 +1,8 @@
 <template>
   <div>
     <el-container>
-        <el-aside  style="height:650px;">
+      <el-container style="width:20%;" direction="vertical">
+        <el-aside  style="height:40%;width:90%;">
             <div class="main" style="background-color: #ffffff">
               <h2 class="title" >网络功能配置</h2>
               <el-collapse v-model="activeNames">
@@ -38,7 +39,16 @@
               </el-collapse>
             </div>
         </el-aside>
-      <el-container style="background-color:#ffffff;border: 1px solid #eee;height:740px;">
+          <el-footer class="netBtn">
+            <div @click="table = true" style="position: relative;">
+            <el-button  type="text">
+              已创建网络功能
+              <i class="el-collapse-item__arrow el-icon-arrow-right"></i>
+            </el-button>
+            </div>
+          </el-footer>
+      </el-container>
+      <el-container style="width:80%;background-color:#ffffff;border: 1px solid #eee;height:740px;">
         <Panel></Panel>
       </el-container>
     <el-drawer
@@ -78,12 +88,6 @@
       </el-row>
     </el-drawer>
     </el-container>
-    <div class="netBtn"  @click="table = true">
-    <el-button  type="text">
-      已创建网络功能
-        <i class="el-collapse-item__arrow el-icon-arrow-right"></i>
-    </el-button>
-    </div>
   </div>
 </template>
 
@@ -123,7 +127,6 @@ export default {
             type: 'success'
           })
           this.getNetwork()
-          // this.$store.state.tableData.splice(index, 1)
         } else if (res.Result === 'false') {
           this.$message({
             message: res.Message,
@@ -157,7 +160,7 @@ export default {
     border-top: 1px solid #eee;
     border-right: 2px solid #eee;
     border-bottom: 2px solid #eee;
-    padding-bottom:10px;
+    border-radius: 1px;
     .title {
       height:58px;
       background:#ffffff;
@@ -168,7 +171,8 @@ export default {
     }
     .el-collapse-item{
       /deep/ .el-collapse-item__header{
-          margin-left:47px;
+          font-size:16px;
+          margin-left:41px;
         background-color: #ffffff;
         }
       /deep/ .el-collapse-item__content{
@@ -178,19 +182,21 @@ export default {
   }
   .netBtn {
     background-color:#ffffff;
-    position:fixed;
-    width:280px;
+    width:90%;
+    margin-top:10%;
     height:63px;
-    bottom:60px;
-    left:20px;
     line-height:63px;
     .el-button {
+      color:black;
+      font-size:16px;
+      font-family: inherit;
       padding-left:20px;
+      /deep/ span{
+        font-weight: bold!important;
+      }
       .el-collapse-item__arrow.el-icon-arrow-right {
         position: absolute;
-        padding-right: 20px;
         right: 0px;
-        padding-right: 0;
       }
     }
   }

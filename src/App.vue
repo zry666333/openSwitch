@@ -16,21 +16,7 @@ export default {
 
 <style lang="scss">
 .app{
-  // font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  .title{
-    color: #4A4A4A;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 16px;
-    height:55px;
-    font-family: PingFangSC-Semibold;
-    background-color:#FFFFFF ;
-    line-height:50px;
-    padding-left:2%;
-    background: #FFFFFF;
-    box-shadow: 0 0 6px 0 #CFD2DD;
-  }
 }
 </style>

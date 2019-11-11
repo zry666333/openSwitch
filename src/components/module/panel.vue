@@ -1,7 +1,7 @@
 <template>
   <div id="panelClass">
     <h2 class="header">服务功能链
-    <span class="generate" @click="generate()">生成</span>
+    <span class="generate" @click="generate()"><img src='../../assets/images/generate.svg' style="" />生成</span>
     </h2>
           <div id="flowContainer" class="container" ref="flowContainer">
             <template v-for="node in data.nodeList" >

@@ -13,6 +13,16 @@ import {post, get} from './service/axios'
 
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+  if (store.getters.getUser || to.path === '/') {
+    next()
+  } else {
+    next({
+      path: '/'
+    })
+  }
+})
+
 Vue.use(ElementUI)
 
 // 把Http挂载到Vue实例上
