@@ -2,23 +2,24 @@
 <div>
   <div class="login">
     <h2 class="title">欢迎登录PML网关安全系统</h2>
-  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-    <el-form-item prop="pass">
-      <el-input type="username" placeholder="请输入用户名" v-model="ruleForm.pass" autocomplete="off">
+  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-form-item prop="username">
+      <el-input type="username" placeholder="请输入用户名" v-model="ruleForm.username" autocomplete="off">
       </el-input>
       <img class="user" src="../assets/images/user.svg" />
     </el-form-item>
-    <el-form-item prop="checkPass">
-      <el-input type="password" placeholder="请输入密码" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+    <el-form-item prop="password">
+      <el-input type="password" placeholder="请输入密码" v-model="ruleForm.password" autocomplete="off"></el-input>
       <img class="password" src="../assets/images/password.svg" />
     </el-form-item>
     <div class="mark">
-      <img class="checked" src="../assets/images/unchecked.svg">
+      <img class="checked" v-show="!ischecked" @click="check()" src="../assets/images/unchecked.svg">
+      <img class="checked" v-show="ischecked" @click="check()" src="../assets/images/checked.svg">
       <span class="rememberPwd">记住密码自动登录</span>
-      <span class="forgetPwd">忘记密码</span>
+      <!--<span class="forgetPwd">忘记密码</span>-->
     </div>
     <el-form-item>
-      <el-button type="primary" @click="login">登录</el-button>
+      <el-button type="primary" @click="login('ruleForm')">登录</el-button>
     </el-form-item>
   </el-form>
   </div>
@@ -32,56 +33,19 @@ import Particles from './particles/Particles'
 export default {
   name: 'login',
   data () {
-    var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('年龄不能为空'))
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error('请输入数字值'))
-        } else {
-          if (value < 18) {
-            callback(new Error('必须年满18岁'))
-          } else {
-            callback()
-          }
-        }
-      }, 1000)
-    }
-    var validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass')
-        }
-        callback()
-      }
-    }
-    var validatePass2 = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请再次输入密码'))
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error('两次输入密码不一致!'))
-      } else {
-        callback()
-      }
-    }
     return {
+      ischecked: false,
       ruleForm: {
         pass: '',
         checkPass: '',
         age: ''
       },
       rules: {
-        pass: [
-          { validator: validatePass, trigger: 'blur' }
+        username: [
+          {required: true, message: '请输入用户名', trigger: 'blur'}
         ],
-        checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
-        ],
-        age: [
-          { validator: checkAge, trigger: 'blur' }
+        password: [
+          {required: true, message: '请输入密码', trigger: 'blur'}
         ]
       }
     }
@@ -90,21 +54,22 @@ export default {
     Particles
   },
   methods: {
-    login () {
-      this.$router.push('/home')
-    },
-    submitForm (formName) {
+    login (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          if (this.ruleForm.userName === 'admin' && this.ruleForm.password === 'admin') {
+            this.$router.push('/home')
+            this.$refs[formName].resetFields()
+          } else {
+            this.$message.warning('用户名或密码错误')
+          }
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+    check () {
+      this.ischecked = !this.ischecked
     }
   }
 }
@@ -159,6 +124,7 @@ export default {
       margin-left:0px !important;
       margin-right:0px !important;
       /deep/ .el-input__inner {
+        color:#ffffff;
         padding-left:65px;
         border:2px solid #42E3E1;
         height:55px !important;
