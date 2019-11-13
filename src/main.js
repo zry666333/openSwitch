@@ -10,6 +10,7 @@ import store from './store/store.js'
 import Http from './service/http'
 import './css/iconfont.css'
 import {post, get} from './service/axios'
+import echarts from 'echarts'
 
 Vue.config.productionTip = false
 
@@ -31,6 +32,8 @@ Vue.prototype.$Http = Http
 Vue.prototype.$post = post
 
 Vue.prototype.$get = get
+
+Vue.prototype.$echarts = echarts
 
 let bus = new Vue()
 Vue.prototype.bus = bus

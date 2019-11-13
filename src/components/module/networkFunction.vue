@@ -1,9 +1,8 @@
 <template>
   <div>
     <el-container>
-      <el-container style="width:20%;" direction="vertical">
-        <el-aside  style="height:40%;width:90%;">
-            <div class="main" style="background-color: #ffffff">
+      <el-container style="width:20%;padding-right:1.3%;" direction="vertical">
+        <el-aside class="main">
               <h2 class="title" >网络功能配置</h2>
               <el-collapse v-model="activeNames">
                 <div style="position: relative;">
@@ -37,7 +36,6 @@
                   <img src='../../assets/images/wangqiao.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
                 </div>
               </el-collapse>
-            </div>
         </el-aside>
           <el-footer class="netBtn">
             <div @click="table = true" style="position: relative;">
@@ -48,7 +46,15 @@
             </div>
           </el-footer>
       </el-container>
-      <el-container style="width:80%;background-color:#ffffff;border: 1px solid #eee;height:740px;">
+      <el-container  direction="vertical" style="width:80%;background-color:#ffffff;border: 1px solid #eee;height:740px;">
+        <el-row>
+        <el-col :span="12">
+          <Chart  style="height:280px;"></Chart>
+        </el-col>
+          <el-col :span="12">
+            <Chart  style="height:280px;"></Chart>
+          </el-col>
+        </el-row>
         <Panel></Panel>
       </el-container>
     <el-drawer
@@ -98,6 +104,7 @@ import FireWall from './network/fireWall'
 import Bridge from './network/bridge'
 import AESCode from './network/aesCode'
 import AESDecode from './network/aesDecode'
+import Chart from './charts/chart'
 
 export default {
   name: 'networkFunction',
@@ -107,7 +114,8 @@ export default {
     FireWall,
     Bridge,
     AESCode,
-    AESDecode
+    AESDecode,
+    Chart
   },
   data () {
     return {
@@ -154,13 +162,9 @@ export default {
 
 <style lang="scss" scoped>
   .main{
-    line-height: 16px;
+    width:100% !important;
+    height:40%;
     background:#ffffff;
-    border-left: 1px solid #eee;
-    border-top: 1px solid #eee;
-    border-right: 2px solid #eee;
-    border-bottom: 2px solid #eee;
-    border-radius: 1px;
     .title {
       height:58px;
       background:#ffffff;
@@ -182,7 +186,6 @@ export default {
   }
   .netBtn {
     background-color:#ffffff;
-    width:90%;
     margin-top:10%;
     height:63px;
     line-height:63px;
@@ -237,5 +240,17 @@ export default {
     }
   .el-menu-item.is-active,.el-menu-item:hover {
       color:#409EFF!important;
+  }
+  //滚动条的宽度
+  ::-webkit-scrollbar {
+    width: 12px;
+    background: #FAFAFA;
+    border-radius: 6px;
+  }
+  //滚动条的滑块
+  ::-webkit-scrollbar-thumb {
+    opacity: 0.23;
+    background: #9B9B9B;
+    border-radius: 6px;
   }
 </style>
