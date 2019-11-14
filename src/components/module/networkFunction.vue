@@ -1,42 +1,44 @@
 <template>
   <div>
-    <el-container>
+    <el-container direction="horizontal">
       <el-container style="width:20%;padding-right:1.3%;" direction="vertical">
-        <el-aside class="main">
-              <h2 class="title" >网络功能配置</h2>
+        <div style="height:758px;" :style="img">
+        <h2 class="title">网络功能配置</h2>
+        <el-aside class="main" style="height: 90%;">
               <el-collapse v-model="activeNames">
                 <div style="position: relative;">
                   <el-collapse-item  title="路由器"  name="1">
                     <Route @newData1="getNetwork" :tableData="tableData"></Route>
                   </el-collapse-item>
-                  <img src='../../assets/images/luyouqi.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
+                  <img class="img" src='../../assets/images/luyouqi.svg'/>
                 </div>
                 <div style="position: relative;">
                   <el-collapse-item   title="防火墙" name="2">
                     <FireWall @newData2="getNetwork" :tableData="tableData"></FireWall>
                   </el-collapse-item>
-                  <img src='../../assets/images/fanghuoqiang.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
+                  <img src='../../assets/images/fanghuoqiang.svg' class="img" />
                 </div>
                 <div style="position: relative;">
                   <el-collapse-item  title="AES加密" name="3">
                     <AESCode @newData3="getNetwork" :tableData="tableData"></AESCode>
                   </el-collapse-item>
-                  <img src='../../assets/images/jiami.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
+                  <img src='../../assets/images/jiami.svg' class="img" />
                 </div>
                 <div style="position: relative;">
                   <el-collapse-item  title="AES解密" name="4">
                     <AESDecode @newData4="getNetwork" :tableData="tableData"></AESDecode>
                   </el-collapse-item>
-                  <img src='../../assets/images/jiemi.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
+                  <img src='../../assets/images/jiemi.svg' class="img" />
                 </div>
                 <div style="position: relative;">
                   <el-collapse-item  title="网桥" name="5">
                     <Bridge @newData5="getNetwork" :tableData="tableData"></Bridge>
                   </el-collapse-item>
-                  <img src='../../assets/images/wangqiao.svg' style="position:absolute;top:15px;left:23px;margin-left: -10px;" />
+                  <img src='../../assets/images/wangqiao.svg' class="img" />
                 </div>
               </el-collapse>
         </el-aside>
+        </div>
           <el-footer class="netBtn">
             <div @click="table = true" style="position: relative;">
             <el-button  type="text">
@@ -46,16 +48,16 @@
             </div>
           </el-footer>
       </el-container>
-      <el-container  direction="vertical" style="width:80%;background-color:#ffffff;border: 1px solid #eee;height:740px;">
+      <el-container  direction="vertical" style="width:80%;background-color:transparent;">
         <el-row>
         <el-col :span="12">
-          <Chart  style="height:280px;"></Chart>
+          <Chart :series="seriesInput" :legend="legend"  style="height:280px;" />
         </el-col>
           <el-col :span="12">
-            <Chart  style="height:280px;"></Chart>
+            <Chart :series="seriesOutput" :legend="legend"  style="height:280px;" />
           </el-col>
         </el-row>
-        <Panel></Panel>
+        <Panel :style="imgPanel" style="background-image: linear-gradient(0deg, rgba(45,101,119,0.36) 0%, #143542 35%);"></Panel>
       </el-container>
     <el-drawer
       :visible.sync="table"
@@ -119,9 +121,34 @@ export default {
   },
   data () {
     return {
+      img: {
+        backgroundImage: 'url(' + require('../../assets/images/aside.png') + ')',
+        backgroundSize: '100% 100%',
+        backgroundPosition: '0 0',
+        backgroundRepeat: 'no-repeat'
+      },
+      imgPanel: {
+        backgroundImage: 'url(' + require('../../assets/images/panel.png') + ')',
+        backgroundSize: '100% 100%',
+        backgroundPosition: '0 0',
+        backgroundRepeat: 'no-repeat'
+      },
       table: false,
       activeNames: ['1', '2', '3', '4', '5'],
-      tableData: []
+      tableData: [],
+      seriesInput: [],
+      seriesOutput: [],
+      legend: {
+        data: ['接收包速率', '发送包速率'],
+        right: 10,
+        top: 12,
+        textStyle: {
+          color: '#fff'
+        },
+        itemWidth: 12,
+        itemHeight: 10
+        // itemGap: 35
+      }
     }
   },
   methods: {
@@ -152,45 +179,122 @@ export default {
     async getNetwork () {
       const res = await this.$Http.readNf()
       this.tableData = res
+    },
+    initData () {
+      this.seriesInput = [{
+        name: '接收包速率',
+        type: 'bar',
+        barWidth: '15%',
+        itemStyle: {
+          normal: {
+            color: '#42E3E1'
+          }
+        },
+        data: [400, 400, 300, 300, 300, 400, 400, 400, 300]
+      },
+      {
+        name: '发送包速率',
+        type: 'bar',
+        barWidth: '15%',
+        itemStyle: {
+          normal: {
+            color: '#97FF91'
+          }
+
+        },
+        data: [800, 800, 800, 800, 800, 800, 800, 800, 800]
+      }]
+      this.seriesOutput = [{
+        name: '接收包速率',
+        type: 'bar',
+        barWidth: '15%',
+        itemStyle: {
+          normal: {
+            color: '#42E3E1'
+          }
+        },
+        data: [400, 400, 400, 400, 400, 400, 400, 400, 800]
+      },
+      {
+        name: '发送包速率',
+        type: 'bar',
+        barWidth: '15%',
+        itemStyle: {
+          normal: {
+            color: '#97FF91'
+          }
+
+        },
+        data: [500, 500, 500, 500, 500, 500, 500, 500, 900]
+      }]
     }
   },
   mounted () {
     this.getNetwork()
+    this.$nextTick(() => {
+      this.initData()
+    })
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  .img {
+    position:absolute;
+    top:15px;
+    left:23px;
+    margin-left: -10px;
+    width:20px;
+    height: 20px;
+  }
+  .title {
+    height:58px;
+    font-size:16px;
+    text-align: left;
+    line-height: 58px;
+    padding-left:20px;
+    color: #15F0FA;
+    letter-spacing: 0;
+  }
   .main{
     width:100% !important;
     height:40%;
-    background:#ffffff;
-    .title {
-      height:58px;
-      background:#ffffff;
-      font-size:16px;
-      text-align: left;
-      line-height: 58px;
-      padding-left:20px;
-    }
-    .el-collapse-item{
-      /deep/ .el-collapse-item__header{
+    background-image: linear-gradient(0deg, rgba(45,101,119,0.53) 0%, #143542 16%);
+   // border: 1px solid rgba(66,227,225,0.50);
+    /*box-shadow: 0 0 15px 0 rgba(51,208,229,0.43);*/
+    /*border-radius: 3px 3px 0 3px;*/
+    .el-collapse {
+      border-top:none;
+      border-bottom:none;
+      .el-collapse-item{
+        /deep/ .el-collapse-item__header{
+          border-top: 1px solid #4FDCFD;
+          border-bottom: 1px solid #4FDCFD;
           font-size:16px;
-          margin-left:41px;
-        background-color: #ffffff;
+          padding-left:41px;
+          color: #42E3E1;
+          letter-spacing: 0;
+          background: rgba(79,220,253,0.10);
         }
-      /deep/ .el-collapse-item__content{
-        padding-bottom:0px !important;
+        /deep/ .el-collapse-item__wrap {
+          background-color:transparent;
+          border-bottom:none;
+          .el-collapse-item__content{
+            padding-bottom:0px !important;
+          }
+        }
       }
-      }
+    }
   }
   .netBtn {
-    background-color:#ffffff;
+    background-image: linear-gradient(90deg, #42E3E1 0%, #33D0E5 100%);
+    border-radius: 1px;
     margin-top:10%;
     height:63px;
     line-height:63px;
     .el-button {
-      color:black;
+      color: #292E30;
+      letter-spacing: 0;
       font-size:16px;
       font-family: inherit;
       padding-left:20px;
@@ -244,13 +348,13 @@ export default {
   //滚动条的宽度
   ::-webkit-scrollbar {
     width: 12px;
-    background: #FAFAFA;
+    opacity: 0.23;
+    background: rgba(169,219,219,0.57);
     border-radius: 6px;
   }
   //滚动条的滑块
   ::-webkit-scrollbar-thumb {
-    opacity: 0.23;
-    background: #9B9B9B;
+    background: rgba(66,227,225,0.27);
     border-radius: 6px;
   }
 </style>

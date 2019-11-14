@@ -3,7 +3,8 @@
     <el-tooltip class="item" effect="dark"  placement="right">
       <div id="div" slot="content" v-html="tooltipContent"></div>
       <div>
-        <span :class="node.ico" style="font-size: 40px;"></span>
+        <!--<span :class="node.ico" style="font-size: 40px;"></span>-->
+        <img :src="require('../../../assets/images/' + node.ico)" style="width:30px;height: 30px;" />
     <!--<div class="flow-node-header" >-->
       <!--<i :class="nodeClass"></i><span>{{node.name}}</span>-->
       <!--&lt;!&ndash;<div v-show="mouseEnter" style="position:absolute;top:0px;right:0px;line-height:25px">&ndash;&gt;-->

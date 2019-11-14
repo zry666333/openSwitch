@@ -209,15 +209,15 @@ export default {
       if (result !== undefined) data = JSON.parse(JSON.stringify(result))
       data.forEach(item => {
         if (item.name === '路由器') {
-          item['ico'] = 'iconfont icon-luyouqi'
+          item['ico'] = 'luyouqi.svg'
         } else if (item.name === '防火墙') {
-          item['ico'] = 'iconfont icon-fanghuoqiang'
+          item['ico'] = 'fanghuoqiang.svg'
         } else if (item.name === '网桥') {
-          item['ico'] = 'iconfont icon-qiao'
+          item['ico'] = 'wangqiao.svg'
         } else if (item.name === 'AES加密') {
-          item['ico'] = 'iconfont icon-jiami'
+          item['ico'] = 'jiami.svg'
         } else if (item.name === 'AES解密') {
-          item['ico'] = 'iconfont icon-jiemi'
+          item['ico'] = 'jiemi.svg'
         }
       })
       routeNode = this.classifyNode(data, '路由器')
@@ -339,21 +339,23 @@ export default {
     width: 100%;
     height:100%;
     .header {
+      background: rgba(8,74,100,0.45);
       position:relative;
       .generate {
         position:absolute;
         font-size:12px;
-        color:#3FA2F7;
+        color:#50E3C2 ;
         right:30px;
         cursor:pointer;
       }
       width: 100%;
       height:58px;
-      background-color:#ffffff;
       padding-left:20px;
       box-sizing: border-box;
       line-height: 58px;
-      border-bottom:1px solid #EDEDED
+      font-size: 16px;
+      color: #42E3E1;
+      letter-spacing: 0;
     }
     #flowContainer{
       width:100%;

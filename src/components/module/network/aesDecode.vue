@@ -13,7 +13,7 @@
         <el-input v-model.number="decodeForm.nexthop_id" autocomplete="false" placeholder="输入1至32整数"></el-input>
       </el-form-item>
       <el-form-item class="newBtn">
-        <el-button type="primary" @click="newNetworkFun('decodeForm')">创建</el-button>
+        <el-button type="primary" @click="newNetworkFun('decodeForm')">创&nbsp;建</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -100,17 +100,27 @@ export default {
 
 <style lang="scss" scoped>
   .common_block{
-    background-color: #ffffff;
+    background-color: transparent;
     height:230px;
     position:relative;
     padding:0px 20px 0px 20px;
     .el-form-item{
       margin-bottom: 0px;
       /deep/ .el-form-item__label {
-        padding:0 0 0
+        padding:0 0 0;
+        font-size: 14px;
+        color: #42E3E1;
+        letter-spacing: 0;
       }
       .el-input{
         margin-left:0px;
+        /deep/ .el-input__inner {
+          background: rgba(66,227,225,0.10) !important;
+          border: 1px solid #42E3E1;
+          border-radius: 4px;
+          font-size: 14px;
+          color: #93D4D5 !important;
+        }
       }
     }
     .newBtn{
@@ -118,7 +128,10 @@ export default {
       .el-button {
         width:96px;
         height:35px;
-        background-color: #3996FF;
+        text-align: center;
+        background-image: linear-gradient(90deg, #42E3E1 0%, #33D0E5 100%);
+        border-radius: 3px;
+        color:#000;
       }
     }
   }

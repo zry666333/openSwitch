@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="15px" height="14px" viewBox="0 0 15 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="35px" height="38px" viewBox="0 0 35 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
     <title>分组 5</title>
     <desc>Created with Sketch.</desc>
-    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="01" transform="translate(-1546.000000, -201.000000)">
-            <g id="分组-9" transform="translate(19.000000, 124.500000)">
-                <g id="分组-5" transform="translate(1527.000000, 76.500000)">
-                    <rect id="矩形" fill="#4A4A4A" x="9.64571193" y="1.15463195e-14" width="4.74393454" height="3.95327878" rx="0.65"></rect>
-                    <rect id="矩形-copy-2" fill="#4A4A4A" x="-5.41788836e-14" y="10" width="4.74393454" height="3.95327878" rx="0.65"></rect>
-                    <path d="M12.1644513,1.97663939 L1.6318131,1.97663939 C1.07952835,1.97663939 0.631813102,2.42435464 0.631813102,2.97663939 L0.631813102,5.71348491 C0.631813102,6.26576966 1.07952835,6.71348491 1.6318131,6.71348491 L12.7934083,6.71348491 C13.3456931,6.71348491 13.7934083,7.16120016 13.7934083,7.71348491 L13.7934083,10.9766394 C13.7934083,11.5289241 13.3456931,11.9766394 12.7934083,11.9766394 L1.24885643,11.9766394" id="路径-4" stroke="#4A4A4A" stroke-linejoin="round"></path>
-                </g>
+    <g id="dark_3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01-copy" transform="translate(-1567.000000, -903.000000)">
+            <g id="分组-5" transform="translate(1568.000000, 903.772079)">
+                <rect id="矩形" fill="#42E3E1" x="21.3199938" y="1.15463195e-14" width="12.4528282" height="10.3773568" rx="1.70625"></rect>
+                <rect id="矩形-copy-2" fill="#42E3E1" x="-5.41788836e-14" y="26.25" width="12.4528282" height="10.3773568" rx="1.70625"></rect>
+                <path d="M27.8473044,3.9386784 L4.28350939,3.9386784 C2.83376193,3.9386784 1.65850939,5.11393094 1.65850939,6.5636784 L1.65850939,14.3400036 C1.65850939,15.789751 2.83376193,16.9650036 4.28350939,16.9650036 L28.9214079,16.9650036 C30.3711554,16.9650036 31.5464079,18.1402561 31.5464079,19.5900036 L31.5464079,28.8136784 C31.5464079,30.2634259 30.3711554,31.4386784 28.9214079,31.4386784 L3.05971707,31.4386784" id="路径-4" stroke="#42E3E1" stroke-width="4" stroke-linejoin="round"></path>
             </g>
         </g>
     </g>

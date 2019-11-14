@@ -1,6 +1,6 @@
 <template>
 <div style="z-index:100;">
-  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+  <el-menu :default-active="activeIndex" class="header" mode="horizontal" @select="handleSelect">
     <el-menu-item index="networkFunction">网络功能</el-menu-item>
     <el-menu-item index="config">路由/防火墙配置</el-menu-item>
     <el-menu-item index="classifer">流分类</el-menu-item>
@@ -35,6 +35,23 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.header {
+  background-color:transparent;
+  background-image: linear-gradient(0deg, rgba(51,208,229,0.37) 0%, rgba(49,49,49,0.00) 100%);
+  border-bottom: none;
+  /deep/ .el-menu-item {
+    color:#93D4D5
+  }
+  /deep/ .el-menu-item:hover {
+    background-color:transparent!important;
+    color:#15F0FA !important;
+  }
+  /deep/ .el-menu-item.is-active {
+    background-color:transparent;
+    color:#15F0FA !important;
+    border-bottom: 2px solid #15F0FA;
+    /*border-bottom: #15F0FA !important;*/
+  }
+}
 </style>
