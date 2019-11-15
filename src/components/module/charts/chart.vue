@@ -1,5 +1,5 @@
 <template>
-    <div ref="chart"></div>
+    <div :style="img" ref="chart" style="height:278px;width: 703px;"></div>
 </template>
 
 <script>
@@ -8,7 +8,13 @@ export default {
   name: 'chart.vue',
   data () {
     return {
-      chartSeries: []
+      chartSeries: [],
+      img: {
+        backgroundImage: 'url(' + require('../../../assets/images/chart.png') + ')',
+        backgroundSize: '100% 100%',
+        backgroundPosition: '0 0',
+        backgroundRepeat: 'no-repeat'
+      }
     }
   },
   props: {
@@ -28,7 +34,6 @@ export default {
   watch: {
     series: {
       handler (newValue, oldValue) {
-        console.log('-new-', newValue)
         this.chartSeries = newValue
         this.initCharts()
       },
@@ -51,10 +56,12 @@ export default {
           right: '4%',
           bottom: '14%',
           top: '16%',
-          containLabel: true
+          containLabel: true,
+          show: false
         },
         legend: this.legend,
         xAxis: {
+          splitLine: {show: false},
           type: 'category',
           data: ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019'],
           axisLine: {
@@ -82,7 +89,7 @@ export default {
             }
           },
           splitLine: {
-            show: true,
+            show: false,
             lineStyle: {
               color: 'rgba(255,255,255,0.3)'
             }
@@ -130,7 +137,6 @@ export default {
           dataIndex: app.currentIndex
         })
         app.currentIndex = (app.currentIndex + 1) % dataLen
-        // console.log(app.currentIndex);
         // 高亮当前图形
         myChart.dispatchAction({
           type: 'highlight',

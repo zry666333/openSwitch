@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div style="background-color: #ffffff;position: relative;">
+  <div class="block">
+    <div class="outer_block" :style="img">
       <h2 class="title">ACL配置</h2>
       <el-row  style="height:444px;">
         <div class="common_block">
@@ -34,8 +34,8 @@
         </div>
       </el-row>
     </div>
-    <div>
-      <el-row class="card" style="background-color: #ffffff;margin-top: 15px;">
+    <div class="table_block" :style="tableImg">
+      <el-row class="card" style="margin-top: 15px;">
         <div class="card-header"  style="position: relative;">
           <strong>已添加的ACL</strong>
         </div>
@@ -77,6 +77,18 @@ export default {
   name: 'acl-op',
   data () {
     return {
+      img: {
+        backgroundImage: 'url(' + require('../../../assets/images/outer_block.png') + ')',
+        backgroundSize: '100% 100%',
+        backgroundPosition: '0 0',
+        backgroundRepeat: 'no-repeat'
+      },
+      tableImg: {
+        backgroundImage: 'url(' + require('../../../assets/images/table_block.png') + ')',
+        backgroundSize: '100% 100%',
+        backgroundPosition: '0 0',
+        backgroundRepeat: 'no-repeat'
+      },
       options: [{
         value: 'any',
         label: 'any'
@@ -158,43 +170,59 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .common_block{
-    padding-left:20px;
-    padding-right:30px;
-    border-top: 1px solid #D2D2D2;
-    text-align: center;
-    .title{
-      text-align:center;
-      padding:15px 0;
-    }
-    .el-form-item {
-      margin-bottom:0px;
-      /deep/ .el-form-item__label {
-        float: left;
-        display: inline-block;
-        padding: 0 0 0px;
-      }
-    }
-    .newBtn{
-      position: absolute;
-      bottom: 51px;
-      left: 50%;
-      right: 50%;
-      margin-left: -35px;
-      .el-button {
-        background-color: #3996FF;
-        width: 96px;
-        height: 35px;
-        /deep/ span {
-          font-size: 16px;
+  .block {
+    .outer_block {
+      position: relative;
+      background-image: linear-gradient(0deg, rgba(45,101,119,0.30) 0%, #143542 24%);
+      .common_block{
+        padding-left:20px;
+        padding-right:30px;
+        .newBtn{
+          position: absolute;
+          bottom: 51px;
+          left: 50%;
+          right: 50%;
+          margin-left: -35px;
+          .el-button {
+            background-image: linear-gradient(90deg, #42E3E1 0%, #33D0E5 100%);
+            border-radius: 3px;
+            width: 96px;
+            height: 35px;
+            padding: 0;
+            /deep/ span {
+              font-size: 16px;
+              color: #292E30;
+            }
+          }
         }
       }
+      .title{
+        padding-left: 20px;
+        height: 56px;
+        line-height: 56px;
+        font-size: 16px;
+        color: #42E3E1;
+        letter-spacing: 0;
+      }
     }
-  }
-  .title{
-    padding-left: 20px;
-    height: 56px;
-    line-height: 56px;
-    font-size: 16px;
+    .table_block {
+      padding:0 5px;
+      .card {
+        strong {
+          font-size: 16px;
+          color: #42E3E1;
+        }
+        .refresh {
+          background-color: transparent;
+          border: none;
+          color: #42E3E1;
+          position: absolute;
+          right:2%;
+          top:10%;
+          bottom:10%;
+        }
+        background-image: linear-gradient(-180deg, rgba(119,243,242,0.00) 70%, rgba(66,227,225,0.15) 100%);
+      }
+    }
   }
 </style>

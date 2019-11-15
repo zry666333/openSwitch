@@ -1,5 +1,42 @@
-.el-input__inner {
-  height:35px !important;
-  border:1px solid #D2D2D2;
-  border-radius:1px;
+.el-form-item {
+  margin-bottom:0px !important;
+  /deep/ .el-form-item__label {
+    padding: 0 0 0px !important;
+    font-size: 14px !important;
+    color: #42E3E1;
+  }
+  /deep/ .el-input{
+    margin-left:0px !important;
+    .el-input__inner {
+      background: rgba(66,227,225,0.10) !important;
+      border: 1px solid #42E3E1;
+      border-radius: 4px !important;
+      font-size: 14px !important;
+      color: #93D4D5 !important;
+    }
+  }
+}
+.el-table {
+  background-color:transparent !important;
+  /deep/ .el-table__header-wrapper {
+    .has-gutter {
+      font-size: 14px;
+      color: #42E3E1;
+    }
+    border-top:1px solid #42E3E1;
+    border-bottom:1px solid #42E3E1;
+    tr {
+      background-color:transparent;
+      th {
+        background-color:transparent;
+        border-bottom:none;
+      }
+    }
+  }
+  /deep/ .el-table__body-wrapper {
+    span {
+      font-size: 14px;
+      color: #93D4D5;
+    }
+  }
 }

@@ -116,6 +116,7 @@ export default {
       }
     }
     .newBtn{
+      margin-top: 20px;
       .el-button {
         width:96px;
         height:35px;

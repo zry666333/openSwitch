@@ -133,6 +133,12 @@ export default {
         backgroundPosition: '0 0',
         backgroundRepeat: 'no-repeat'
       },
+      imgDrawer: {
+        backgroundImage: 'url(' + require('../../assets/images/drawer.png') + ')',
+        backgroundSize: '100% 100%',
+        backgroundPosition: '0 0',
+        backgroundRepeat: 'no-repeat'
+      },
       table: false,
       activeNames: ['1', '2', '3', '4', '5'],
       tableData: [],
@@ -140,8 +146,8 @@ export default {
       seriesOutput: [],
       legend: {
         data: ['接收包速率', '发送包速率'],
-        right: 10,
-        top: 12,
+        right: 12,
+        top: 0,
         textStyle: {
           color: '#fff'
         },
@@ -260,9 +266,6 @@ export default {
     width:100% !important;
     height:40%;
     background-image: linear-gradient(0deg, rgba(45,101,119,0.53) 0%, #143542 16%);
-   // border: 1px solid rgba(66,227,225,0.50);
-    /*box-shadow: 0 0 15px 0 rgba(51,208,229,0.43);*/
-    /*border-radius: 3px 3px 0 3px;*/
     .el-collapse {
       border-top:none;
       border-bottom:none;
@@ -307,6 +310,50 @@ export default {
       }
     }
   }
+  .el-dialog__wrapper {
+    /deep/ .el-drawer {
+      background-color:#143542;
+      .el-drawer__header {
+        .el-drawer__close-btn {
+          color:#42E3E1;
+        }
+      }
+      .el-drawer__body {
+      .card{
+        .card-header {
+          color: #42E3E1;
+          .el-button {
+            background-color:transparent;
+            border:none;
+            color: #42E3E1;
+          }
+        }
+        .el-table {
+          background-color:transparent;
+          border:none;
+          &::before {
+            height:0px;
+          }
+          .el-table__header-wrapper {
+            border-top: 1px solid #42E3E1;
+            border-bottom: 1px solid #42E3E1;
+            tr,th {
+              background-color:transparent;
+              border:none;
+              font-size: 14px;
+              color: #42E3E1;
+              text-align: center;
+            }
+          }
+          span {
+            font-size: 14px;
+            color: #93D4D5;
+          }
+        }
+      }
+    }
+    }
+  }
 </style>
 
 <style lang="scss">
@@ -318,10 +365,8 @@ export default {
     -moz-appearance: textfield;
   }
   .card{
-    border: 1px solid rgba(0,0,0,.125);
     .card-header{
       padding:12px 20px;
-      background: rgba(0,0,0,.03);
     }
     strong{
       font-weight: bolder;
@@ -329,10 +374,6 @@ export default {
   }
   .el-row{
     margin-bottom: 20px;
-  }
-  .el-button--primary{
-    background-color: #428bca;
-    border-color:#357ebd;
   }
   .el-input__inner{
     padding:0 6px;
@@ -342,9 +383,6 @@ export default {
         margin-left:10px;
       }
     }
-  .el-menu-item.is-active,.el-menu-item:hover {
-      color:#409EFF!important;
-  }
   //滚动条的宽度
   ::-webkit-scrollbar {
     width: 12px;
