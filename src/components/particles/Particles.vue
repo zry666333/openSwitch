@@ -1,5 +1,5 @@
 <template>
-  <div style="min-height:900px; height:1000px">
+  <div style="min-height:900px; height:1080px">
     <div id="particles-js"></div>
   </div>
 </template>
@@ -18,7 +18,6 @@ export default {
   methods: {
     init () {
       particlesJS('particles-js', particlesConfig)
-      document.body.style.overflow = 'hidden'
     }
   }
 }
