@@ -38,7 +38,7 @@
     <el-row class="card" style="margin-top: 15px;">
       <div class="card-header"  style="position: relative;">
         <strong>已添加的防火墙配置</strong>
-        <el-button class="refresh" size="small" @click="getFireWallOp ()">刷新</el-button>
+        <span class="refresh" size="small" @click="getFireWallOp ()">刷新</span>
       </div>
       <el-table
         :data="tableData"
@@ -213,17 +213,6 @@ export default {
           left: 50%;
           right: 50%;
           margin-left: -35px;
-          .el-button {
-            background-image: linear-gradient(90deg, #42E3E1 0%, #33D0E5 100%);
-            border-radius: 3px;
-            width: 96px;
-            height: 35px;
-            padding: 0;
-            /deep/ span {
-              font-size: 16px;
-              color: #292E30;
-            }
-          }
         }
       }
       .title{
@@ -248,8 +237,11 @@ export default {
           color: #42E3E1;
           position: absolute;
           right:2%;
-          top:10%;
+          top:50%;
           bottom:10%;
+          margin-top:-8px;
+          font-size: 14px;
+          cursor: pointer;
         }
         background-image: linear-gradient(-180deg, rgba(119,243,242,0.00) 70%, rgba(66,227,225,0.15) 100%);
       }

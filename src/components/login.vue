@@ -3,23 +3,23 @@
   <div class="login" :style="img">
     <h2 class="title">欢迎登录PML网关安全系统</h2>
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-    <el-form-item prop="username">
+    <el-form-item prop="username"  style="margin-top: 34px;">
       <el-input type="username" placeholder="请输入用户名" v-model="ruleForm.username" autocomplete="off">
       </el-input>
       <img class="user" src="../assets/images/user.svg" />
     </el-form-item>
-    <el-form-item prop="password">
+    <el-form-item prop="password" style="margin-top: 34px;">
       <el-input type="password" placeholder="请输入密码" v-model="ruleForm.password" autocomplete="off"></el-input>
       <img class="password" src="../assets/images/password.svg" />
     </el-form-item>
-    <div class="mark">
+      <el-form-item  class="mark" style="margin-top: 22px;">
       <img class="checked" v-show="!ischecked" @click="check()" src="../assets/images/unchecked.svg">
       <img class="checked" v-show="ischecked" @click="check()" src="../assets/images/checked.svg">
       <span class="rememberPwd">记住密码自动登录</span>
       <span class="forgetPwd">忘记密码</span>
-    </div>
+    </el-form-item>
     <el-form-item>
-      <el-button  :style="imgButton" type="primary" @click="login('ruleForm')"></el-button>
+      <el-button style="margin-top: 22px;" type="primary" @click="login('ruleForm')">登&nbsp;&nbsp;录</el-button>
     </el-form-item>
   </el-form>
   </div>
@@ -101,7 +101,6 @@ export default {
     background-color:transparent;
   }
   .el-form {
-    margin-top: 34px;
     position:relative;
     padding-left:65px;
     padding-right:65px;
@@ -144,22 +143,11 @@ export default {
       background-color: #42E3E1;
       border-radius: 7px;
       font-size: 20px;
-      background-size: cover;
-      background-position: center;
+      /deep/ span {
+        font-size:20px;
+        color:#fff;
+      }
     }
   }
 }
-</style>
-
-<style>
-  input:-webkit-autofill , textarea:-webkit-autofill, select:-webkit-autofill {
-    -webkit-text-fill-color: #ededed !important;
-    -webkit-box-shadow: 0 0 0px 1000px transparent  inset !important;
-    background-color:transparent;
-    background-image: none;
-    transition: background-color 50000s ease-in-out 0s;
-  }
-  input {
-    background-color:transparent;
-  }
 </style>
