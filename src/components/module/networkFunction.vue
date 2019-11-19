@@ -51,10 +51,10 @@
       <el-container  direction="vertical" style="width:80%;background-color:transparent;">
         <el-row>
         <el-col :span="12">
-          <Chart :series="seriesInput" :legend="legend"  style="height:280px;" />
+          <Chart :parameter="paramFirst" :legend="legend"  style="height:280px;" />
         </el-col>
           <el-col :span="12">
-            <Chart :series="seriesOutput" :legend="legend"  style="height:280px;" />
+            <Chart :parameter="paramSecond" :legend="legend"  style="height:280px;" />
           </el-col>
         </el-row>
         <Panel :style="imgPanel" style="background-image: linear-gradient(0deg, rgba(45,101,119,0.36) 0%, #143542 35%);"></Panel>
@@ -66,11 +66,10 @@
       <el-row class="card">
         <div class="card-header"  style="position: relative;">
           <strong>已添加网络功能</strong>
-          <el-button style="position: absolute;right:2%;top:10%;bottom:10%;" size="small" @click="getNetwork ()">刷新</el-button>
+          <span class="refresh" size="small" @click="getNetwork ()">刷新</span>
         </div>
         <el-table
           :data="tableData"
-          border
           style="width: 100%">
           <el-table-column
             prop="name"
@@ -142,10 +141,18 @@ export default {
       table: false,
       activeNames: ['1', '2', '3', '4', '5'],
       tableData: [],
-      seriesInput: [],
-      seriesOutput: [],
+      paramFirst: {
+        title: {},
+        series: [],
+        data: []
+      },
+      paramSecond: {
+        title: {},
+        series: [],
+        data: []
+      },
       legend: {
-        data: ['接收包速率', '发送包速率'],
+        data: ['接收包总数', '发送包总数'],
         right: 12,
         top: 0,
         textStyle: {
@@ -153,7 +160,6 @@ export default {
         },
         itemWidth: 12,
         itemHeight: 10
-        // itemGap: 35
       }
     }
   },
@@ -186,53 +192,142 @@ export default {
       const res = await this.$Http.readNf()
       this.tableData = res
     },
+    // 初始化图表数据
+    initChart () {
+      // 第一张图数据
+      this.paramFirst.title = {
+        text: '输入端',
+        triggerEvent: true,
+        textStyle: {
+          fontWeight: 'normal',
+          color: '#42E3E1',
+          fontSize: 16
+        },
+        padding: [20, 50]
+      }
+      this.paramFirst.series = [{
+        name: '接收包总数',
+        type: 'bar',
+        barWidth: '15%',
+        itemStyle: {
+          normal: {
+            color: '#42E3E1'
+          }
+        },
+        data: []
+      },
+      {
+        name: '发送包总数',
+        type: 'bar',
+        barWidth: '15%',
+        itemStyle: {
+          normal: {
+            color: '#97FF91'
+          }
+        },
+        data: []
+      }]
+      // 第二张图数据
+      this.paramSecond.title = {
+        text: '输出端',
+        triggerEvent: true,
+        textStyle: {
+          fontWeight: 'normal',
+          color: '#42E3E1',
+          fontSize: 16
+        },
+        padding: [20, 50]
+      }
+      this.paramSecond.series = [{
+        name: '接收包总数',
+        type: 'bar',
+        barWidth: '15%',
+        itemStyle: {
+          normal: {
+            color: '#42E3E1'
+          }
+        },
+        data: []
+      },
+      {
+        name: '发送包总数',
+        type: 'bar',
+        barWidth: '15%',
+        itemStyle: {
+          normal: {
+            color: '#97FF91'
+          }
+        },
+        data: []
+      }]
+    },
+    // 每隔一秒监听数据变化
+    loopData () {
+      let data1 = 0
+      setInterval(async () => {
+        const temp = await this.getFlow()
+        data1 = data1 + 100
+        if (this.paramFirst.data.length >= 9) {
+          this.paramFirst.series[0].data.shift()
+          this.paramFirst.series[1].data.shift()
+          this.paramFirst.data.shift()
+        }
+        if (this.paramSecond.data.length >= 9) {
+          this.paramSecond.series[0].data.shift()
+          this.paramSecond.series[1].data.shift()
+          this.paramSecond.data.shift()
+        }
+        // 入端口接收出入包总数
+        this.paramFirst.series[0].data.push(parseInt(temp[0].rx))
+        this.paramFirst.series[1].data.push(parseInt(temp[0].tx))
+        this.paramFirst.data.push(data1)
+        // 出端口接收出入包总数
+        this.paramSecond.series[0].data.push(parseInt(temp[1].rx))
+        this.paramSecond.series[1].data.push(parseInt(temp[1].tx))
+        this.paramSecond.data.push(data1)
+      }, 1000)
+    },
     initData () {
-      this.seriesInput = [{
-        name: '接收包速率',
-        type: 'bar',
-        barWidth: '15%',
-        itemStyle: {
-          normal: {
-            color: '#42E3E1'
-          }
-        },
-        data: [400, 400, 300, 300, 300, 400, 400, 400, 300]
+      this.initChart()
+      this.loopData()
+    },
+    async getFlow () {
+      const res = [{
+        name: '入端口',
+        rx: '200',
+        rx_pps: '4',
+        tx: '0',
+        tx_pps: '0'
       },
       {
-        name: '发送包速率',
-        type: 'bar',
-        barWidth: '15%',
-        itemStyle: {
-          normal: {
-            color: '#97FF91'
-          }
-
-        },
-        data: [800, 800, 800, 800, 800, 800, 800, 800, 800]
-      }]
-      this.seriesOutput = [{
-        name: '接收包速率',
-        type: 'bar',
-        barWidth: '15%',
-        itemStyle: {
-          normal: {
-            color: '#42E3E1'
-          }
-        },
-        data: [400, 400, 400, 400, 400, 400, 400, 400, 800]
+        name: '出端口',
+        rx: '200',
+        rx_pps: '5',
+        tx: '0',
+        tx_pps: '0'
       },
       {
-        name: '发送包速率',
-        type: 'bar',
-        barWidth: '15%',
-        itemStyle: {
-          normal: {
-            color: '#97FF91'
-          }
-
-        },
-        data: [500, 500, 500, 500, 500, 500, 500, 500, 900]
-      }]
+        name: '路由器',
+        service_id: '1',
+        rx: '200',
+        rx_pps: '4',
+        tx: '200',
+        tx_pps: '4',
+        drop: '0'
+      },
+      {
+        name: '防火墙',
+        service_id: '2',
+        nexthop_id: '3',
+        rx: '100',
+        rx_pps: '2',
+        tx: '150',
+        tx_pps: '1',
+        drop: '50'
+      }
+      ]
+      return res
+      // const res = await this.$Http.read_flow()
     }
   },
   mounted () {
@@ -297,7 +392,6 @@ export default {
     line-height:63px;
     .el-button {
       color: #292E30;
-      letter-spacing: 0;
       font-size:16px;
       font-family: inherit;
       padding-left:20px;
@@ -322,33 +416,18 @@ export default {
       .card{
         .card-header {
           color: #42E3E1;
-          .el-button {
-            background-color:transparent;
-            border:none;
-            color: #42E3E1;
-          }
         }
-        .el-table {
-          background-color:transparent;
-          border:none;
-          &::before {
-            height:0px;
-          }
-          .el-table__header-wrapper {
-            border-top: 1px solid #42E3E1;
-            border-bottom: 1px solid #42E3E1;
-            tr,th {
-              background-color:transparent;
-              border:none;
-              font-size: 14px;
-              color: #42E3E1;
-              text-align: center;
-            }
-          }
-          span {
-            font-size: 14px;
-            color: #93D4D5;
-          }
+        .refresh {
+          background-color: transparent;
+          border: none;
+          color: #42E3E1;
+          position: absolute;
+          right:2%;
+          top:50%;
+          bottom:10%;
+          margin-top:-8px;
+          font-size: 14px;
+          cursor: pointer;
         }
       }
     }
@@ -374,25 +453,5 @@ export default {
   }
   .el-row{
     margin-bottom: 20px;
-  }
-  .el-input__inner{
-    padding:0 6px;
-  }
-    .el-form-item__content{
-      .el-input{
-        margin-left:10px;
-      }
-    }
-  //滚动条的宽度
-  ::-webkit-scrollbar {
-    width: 12px;
-    opacity: 0.23;
-    background: rgba(169,219,219,0.57);
-    border-radius: 6px;
-  }
-  //滚动条的滑块
-  ::-webkit-scrollbar-thumb {
-    background: rgba(66,227,225,0.27);
-    border-radius: 6px;
   }
 </style>

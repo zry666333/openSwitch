@@ -9,6 +9,8 @@ export default {
   data () {
     return {
       chartSeries: [],
+      chartData: [],
+      chartTitle: {},
       img: {
         backgroundImage: 'url(' + require('../../../assets/images/chart.png') + ')',
         backgroundSize: '100% 100%',
@@ -18,10 +20,10 @@ export default {
     }
   },
   props: {
-    series: {
-      type: Array,
+    parameter: {
+      type: Object,
       default () {
-        return []
+        return {}
       }
     },
     legend: {
@@ -32,9 +34,11 @@ export default {
     }
   },
   watch: {
-    series: {
+    parameter: {
       handler (newValue, oldValue) {
-        this.chartSeries = newValue
+        this.chartSeries = newValue.series
+        this.chartData = newValue.data
+        this.chartTitle = newValue.title
         this.initCharts()
       },
       deep: true
@@ -43,7 +47,9 @@ export default {
   methods: {
     initCharts () {
       let myChart = this.$echarts.init(this.$refs.chart)
+      myChart.off('click')
       var option = {
+        title: this.chartTitle,
         backgroundImage: 'linearGradient(0deg, rgba(45,101,119,0.55) 0%, #143542 44%)',
         tooltip: {
           trigger: 'axis',
@@ -63,7 +69,7 @@ export default {
         xAxis: {
           splitLine: {show: false},
           type: 'category',
-          data: ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+          data: this.chartData,
           axisLine: {
             lineStyle: {
               color: 'white'
@@ -71,8 +77,6 @@ export default {
             }
           },
           axisLabel: {
-            // interval: 0,
-            // rotate: 40,
             textStyle: {
               fontFamily: 'Microsoft YaHei'
             }
@@ -81,7 +85,6 @@ export default {
 
         yAxis: {
           type: 'value',
-          max: '1200',
           axisLine: {
             show: false,
             lineStyle: {
@@ -123,39 +126,13 @@ export default {
         }],
         series: this.chartSeries
       }
-
-      var app = {
-        currentIndex: -1
-      }
-      setInterval(function () {
-        var dataLen = option.series[0].data.length
-
-        // 取消之前高亮的图形
-        myChart.dispatchAction({
-          type: 'downplay',
-          seriesIndex: 0,
-          dataIndex: app.currentIndex
-        })
-        app.currentIndex = (app.currentIndex + 1) % dataLen
-        // 高亮当前图形
-        myChart.dispatchAction({
-          type: 'highlight',
-          seriesIndex: 0,
-          dataIndex: app.currentIndex
-        })
-        // 显示 tooltip
-        myChart.dispatchAction({
-          type: 'showTip',
-          seriesIndex: 0,
-          dataIndex: app.currentIndex
-        })
-      }, 1000)
-
       myChart.setOption(option)
+      myChart.on('click', 'title', function () {
+        console.log('123')
+      })
     }
   },
   mounted () {
-    // this.initCharts()
   }
 }
 </script>

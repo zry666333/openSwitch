@@ -1,20 +1,9 @@
 <template>
   <div ref="node" :style="flowNodeContainer" @mouseenter="showDelete" @mouseleave="hideDelete" @mouseup="changeNodeSite">
-    <el-tooltip class="item" effect="dark"  placement="right">
+    <el-tooltip v-model="mouseEnter" class="item" effect="dark"  placement="right">
       <div id="div" slot="content" v-html="tooltipContent"></div>
       <div>
-        <!--<span :class="node.ico" style="font-size: 40px;"></span>-->
         <img :src="require('../../../assets/images/' + node.ico)" style="width:30px;height: 30px;" />
-    <!--<div class="flow-node-header" >-->
-      <!--<i :class="nodeClass"></i><span>{{node.name}}</span>-->
-      <!--&lt;!&ndash;<div v-show="mouseEnter" style="position:absolute;top:0px;right:0px;line-height:25px">&ndash;&gt;-->
-        <!--&lt;!&ndash;<a @click="editNode"><img src="../../../assets/edit.png"></a>&nbsp;&ndash;&gt;-->
-        <!--&lt;!&ndash;<a @click="deleteNode"><img src="../../../assets/delete.png"></a>&nbsp;&ndash;&gt;-->
-      <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--</div>-->
-    <!--<div class="flow-node-body">-->
-      <!--service_id:{{node.service_id}}-->
-    <!--</div>-->
       </div>
     </el-tooltip>
   </div>
@@ -57,10 +46,6 @@ export default {
   },
   methods: {
     showDelete () {
-      this.tooltipContent = ''
-      for (let i in this.node) {
-        this.tooltipContent += `${i}:${this.node[i]}<br/>`
-      }
       this.mouseEnter = true
     },
     hideDelete () {
@@ -77,12 +62,15 @@ export default {
         top: this.$refs.node.style.top
       })
     },
-    editNode () {
-      this.$emit('editNode', this.node.id)
-    },
-    deleteNode () {
-      this.$emit('deleteNode', this.node.id)
+    initData () {
+      this.tooltipContent = ''
+      for (let i in this.node) {
+        this.tooltipContent += `${i}:${this.node[i]}<br/>`
+      }
     }
+  },
+  mounted () {
+    this.initData()
   }
 }
 </script>
