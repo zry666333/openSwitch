@@ -83,6 +83,11 @@ const NETWORK_API = {
   aesDecrypt: {
     method: 'post',
     url: '/aes_decrypt/'
+  },
+  // 流量查询
+  read_flow: {
+    method: 'get',
+    url: '/read_flow/'
   }
 }
 export default NETWORK_API

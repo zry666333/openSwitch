@@ -185,8 +185,6 @@ export default {
       let aescodeNode = []
       // AES解密节点
       let aesdecodeNode = []
-      // let linkBridgeAesCode = []
-      // let linkBridgeAesDeCode = []
       // 初始路由器高度
       let routeTop = 100
       // 初始AES加密高度
@@ -267,12 +265,6 @@ export default {
       })
       const res = await this.getRouteOp()
       for (let i = 0; i < routeNode.length; i++) {
-        // if (routeNode[i].name === '路由器' && routeNode[i].service_id === 1 + '') {
-        //   linkRoute.push({
-        //     from: '-1',
-        //     to: routeNode[i].service_id + ''
-        //   })
-        // }
         for (let j = 0; j < res.length; j++) {
           linkRoute.push({
             from: routeNode[i].service_id + '',
@@ -327,7 +319,9 @@ export default {
       })
     }
   },
-  mounted () {},
+  mounted () {
+    this.generate()
+  },
   destroyed () {
     this.jsPlumb = null
   }

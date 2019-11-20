@@ -194,7 +194,7 @@ export default {
     },
     // 初始化图表数据
     initChart () {
-      // 第一张图数据
+      // // 第一张图数据
       this.paramFirst.title = {
         text: '输入端',
         triggerEvent: true,
@@ -266,7 +266,7 @@ export default {
       let data1 = 0
       setInterval(async () => {
         const temp = await this.getFlow()
-        data1 = data1 + 100
+        data1 = data1 + 100 > 900 ? 900 : data1 + 100
         if (this.paramFirst.data.length >= 9) {
           this.paramFirst.series[0].data.shift()
           this.paramFirst.series[1].data.shift()
@@ -326,8 +326,8 @@ export default {
         drop: '50'
       }
       ]
-      return res
       // const res = await this.$Http.read_flow()
+      return res
     }
   },
   mounted () {
