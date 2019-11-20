@@ -284,7 +284,6 @@ export default {
       defaultData = JSON.parse(JSON.stringify(getData()))
       defaultData.nodeList = [...defaultData.nodeList, ...data]
       defaultData.lineList = [...linkRoute, ...linkBridge]
-      // this.dataLoad(defaultData)
       this.data = defaultData
       this.$nextTick(() => {
         this.jsPlumbInit()

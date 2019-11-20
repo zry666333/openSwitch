@@ -27,7 +27,6 @@ export default {
       get () {
         return {
           position: 'absolute',
-          // width: '200px',
           top: this.node.top,
           left: this.node.left,
           backgroundColor: 'transparent',
@@ -39,7 +38,6 @@ export default {
       get () {
         var nodeclass = {}
         nodeclass[this.node.ico] = true
-        // nodeclass['flow-node-drag'] = true
         return nodeclass
       }
     }
