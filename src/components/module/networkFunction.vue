@@ -294,16 +294,16 @@ export default {
     async getFlow () {
       const res = [{
         name: '入端口',
-        rx: '200',
-        rx_pps: '4',
-        tx: '0',
+        rx: Math.random() * 1000 + '',
+        rx_pps: Math.random() * 10 + '',
+        tx: Math.random() * 1000 + '',
         tx_pps: '0'
       },
       {
         name: '出端口',
-        rx: '200',
-        rx_pps: '5',
-        tx: '0',
+        rx: Math.random() * 1000 + '',
+        rx_pps: Math.random() * 10 + '',
+        tx: Math.random() * 1000 + '',
         tx_pps: '0'
       },
       {
