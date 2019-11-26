@@ -51,9 +51,6 @@ export default {
     },
     // 鼠标移动后抬起
     changeNodeSite () {
-      if (this.node.left === this.$refs.node.style.left && this.node.top === this.$refs.node.style.top) {
-        return
-      }
       this.$emit('changeNodeSite', {
         nodeId: this.node.id,
         left: this.$refs.node.style.left,

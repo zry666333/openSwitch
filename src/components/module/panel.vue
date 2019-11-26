@@ -1,13 +1,15 @@
 <template>
   <div id="panelClass">
     <h2 class="header">服务功能链
-    <span class="generate" @click="generate()"><img src='../../assets/images/generate.svg' style="" />生成</span>
+    <span class="generate" @click="generate()"><img src='../../assets/images/generate.svg'>生成</span>
     </h2>
+    <div class="moveArea">
           <div id="flowContainer" class="container" ref="flowContainer">
             <template v-for="node in data.nodeList" >
               <FlowNode :id="node.id" :title="node.name" :datatype="node.service_id" v-show="node.show" :key="node.id" :node="node" @changeNodeSite="changeNodeSite"></FlowNode>
             </template>
           </div>
+    </div>
     <FlowInfo v-if="flowInfoVisable" ref="flowInfo" :data="data"></FlowInfo>
     <FlowNodeForm v-if="nodeFormVisible" ref="nodeForm"></FlowNodeForm>
   </div>
@@ -331,9 +333,10 @@ export default {
   #panelClass {
     width: 100%;
     height:100%;
+    position:relative;
     .header {
-      background: rgba(8,74,100,0.45);
-      position:relative;
+      background: rgba(8,74,100,0.45);;
+      width:100%;
       .generate {
         position:absolute;
         font-size:12px;
@@ -349,6 +352,12 @@ export default {
       font-size: 16px;
       color: #42E3E1;
       letter-spacing: 0;
+    }
+    .moveArea {
+      position:absolute;
+      top:58px;
+      bottom:0;
+      width:100%;
     }
     #flowContainer{
       width:100%;
