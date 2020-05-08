@@ -40,7 +40,8 @@
           <strong>已添加的ACL</strong>
         </div>
         <el-table
-          :data="tableData"
+          :data="
+          tableData"
           style="width: 100%">
           <el-table-column
             prop="acl_name"

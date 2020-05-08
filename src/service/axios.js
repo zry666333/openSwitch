@@ -18,14 +18,14 @@ function startLoading () {
 }
 
 instance.interceptors.request.use(config => {
-  startLoading()
+  // startLoading()
   return config
 }, () => {})
 
 instance.interceptors.response.use(res => {
   loading.close()
   return res.data
-}, () => {
+}, err => {
   loading.close()
 })
 

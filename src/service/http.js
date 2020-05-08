@@ -61,7 +61,7 @@ for (let key in service) {
 // 拦截器的添加
 instance.interceptors.request.use(config => {
   // 发起请求前做些什么
-  startLoading()
+  // startLoading()
   return config
 }, () => {
   // 请求错误
@@ -76,7 +76,7 @@ instance.interceptors.response.use(res => {
   return res.data
 }, (err) => {
   console.log('-err-', err)
-  console.log('=err=', err.response.data.Message)
+  // console.log('=err=', err.response.data.Message)
   Message.error('系统出错')
   // 响应失败
   loading.close()
