@@ -1,6 +1,5 @@
 import axios from 'axios'
 import service from './networkApi'
-// import {Loading} from 'element-ui'
 import {Loading, Message} from 'element-ui'
 
 let loading
@@ -61,7 +60,7 @@ for (let key in service) {
 // 拦截器的添加
 instance.interceptors.request.use(config => {
   // 发起请求前做些什么
-  // startLoading()
+  startLoading()
   return config
 }, () => {
   // 请求错误
