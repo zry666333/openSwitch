@@ -1,7 +1,7 @@
 import axios from 'axios'
 import service from './networkApi'
-import {Loading} from 'element-ui'
-// import {Loading, Message} from 'element-ui'
+// import {Loading} from 'element-ui'
+import {Loading, Message} from 'element-ui'
 
 let loading
 
@@ -16,7 +16,7 @@ function startLoading () {
 
 // service 循环遍历输出不同的请求方法
 let instance = axios.create({
-  baseURL: 'http://10.117.62.61:8000/',
+  baseURL: 'http://localhost:8080/',
   timeout: 3000
 })
 
@@ -66,6 +66,7 @@ instance.interceptors.request.use(config => {
 }, () => {
   // 请求错误
   loading.close()
+  // Message.error(err.response.data.Message)
 })
 
 // 响应拦截器
@@ -76,6 +77,7 @@ instance.interceptors.response.use(res => {
 }, (err) => {
   console.log('-err-', err)
   console.log('=err=', err.response.data.Message)
+  Message.error('系统出错')
   // 响应失败
   loading.close()
   // Message.error(err.response.data.Message)

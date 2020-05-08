@@ -285,7 +285,7 @@ export default {
         this.paramSecond.series[0].data.push(parseInt(temp[1].rx))
         this.paramSecond.series[1].data.push(parseInt(temp[1].tx))
         this.paramSecond.data.push(data1)
-      }, 1000)
+      }, 3000)
     },
     initData () {
       this.initChart()
