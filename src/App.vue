@@ -54,6 +54,10 @@ export default {
         font-size: 14px;
         color: #93D4D5;
       }
+       .el-button span{
+           font-size: 16px;
+           color: #292E30;
+       }
     }
   }
   .el-button {
