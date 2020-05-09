@@ -49,14 +49,7 @@
           </el-footer>
       </el-container>
       <el-container  direction="vertical" style="width:80%;background-color:transparent;">
-        <el-row>
-        <el-col :span="12">
-          <Chart :parameter="paramFirst" :legend="legend"  style="height:280px;" />
-        </el-col>
-          <el-col :span="12">
-            <Chart :parameter="paramSecond" :legend="legend"  style="height:280px;" />
-          </el-col>
-        </el-row>
+        <Chart></Chart>
         <Panel :style="imgPanel" style="background-image: linear-gradient(0deg, rgba(45,101,119,0.36) 0%, #143542 35%);"></Panel>
       </el-container>
     <el-drawer
@@ -105,7 +98,8 @@ import FireWall from './network/fireWall'
 import Bridge from './network/bridge'
 import AESCode from './network/aesCode'
 import AESDecode from './network/aesDecode'
-import Chart from './charts/chart'
+import lineChart from './charts/lineChart'
+import Chart from './networkFunction/chart'
 
 export default {
   name: 'networkFunction',
@@ -116,6 +110,7 @@ export default {
     Bridge,
     AESCode,
     AESDecode,
+    lineChart,
     Chart
   },
   data () {
@@ -140,27 +135,7 @@ export default {
       },
       table: false,
       activeNames: ['1', '2', '3', '4', '5'],
-      tableData: [],
-      paramFirst: {
-        title: {},
-        series: [],
-        data: []
-      },
-      paramSecond: {
-        title: {},
-        series: [],
-        data: []
-      },
-      legend: {
-        data: ['接收包总数', '发送包总数'],
-        right: 12,
-        top: 0,
-        textStyle: {
-          color: '#fff'
-        },
-        itemWidth: 12,
-        itemHeight: 10
-      }
+      tableData: []
     }
   },
   methods: {
@@ -191,150 +166,10 @@ export default {
     async getNetwork () {
       const res = await this.$Http.readNf()
       this.tableData = res
-    },
-    // 初始化图表数据
-    initChart () {
-      // // 第一张图数据
-      this.paramFirst.title = {
-        text: '输入端',
-        triggerEvent: true,
-        textStyle: {
-          fontWeight: 'normal',
-          color: '#42E3E1',
-          fontSize: 16
-        },
-        padding: [20, 50]
-      }
-      this.paramFirst.series = [{
-        name: '接收包总数',
-        type: 'bar',
-        barWidth: '15%',
-        itemStyle: {
-          normal: {
-            color: '#42E3E1'
-          }
-        },
-        data: []
-      },
-      {
-        name: '发送包总数',
-        type: 'bar',
-        barWidth: '15%',
-        itemStyle: {
-          normal: {
-            color: '#97FF91'
-          }
-        },
-        data: []
-      }]
-      // 第二张图数据
-      this.paramSecond.title = {
-        text: '输出端',
-        triggerEvent: true,
-        textStyle: {
-          fontWeight: 'normal',
-          color: '#42E3E1',
-          fontSize: 16
-        },
-        padding: [20, 50]
-      }
-      this.paramSecond.series = [{
-        name: '接收包总数',
-        type: 'bar',
-        barWidth: '15%',
-        itemStyle: {
-          normal: {
-            color: '#42E3E1'
-          }
-        },
-        data: []
-      },
-      {
-        name: '发送包总数',
-        type: 'bar',
-        barWidth: '15%',
-        itemStyle: {
-          normal: {
-            color: '#97FF91'
-          }
-        },
-        data: []
-      }]
-    },
-    // 每隔一秒监听数据变化
-    loopData () {
-      let data1 = 0
-      setInterval(async () => {
-        const temp = await this.getFlow()
-        data1 = data1 + 100 > 900 ? 900 : data1 + 100
-        if (this.paramFirst.data.length >= 9) {
-          this.paramFirst.series[0].data.shift()
-          this.paramFirst.series[1].data.shift()
-          this.paramFirst.data.shift()
-        }
-        if (this.paramSecond.data.length >= 9) {
-          this.paramSecond.series[0].data.shift()
-          this.paramSecond.series[1].data.shift()
-          this.paramSecond.data.shift()
-        }
-        // 入端口接收出入包总数
-        this.paramFirst.series[0].data.push(parseInt(temp[0].rx))
-        this.paramFirst.series[1].data.push(parseInt(temp[0].tx))
-        this.paramFirst.data.push(data1)
-        // 出端口接收出入包总数
-        this.paramSecond.series[0].data.push(parseInt(temp[1].rx))
-        this.paramSecond.series[1].data.push(parseInt(temp[1].tx))
-        this.paramSecond.data.push(data1)
-      }, 3000)
-    },
-    initData () {
-      this.initChart()
-      this.loopData()
-    },
-    async getFlow () {
-      const res = [{
-        name: '入端口',
-        rx: Math.random() * 1000 + '',
-        rx_pps: Math.random() * 10 + '',
-        tx: Math.random() * 1000 + '',
-        tx_pps: '0'
-      },
-      {
-        name: '出端口',
-        rx: Math.random() * 1000 + '',
-        rx_pps: Math.random() * 10 + '',
-        tx: Math.random() * 1000 + '',
-        tx_pps: '0'
-      },
-      {
-        name: '路由器',
-        service_id: '1',
-        rx: '200',
-        rx_pps: '4',
-        tx: '200',
-        tx_pps: '4',
-        drop: '0'
-      },
-      {
-        name: '防火墙',
-        service_id: '2',
-        nexthop_id: '3',
-        rx: '100',
-        rx_pps: '2',
-        tx: '150',
-        tx_pps: '1',
-        drop: '50'
-      }
-      ]
-      // const res = await this.$Http.read_flow()
-      return res
     }
   },
   mounted () {
     this.getNetwork()
-    this.$nextTick(() => {
-      this.initData()
-    })
   }
 }
 </script>

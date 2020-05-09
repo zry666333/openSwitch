@@ -1,0 +1,74 @@
+<template>
+    <div :style="img" style="height: 280px"></div>
+</template>
+
+<script>
+import echarts from 'echarts'
+require('echarts/theme/macarons') // echarts theme
+
+export default {
+  name: 'lineChart',
+  props: {
+    chartData: {
+      type: Object
+    }
+  },
+  watch: {
+    chartData: {
+      deep: true,
+      handler (val) {
+        this.setOptions(val)
+      }
+    }
+  },
+  data () {
+    return {
+      myChart: null,
+      img: {
+        backgroundImage: 'url(' + require('../../../assets/images/chart.png') + ')',
+        backgroundSize: '100% 100%',
+        backgroundPosition: '0 0',
+        backgroundRepeat: 'no-repeat'
+      }
+    }
+  },
+  methods: {
+    init () {
+      this.myChart = echarts.init(this.$el, 'macarons')
+      this.setOptions(this.chartData)
+    },
+    setOptions ({labelData, txData, rxData} = {}) {
+      this.myChart.setOption({
+        xAxis: {
+          type: 'category',
+          data: labelData
+        },
+        yAxis: {
+          type: 'value'
+        },
+        legend: {
+          data: ['RX', 'TX']
+        },
+        series: [{
+          name: 'RX',
+          data: rxData,
+          type: 'line'
+        },
+        {
+          name: 'TX',
+          data: txData,
+          type: 'line'
+        }
+        ]
+      })
+    }
+  },
+  mounted () {
+    this.init()
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

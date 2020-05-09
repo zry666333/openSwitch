@@ -88,6 +88,11 @@ const NETWORK_API = {
   read_flow: {
     method: 'get',
     url: '/read_flow/'
+  },
+  // 流量监测
+  flow_monitoring: {
+    method: 'get',
+    url: '/flow_monitoring/'
   }
 }
 export default NETWORK_API
