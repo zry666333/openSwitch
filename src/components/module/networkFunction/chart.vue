@@ -19,6 +19,7 @@ export default {
   },
   data () {
     return {
+      timer: null,
       chartData: {
         port0: {
           labelData: [],
@@ -31,21 +32,15 @@ export default {
           rxData: []
         }
       }
-      // chartData2: {
-      //   labelData: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      //   txData: [820, 932, 901, 934, 1290, 1330, 1320],
-      //   rxData: [520, 432, 801, 934, 1290, 1330, 1320]
-      // }
     }
   },
   methods: {
     init () {
-      // this.chartData = {}
       this.loopData()
     },
     // 循环请求
     loopData () {
-      setInterval(this.formData, 3000)
+      this.timer = setInterval(this.formData, 3000)
     },
     // 清理数组，保持数组长度为6
     clearChartData () {
@@ -63,7 +58,7 @@ export default {
     // 格式化图表数据
     formData () {
       let res = this.getData()
-      if (res) {
+      if (!res.then) {
         this.clearChartData()
         this.chartData.port0.labelData.push(res.last_updated)
         this.chartData.port0.txData.push(res.onvm_port_stats['Port 0'].TX)
@@ -71,12 +66,15 @@ export default {
         this.chartData.port1.labelData.push(res.last_updated)
         this.chartData.port1.txData.push(res.onvm_port_stats['Port 1'].TX)
         this.chartData.port1.rxData.push(res.onvm_port_stats['Port 1'].RX)
+      } else {
+        clearInterval(this.timer)
       }
     },
     // 发起请求
     async getData () {
-      const res = await this.$Http.flow_monitoring()
-      console.log('res:', res)
+      let res
+      res = await this.$Http.flow_monitoring()
+      // console.log('res:', res)
       // let res = {
       //   'onvm_port_stats': {
       //     'Port 1': {
@@ -109,6 +107,9 @@ export default {
   },
   mounted () {
     this.init()
+  },
+  beforeDestroy () {
+    clearInterval(this.timer)
   }
 }
 </script>
