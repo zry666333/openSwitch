@@ -13,7 +13,7 @@ var dataA = {
     {
       id: '0',
       name: '出端口',
-      left: '1400px',
+      right: '10px',
       top: '200px',
       ico: 'chukou.svg',
       service_id: '0',

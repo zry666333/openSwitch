@@ -93,6 +93,10 @@ const NETWORK_API = {
   flow_monitoring: {
     method: 'get',
     url: '/flow_monitoring/'
+  },
+  system_monitoring: {
+    method: 'get',
+    url: '/system_monitoring/'
   }
 }
 export default NETWORK_API

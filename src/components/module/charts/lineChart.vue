@@ -37,8 +37,16 @@ export default {
       this.myChart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions ({labelData, txData, rxData} = {}) {
+    setOptions ({title, labelData, txData, rxData} = {}) {
       this.myChart.setOption({
+        title: {
+          text: title,
+          left: 'center',
+          bottom: '8%',
+          textStyle: {
+            color: '#42E3E1'
+          }
+        },
         xAxis: {
           type: 'category',
           data: labelData

@@ -29,6 +29,7 @@ export default {
           position: 'absolute',
           top: this.node.top,
           left: this.node.left,
+          right: this.node.right,
           backgroundColor: 'transparent',
           boxShadow: this.mouseEnter ? '#66a6e0 0px 0px 12px 0px' : ''
         }

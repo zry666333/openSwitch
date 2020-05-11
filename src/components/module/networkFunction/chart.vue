@@ -22,11 +22,13 @@ export default {
       timer: null,
       chartData: {
         port0: {
+          title: '入端口流量监控',
           labelData: [],
           txData: [],
           rxData: []
         },
         port1: {
+          title: '出端口流量监控',
           labelData: [],
           txData: [],
           rxData: []
