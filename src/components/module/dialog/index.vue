@@ -2,7 +2,8 @@
     <div>
       <el-dialog
         title="服务器状态信息监控"
-        :visible.sync="dialogVisible"
+        :visible="dialogVisible"
+        @close="fn"
         width="50%"
        >
         <el-row :gutter="20">
@@ -41,10 +42,6 @@
           >
           </el-input></el-col>
         </el-row>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="fn">取 消</el-button>
-          <el-button type="primary" @click="fn">确 定</el-button>
-        </span>
       </el-dialog>
     </div>
 </template>
@@ -73,14 +70,14 @@ export default {
     }
   },
   methods: {
-    fn () {
-      this.$emit('dialogVisible', false)
-    },
     async getData () {
       const res = await this.$Http.system_monitoring()
       if (res) {
         this.formItem = res
       }
+    },
+    fn (val) {
+      this.$emit('dialog', false)
     }
   },
   created () {

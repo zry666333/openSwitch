@@ -5,7 +5,7 @@
     <i @click="open" style="position:absolute" class="icon el-icon-picture-outline-round"></i>
     PML网关安全系统
   </h2>
-  <Dialog :dialogVisible="dialog" @dialogVisible="close"></Dialog>
+  <Dialog :dialogVisible="dialog" @dialog="close"></Dialog>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     open () {
       this.dialog = true
     },
-    close (val) {
+    close () {
       this.dialog = false
     }
   }
