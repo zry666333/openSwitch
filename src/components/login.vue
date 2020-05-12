@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="login" :style="img">
-    <h2 class="title">欢迎登录PML网关安全系统</h2>
+    <h2 class="title"> 软件定义骨干网安全接入系统</h2>
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
     <el-form-item prop="username"  style="margin-top: 34px;">
       <el-input type="username" placeholder="请输入用户名" v-model="ruleForm.username" autocomplete="off">

@@ -3,7 +3,7 @@
   <h2 class="title">
     <img src='../assets/images/logo.svg' style="position:absolute;left: 20px;top:50%;margin-top:-8px;"/>
     <i @click="open" style="position:absolute" class="icon el-icon-picture-outline-round"></i>
-    PML网关安全系统
+    软件定义骨干网安全接入系统
   </h2>
   <Dialog :dialogVisible="dialog" @dialog="close"></Dialog>
   </div>
