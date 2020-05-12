@@ -42,7 +42,7 @@ export default {
     },
     // 循环请求
     loopData () {
-      this.timer = setInterval(this.formData, 3000)
+      this.timer = setInterval(this.getData, 3000)
     },
     // 清理数组，保持数组长度为6
     clearChartData () {
@@ -58,36 +58,20 @@ export default {
       }
     },
     // 格式化图表数据
-    formData () {
-      let res = this.getData()
-      if (!res.then) {
-        this.clearChartData()
-        this.chartData.port0.labelData.push(res.last_updated)
-        this.chartData.port0.txData.push(res.onvm_port_stats['Port 0'].TX)
-        this.chartData.port0.rxData.push(res.onvm_port_stats['Port 0'].RX)
-        this.chartData.port1.labelData.push(res.last_updated)
-        this.chartData.port1.txData.push(res.onvm_port_stats['Port 1'].TX)
-        this.chartData.port1.rxData.push(res.onvm_port_stats['Port 1'].RX)
-      } else {
-        clearInterval(this.timer)
-      }
-    },
-    // 发起请求
     async getData () {
-      let res
-      res = await this.$Http.flow_monitoring()
-      // console.log('res:', res)
+      const res = await this.$Http.flow_monitoring()
+      console.log('res:', res)
       // let res = {
       //   'onvm_port_stats': {
       //     'Port 1': {
-      //       'RX': 0,
+      //       'RX': 7,
       //       'Label': 'Port 1',
-      //       'TX': 0
+      //       'TX': 8
       //     },
       //     'Port 0': {
-      //       'RX': 0,
+      //       'RX': 4,
       //       'Label': 'Port 0',
-      //       'TX': 0
+      //       'TX': 9
       //     }
       //   },
       //   'last_updated': 'Fri May 1 16:52:48 2020\n',
@@ -104,7 +88,20 @@ export default {
       //     }
       //   }
       // }
-      return res
+      this.formData(res)
+    },
+    formData (res) {
+      if (!res.then) {
+        this.clearChartData()
+        this.chartData.port0.labelData.push(res.last_updated)
+        this.chartData.port0.txData.push(res.onvm_port_stats['Port 0'].TX)
+        this.chartData.port0.rxData.push(res.onvm_port_stats['Port 0'].RX)
+        this.chartData.port1.labelData.push(res.last_updated)
+        this.chartData.port1.txData.push(res.onvm_port_stats['Port 1'].TX)
+        this.chartData.port1.rxData.push(res.onvm_port_stats['Port 1'].RX)
+      } else {
+        clearInterval(this.timer)
+      }
     }
   },
   mounted () {

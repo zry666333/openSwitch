@@ -42,7 +42,7 @@ export default {
         title: {
           text: title,
           left: 'center',
-          bottom: '8%',
+          bottom: '5%',
           textStyle: {
             color: '#42E3E1'
           }
@@ -55,17 +55,32 @@ export default {
           type: 'value'
         },
         legend: {
-          data: ['RX', 'TX']
+          data: [{
+            name: 'RX',
+            textStyle: {
+              color: '#fff'
+            }
+          }, {
+            name: 'TX',
+            textStyle: {
+              color: '#fff'
+            }
+          }]
+
         },
         series: [{
           name: 'RX',
           data: rxData,
-          type: 'line'
+          type: 'line',
+          animationDuration: 2800,
+          animationEasing: 'cubicInOut'
         },
         {
           name: 'TX',
           data: txData,
-          type: 'line'
+          type: 'line',
+          animationDuration: 2800,
+          animationEasing: 'quadraticOut'
         }
         ]
       })
