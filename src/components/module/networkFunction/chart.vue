@@ -60,7 +60,6 @@ export default {
     // 格式化图表数据
     async getData () {
       const res = await this.$Http.flow_monitoring()
-      console.log('res:', res)
       // let res = {
       //   'onvm_port_stats': {
       //     'Port 1': {
@@ -91,7 +90,8 @@ export default {
       this.formData(res)
     },
     formData (res) {
-      if (!res.then) {
+      console.log('dfs', res)
+      if (res) {
         this.clearChartData()
         this.chartData.port0.labelData.push(res.last_updated)
         this.chartData.port0.txData.push(res.onvm_port_stats['Port 0'].TX)
