@@ -12,7 +12,15 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">user_info</el-col>
-          <el-col :span="16">{{formItem['user_info']}}</el-col>
+          <el-col :span="16"><el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入内容"
+            v-model="formItem.user_info"
+            readonly
+            autosize
+          >
+          </el-input></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">time_info(%)</el-col>
