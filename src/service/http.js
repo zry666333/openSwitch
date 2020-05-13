@@ -62,11 +62,9 @@ const whiteUrl = ['/flow_monitoring/', '/system_monitoring/']
 
 // 拦截器的添加
 instance.interceptors.request.use(config => {
-  whiteUrl.forEach((url) => {
-    if (url !== config.url) {
-      startLoading()
-    }
-  })
+  if (!whiteUrl.includes(config.url)) {
+    startLoading()
+  }
   // 发起请求前做些什么
   return config
 }, () => {
