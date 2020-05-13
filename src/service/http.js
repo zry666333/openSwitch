@@ -57,10 +57,17 @@ for (let key in service) {
   }
 }
 
+// 不载入loading页
+const whiteUrl = ['/flow_monitoring/', '/system_monitoring/']
+
 // 拦截器的添加
 instance.interceptors.request.use(config => {
+  whiteUrl.forEach((url) => {
+    if (url !== config.url) {
+      startLoading()
+    }
+  })
   // 发起请求前做些什么
-  startLoading()
   return config
 }, () => {
   // 请求错误

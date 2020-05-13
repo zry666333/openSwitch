@@ -90,7 +90,6 @@ export default {
       this.formData(res)
     },
     formData (res) {
-      console.log('dfs', res)
       if (res) {
         this.clearChartData()
         this.chartData.port0.labelData.push(res.last_updated)
