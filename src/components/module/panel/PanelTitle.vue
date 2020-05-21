@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'PanelTitle',
   data () {
@@ -82,7 +84,9 @@ export default {
       return arr
     },
     async getData () {
-      const promise = new Promise()
+      const promise = new Promise(function (resolve, reject) {
+        resolve()
+      })
       const pro1 = new Promise(async (resolve, reject) => {
         const data = await this.$Http.readNf()
         resolve(data)
@@ -91,10 +95,31 @@ export default {
         const data = await this.$Http.flow_monitoring()
         resolve(data)
       })
-      const arr = await promise.all([pro1, pro2])
-      console.log('arr:', arr)
-      const res1 = arr[0]
-      const res2 = arr[1]
+      promise.all([pro1, pro2]).then((arr) => {
+        console.log('arr:', arr)
+        const res1 = arr[0]
+        const res2 = arr[1]
+        if (res1) {
+          this.data1 = this.objectToArray(res1['onvm_nf_stats'])
+        } else {
+          clearInterval(this.timer)
+        }
+        if (res2) {
+          this.data2 = res2
+        }
+        for (let item1 of this.data2) {
+          for (let item2 of this.data1) {
+            if (item1.service_id + '' === item2.service_id + '') {
+              console.log(item1, item2)
+              item2.name = item1.name
+              break
+            }
+          }
+        }
+        this.data = this.data1
+        console.log('data:', this.data)
+      })
+
       // const res1 = {
       //   'last_updated': 'Fri May 1 16:52:48 2020\n',
       //   'onvm_nf_stats': {
@@ -142,25 +167,6 @@ export default {
       //     'service_id': '2'
       //   }
       // ]
-      if (res1) {
-        this.data1 = this.objectToArray(res1['onvm_nf_stats'])
-      } else {
-        clearInterval(this.timer)
-      }
-      if (res2) {
-        this.data2 = res2
-      }
-      for (let item1 of this.data2) {
-        for (let item2 of this.data1) {
-          if (item1.service_id + '' === item2.service_id + '') {
-            console.log(item1, item2)
-            item2.name = item1.name
-            break
-          }
-        }
-      }
-      this.data = this.data1
-      console.log('data:', this.data)
     },
     loopData () {
       this.timer = setInterval(this.getData, 3000)
