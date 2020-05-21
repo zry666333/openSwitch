@@ -83,13 +83,13 @@ export default {
     },
     async getData () {
       const promise = new Promise()
-      const pro1 = new Promise(function (resolve, reject) {
-        this.readNf()
-        resolve()
+      const pro1 = new Promise((resolve, reject) => {
+        const data = this.$Http.readNf()
+        resolve(data)
       })
-      const pro2 = new Promise(function (resolve, reject) {
-        this.flow_monitoring()
-        resolve()
+      const pro2 = new Promise((resolve, reject) => {
+        const data = this.$Http.flow_monitoring()
+        resolve(data)
       })
       const arr = await promise.all([pro1, pro2])
       console.log('arr:', arr)

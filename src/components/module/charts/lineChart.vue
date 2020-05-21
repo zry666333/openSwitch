@@ -52,6 +52,7 @@ export default {
           data: labelData
         },
         yAxis: {
+          name: '单位:pps',
           type: 'value'
         },
         legend: {
