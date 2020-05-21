@@ -4,7 +4,7 @@
         服务功能链
       </h3>
       <el-dialog
-        title="提示"
+        title="网络功能流量监控"
         :visible.sync="modal"
         width="30%"
       >
@@ -14,23 +14,23 @@
             <div class="title">{{item.name}}</div>
             <div class="content">
               <div class="attr">
-                <span>label</span>
-                <span>{{item.label}}</span>
+                <span>service_id:</span>
+                <span>{{item.service_id}}</span>
               </div>
               <div class="attr">
-                <span>RX</span>
+                <span>接收速率:</span>
                 <span>{{item.RX}}</span>
               </div>
               <div class="attr">
-                <span>TX</span>
+                <span>发送速率:</span>
                 <span>{{item.TX}}</span>
               </div>
               <div class="attr">
-                <span>RX_Drop_Rate</span>
+                <span>接收丢包速率:</span>
                 <span>{{item.RX_Drop_Rate}}</span>
               </div>
               <div class="attr">
-                <span>TX_Drop_Rate</span>
+                <span>发送丢包速率:</span>
                 <span>{{item.TX_Drop_Rate}}</span>
               </div>
             </div>
@@ -82,17 +82,18 @@ export default {
       }
       return arr
     },
-    async getData () {
-      const pro1 = new Promise(async (resolve, reject) => {
-        const data = await this.$Http.readNf()
-        resolve(data)
+    getData () {
+      const pro1 = new Promise((resolve, reject) => {
+        this.$Http.readNf().then(res => {
+          resolve(res)
+        })
       })
-      const pro2 = new Promise(async (resolve, reject) => {
-        const data = await this.$Http.flow_monitoring()
-        resolve(data)
+      const pro2 = new Promise((resolve, reject) => {
+        this.$Http.flow_monitoring().then(res => {
+          resolve(res)
+        })
       })
       Promise.all([pro1, pro2]).then((arr) => {
-        console.log('arr:', arr)
         const res1 = arr[0]
         const res2 = arr[1]
         if (res1) {
@@ -106,14 +107,12 @@ export default {
         for (let item1 of this.data2) {
           for (let item2 of this.data1) {
             if (item1.service_id + '' === item2.service_id + '') {
-              console.log(item1, item2)
               item2.name = item1.name
               break
             }
           }
         }
         this.data = this.data1
-        console.log('data:', this.data)
       })
 
       // const res1 = {

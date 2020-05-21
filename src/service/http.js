@@ -58,7 +58,7 @@ for (let key in service) {
 }
 
 // 不载入loading页
-const whiteUrl = ['/flow_monitoring/', '/system_monitoring/']
+const whiteUrl = ['/read_flow/', '/flow_monitoring/', '/system_monitoring/']
 
 // 拦截器的添加
 instance.interceptors.request.use(config => {
