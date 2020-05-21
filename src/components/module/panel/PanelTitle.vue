@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'PanelTitle',
@@ -84,9 +83,6 @@ export default {
       return arr
     },
     async getData () {
-      const promise = new Promise(function (resolve, reject) {
-        resolve()
-      })
       const pro1 = new Promise(async (resolve, reject) => {
         const data = await this.$Http.readNf()
         resolve(data)
@@ -95,7 +91,7 @@ export default {
         const data = await this.$Http.flow_monitoring()
         resolve(data)
       })
-      promise.all([pro1, pro2]).then((arr) => {
+      Promise.all([pro1, pro2]).then((arr) => {
         console.log('arr:', arr)
         const res1 = arr[0]
         const res2 = arr[1]
