@@ -49,7 +49,7 @@
           </el-footer>
       </el-container>
       <el-container  direction="vertical" style="width:80%;background-color:transparent;">
-        <Chart></Chart>
+        <Chart />
         <Panel :style="imgPanel" style="background-image: linear-gradient(0deg, rgba(45,101,119,0.36) 0%, #143542 35%);"></Panel>
       </el-container>
     <el-drawer

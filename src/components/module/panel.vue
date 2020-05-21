@@ -1,8 +1,9 @@
 <template>
   <div id="panelClass">
-    <h2 class="header">服务功能链
-    <span class="generate" @click="generate()"><img src='../../assets/images/generate.svg'>生成</span>
-    </h2>
+    <div  class="header">
+      <PanelTitle />
+        <span class="generate" @click="generate()"><img src='../../assets/images/generate.svg'>生成</span>
+    </div>
     <div class="moveArea">
           <div id="flowContainer" class="container" ref="flowContainer">
             <template v-for="node in data.nodeList" >
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+import PanelTitle from './panel/PanelTitle'
 import FlowTool from './flow/flow-tool'
 import FlowNode from './flow/flow-node'
 import {jsPlumb} from 'jsplumb'
@@ -27,6 +29,7 @@ export default {
   name: 'panel',
   data () {
     return {
+      modal: false,
       nodeFormVisible: false,
       flowInfoVisable: false,
       jsPlumb: null,
@@ -78,6 +81,7 @@ export default {
     }
   },
   components: {
+    PanelTitle,
     FlowTool,
     FlowNode,
     FlowInfo,
@@ -335,12 +339,13 @@ export default {
     height:100%;
     position:relative;
     .header {
+      position:relative;
       background: rgba(8,74,100,0.45);;
-      width:100%;
       .generate {
         position:absolute;
         font-size:12px;
         color:#50E3C2 ;
+        top:0;
         right:30px;
         cursor:pointer;
       }
