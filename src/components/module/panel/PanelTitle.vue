@@ -94,8 +94,8 @@ export default {
         })
       })
       Promise.all([pro1, pro2]).then((arr) => {
-        const res1 = arr[0]
-        const res2 = arr[1]
+        const res1 = arr[1]
+        const res2 = arr[0]
         if (res1) {
           this.data1 = this.objectToArray(res1['onvm_nf_stats'])
         } else {
