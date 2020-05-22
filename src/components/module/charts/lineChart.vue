@@ -49,11 +49,31 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: labelData
+          data: labelData,
+          axisLine: {
+            lineStyle: {
+              color: '#42E3E1'
+            }
+          },
+          splitLine: {
+            lineStyle: {
+              color: '#42E3E1'
+            }
+          }
         },
         yAxis: {
           name: '单位:pps',
-          type: 'value'
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: '#42E3E1'
+            }
+          },
+          splitLine: {
+            lineStyle: {
+              color: '#42E3E1'
+            }
+          }
         },
         legend: {
           data: [{
