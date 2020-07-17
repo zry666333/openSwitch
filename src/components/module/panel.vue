@@ -24,6 +24,7 @@ import {jsPlumb} from 'jsplumb'
 import {getData} from './flow/data_A.js'
 import FlowInfo from './flow/flow-info'
 import FlowNodeForm from './flow/flow-node-form'
+import { typeOf } from '../../utils/assist'
 
 export default {
   name: 'panel',
@@ -54,7 +55,7 @@ export default {
         EndpointStyle: {fill: 'rgba(255,255,255,0)', outlineWidth: 1},
         LogEnabled: true, // 是否打开jsPlumb的内部日志记录
         // 绘制线
-        PaintStyle: {stroke: 'black', strokeWidth: 3},
+        PaintStyle: {stroke: 'rgba(52,181,183)', strokeWidth: 3},
         // 绘制箭头
         Overlays: [['Arrow', {width: 12, length: 12, location: 1}]],
         RenderMode: 'svg'
@@ -89,7 +90,6 @@ export default {
   },
   methods: {
     jsPlumbInit () {
-      // const _this = this
       this.jsPlumb.ready(() => {
         // 导入默认配置
         this.jsPlumb.importDefaults(this.jsplumbSetting)
@@ -130,6 +130,7 @@ export default {
           node.top = data.top
         }
       }
+      this.jsPlumb.repaintEverything()
     },
     hasLine (from, to) {
       for (var i = 0; i < this.data.lineList.length; i++) {
@@ -155,21 +156,11 @@ export default {
         })
       }
     },
-    // dataLoad (data) {
-    //   this.data = data
-    //   this.$nextTick(() => {
-    //     this.jsPlumbInit()
-    //   })
-    // },
     async getNetwork () {
       const res = await this.$Http.readNf()
       return res
     },
     async getRouteOp () {
-      // const res = [{
-      //   'dst_ip': '40.0.0.1',
-      //   'to_service_Id': '3'
-      // }]
       let res = await this.$Http.getRouteOp()
       return res
     },
@@ -318,6 +309,12 @@ export default {
       return arr
     },
     generate () {
+      if (typeOf(this.jsPlumb) !== 'null') {
+        let connections = this.jsPlumb.getAllConnections()
+        while (connections.length !== 0) {
+          this.jsPlumb.deleteConnection(connections[0])
+        }
+      }
       this.jsPlumb = jsPlumb.getInstance()
       this.$nextTick(() => {
         this.initData()
