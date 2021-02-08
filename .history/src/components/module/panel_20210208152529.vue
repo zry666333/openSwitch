@@ -116,7 +116,6 @@ export default {
       })
     },
     async handleClick (node) {
-      if (node.name === '出端口' || node.name === '入端口') return
       const res = await this.$Http.check_nf({
         service_id: node.service_id,
         name: node.name
@@ -132,7 +131,7 @@ export default {
       } else {
         this.$message({
           message: res.Message,
-          type: 'warning'
+          type: 'error'
         })
       }
     },

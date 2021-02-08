@@ -13,24 +13,16 @@
     </div>
     <FlowInfo v-if="flowInfoVisable" ref="flowInfo" :data="data"></FlowInfo>
     <FlowNodeForm v-if="nodeFormVisible" ref="nodeForm"></FlowNodeForm>
-    <el-dialog top="5vh" :show-close="false" :visible="fireWallVisible">
-      <fireWallOp :propForm="curForm"></fireWallOp>
+    <el-dialog :visible="visible">
         <div slot="footer" class="dialog-footer">
-          <el-button @click="handleCancel">关闭</el-button>
-        </div>
-    </el-dialog>
-     <el-dialog  top="5vh" :show-close="false" :visible="routeVisible">
-      <routeOp :propForm="curForm"></routeOp>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="handleCancel">关闭</el-button>
+          <el-button @click="visible = false">取 消</el-button>
+          <el-button type="primary" @click="visible = false">确 定</el-button>
         </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import routeOp from './routeOption'
-import fireWallOp from './fireWallOption'
 import PanelTitle from './panel/PanelTitle'
 import FlowTool from './flow/flow-tool'
 import FlowNode from './flow/flow-node'
@@ -44,9 +36,7 @@ export default {
   name: 'panel',
   data () {
     return {
-      curForm: {},
-      fireWallVisible: false,
-      routeVisible: false,
+      visible: false,
       nodeFormVisible: false,
       flowInfoVisable: false,
       jsPlumb: null,
@@ -102,39 +92,12 @@ export default {
     FlowTool,
     FlowNode,
     FlowInfo,
-    FlowNodeForm,
-    fireWallOp,
-    routeOp
+    FlowNodeForm
   },
   methods: {
-    handleCancel () {
-      this.fireWallVisible = false
-      this.routeVisible = false
-      this.curForm = {}
-      this.$nextTick(() => {
-        this.generate()
-      })
-    },
-    async handleClick (node) {
-      if (node.name === '出端口' || node.name === '入端口') return
-      const res = await this.$Http.check_nf({
-        service_id: node.service_id,
-        name: node.name
-      }, true)
-      if (res.Result === 'success') {
-        if (node.name === '防火墙') {
-          this.curForm = node
-          this.fireWallVisible = true
-        } else if (node.name === '路由器') {
-          this.curForm = node
-          this.routeVisible = true
-        }
-      } else {
-        this.$message({
-          message: res.Message,
-          type: 'warning'
-        })
-      }
+    handleClick (node) {
+      this.visible = true
+      console.log('node:', node)
     },
     jsPlumbInit () {
       this.jsPlumb.ready(() => {

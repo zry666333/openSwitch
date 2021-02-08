@@ -4,7 +4,7 @@
  * @Author: zry
  * @Date: 2020-08-10 09:54:12
  * @LastEditors: zry
- * @LastEditTime: 2021-02-08 14:25:18
+ * @LastEditTime: 2021-02-08 11:48:39
 -->
 <template>
 <div style="z-index:100;">
@@ -13,8 +13,8 @@
     <el-menu-item index="networkFunction">网络功能</el-menu-item>
     <el-menu-item index="classifer">流分类</el-menu-item>
     <el-menu-item index="attackDetect">异常攻击检测</el-menu-item>
-     <!-- <el-menu-item index="routeOption">路由配置</el-menu-item>
-     <el-menu-item index="fireWallOption">防火墙配置</el-menu-item> -->
+     <el-menu-item disabled index="routeOption">路由配置</el-menu-item>
+     <el-menu-item disabled index="fireWallOption">防火墙配置</el-menu-item>
   </el-menu>
   <el-main>
     <component :is="currentView" ></component>

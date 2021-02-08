@@ -115,26 +115,18 @@ export default {
         this.generate()
       })
     },
-    async handleClick (node) {
-      if (node.name === '出端口' || node.name === '入端口') return
-      const res = await this.$Http.check_nf({
-        service_id: node.service_id,
-        name: node.name
-      }, true)
-      if (res.Result === 'success') {
-        if (node.name === '防火墙') {
-          this.curForm = node
-          this.fireWallVisible = true
-        } else if (node.name === '路由器') {
-          this.curForm = node
-          this.routeVisible = true
-        }
-      } else {
-        this.$message({
-          message: res.Message,
-          type: 'warning'
-        })
+    handleClick (node) {
+      if (node.name === '入端口') {
+        this.curForm = node
+        this.fireWallVisible = true
+      } else if (node.name === '出端口') {
+        console.log('1', this.curForm)
+        node.service_id = '9'
+        this.curForm = node
+        console.log('2', this.curForm)
+        this.routeVisible = true
       }
+      console.log('node:', node)
     },
     jsPlumbInit () {
       this.jsPlumb.ready(() => {

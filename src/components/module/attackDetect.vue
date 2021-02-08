@@ -2,390 +2,185 @@
   <div>
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-card class="box-card">
-            <div slot="header" style="text-align: center;color:white;font-size: 16px;">
-              <span>域名服务器</span>
-            </div>
-            <div class="card-content">
-              <div class="card-head">
-                <div class="card-tip1">
-                  <p>收到攻击次数</p>
-                  <p>251145</p>
-                </div>
-                <div class="card-tip2">
-                  <p>攻击成功次数</p>
-                  <p>0</p>
-                </div>
-              </div>
-              <div ref="pieChart1" id="pieChart1" style="height:300px;background-color: transparent"></div>
-              <div class="card-list">
-                <div class="card-list-header">
-                  <span>攻击详细列表</span>
-                </div>
-                <div class="card-list-content">
-                  <div class="header">
-                    <div>攻击ip</div>
-                    <div>攻击手段</div>
-                    <div>攻击来源</div>
-                    <div>攻击地区</div>
-                  </div>
-                  <div class="List" >
-                    <div class="allData" ref="slide">
-                      <ul v-for="(item,id) in items" v-bind:key="id" ref="slide1">
-                        <li>{{item.trade}}</li>
-                        <li>{{item.price}}</li>
-                        <li>{{item.riseFall}}</li>
-                        <li>{{item.volume}}</li>
-                      </ul>
-                      <ul v-for="(item,id) in items" v-bind:key="id" ref="slide2">
-                        <li>{{item.trade}}</li>
-                        <li>{{item.price}}</li>
-                        <li>{{item.riseFall}}</li>
-                        <li>{{item.volume}}</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </el-card>
+          <Detail title="域名服务器" :type="type1" number="251145" :data="data1" :items="items1"></Detail>
         </el-col>
         <el-col :span="8">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span>路由器</span>
-            </div>
-            <p>内容1</p>
-          </el-card>
+          <Detail title="分布式存储" :type="type2" number="58652" :data="data2" :items="items2"></Detail>
         </el-col>
         <el-col :span="8">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span>分布式存储</span>
-            </div>
-            <p>内容1</p>
-          </el-card>
+          <Detail title="Web服务器" :type="type3"  number="104921" :data="data3"  :items="items3"></Detail>
         </el-col>
       </el-row>
   </div>
 </template>
 
 <script>
-import echarts from 'echarts' // echarts theme
-
-var durColor = ['#ffe67a', '#ffa468', '#ff5469', '#fe2c59', '#defffd', '#02e8ff']
-var durTimeData = ['DNS劫持', '域名劫持', 'sdfsdf', 'aaaaa', 'DNS DDoS攻击', '恶意文件攻击']
-var data2 = [50, 47, 45, 36, 30, 29, 23]
-var all = 260
-var getDurData = function (data) {
-  var result = []
-  for (var i in data) {
-    var opt = {
-      left: -100,
-      name: durTimeData[i],
-      type: 'pie',
-      z: i + 1,
-      clockWise: false,
-      // center: ['45%', '47%'],
-      // itemStyle : dataStyle,
-      label: {
-        position: 'outside',
-        formatter: '{d}%{a}',
-        alignTo: 'edge',
-        margin: '50',
-        distanceToLabelLine: 50
-      },
-      labelLine: {
-        length: 0,
-        length2: 10
-      },
-      hoverAnimation: false,
-      data: [
-        {
-          value: data[i],
-          itemStyle: {
-            color: durColor[i]
-          }
-        },
-        {
-          value: all - data[i],
-          itemStyle: {
-            normal: {
-              color: '#ccc'
-            }
-          },
-          label: {
-            normal: {
-              show: false
-            },
-            emphasis: {
-              show: false
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            },
-            emphasis: {
-              show: false
-            }
-          },
-          tooltip: {
-            show: false,
-            formatter: function () {
-              return ''
-            }
-          }
-        }
-      ]
-    }
-    var max = data.length * 10 - i * 8
-    opt.radius = [(max - 16) + '%', (max - 10) + '%']
-    result.push(opt)
-  }
-  return result
-}
-var option = {
-  title: {
-    textStyle: {
-      color: '#fff'
-    },
-    text: '攻击手法占比'
-  },
-  color: durColor,
-  tooltip: {
-    show: true,
-    formatter: '{a} <br/> {c}人 ({d}%)'
-  },
-  series: getDurData(data2)
-}
+import Detail from './attackDetect/Detail'
 
 export default {
   name: 'attackDetect',
+  components: {
+    Detail
+  },
   data () {
     return {
-      chart: null,
-      interval: null,
-      time: '',
-      num: '',
-      items: [
+      type1: ['DNS劫持', '域名劫持', '缓存投毒', 'DNS放大攻击', 'DDoS攻击', '恶意文件攻击'],
+      type2: ['登录用户爆破', '木马植入', '跨站请求伪造', '信息泄露', '弱口令', '恶意启用socket代理'],
+      type3: ['xss注入攻击', 'SQL注入攻击', '目录遍历攻击', 'union注入', 'select from过滤', '恶意小程序'],
+      data1: [80, 47, 145, 236, 130, 229],
+      data2: [120, 67, 215, 136, 230, 29],
+      data3: [230, 187, 75, 136, 110, 229],
+      items1: [
         {
-          trade: 'a1',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
+          trade: '1.0.9.65',
+          price: '域名劫持',
+          riseFall: 'asdasdf07395656',
+          volume: '亚洲'
         },
         {
-          trade: 'a2',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
+          trade: '6.0.9.12',
+          price: '恶意文件攻击',
+          riseFall: 'rtyu07395646',
+          volume: '亚洲'
         },
         {
-          trade: 'a3',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
+          trade: '152.0.9.45',
+          price: 'DDoS攻击',
+          riseFall: 'uhgroi0346953456',
+          volume: '英国'
         },
         {
-          trade: 'a4',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
+          trade: '124.0.9.65',
+          price: '恶意文件攻击',
+          riseFall: 'ttrtuyt5867567',
+          volume: '日本'
         },
         {
-          trade: 'a5',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
+          trade: '16.0.9.15',
+          price: '恶意文件攻击',
+          riseFall: 'uhgroi07395656',
+          volume: '亚洲'
         },
         {
-          trade: 'a6',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
+          trade: '15.0.9.65',
+          price: '恶意文件攻击',
+          riseFall: 'mghdf07395656',
+          volume: '英国'
         },
         {
-          trade: 'a7',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
+          trade: '16.4.9.66',
+          price: '恶意文件攻击',
+          riseFall: 'uhgroi07395656',
+          volume: '亚洲'
         },
         {
-          trade: 'a8',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
-        },
-        {
-          trade: 'a9',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
-        },
-        {
-          trade: 'a10',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
-        },
-        {
-          trade: 'a11',
-          price: 'aaaaaaaaaaaaaaa',
-          riseFall: 'ddddddddddddd',
-          volume: 'cccccccccccccccccc'
+          trade: '126.0.9.65',
+          price: '恶意文件攻击',
+          riseFall: 'mnb077654',
+          volume: '亚洲'
         }
       ],
-      id: 0
-
+      items2: [
+        {
+          trade: '56.0.9.62',
+          price: '木马植入',
+          riseFall: 'uhgroi07395656',
+          volume: '英国'
+        },
+        {
+          trade: '54.0.9.65',
+          price: '恶意启用socket代理',
+          riseFall: 'mnbvc4394584',
+          volume: '亚洲'
+        },
+        {
+          trade: '16.0.9.65',
+          price: '恶意文件攻击',
+          riseFall: 'nkdtyt675364',
+          volume: '亚洲'
+        },
+        {
+          trade: '15.3.9.65',
+          price: '木马植入',
+          riseFall: 'zerdf07sdfa56',
+          volume: '亚洲'
+        },
+        {
+          trade: '56.0.9.75',
+          price: '恶意文件攻击',
+          riseFall: 'uherw07395656',
+          volume: '亚洲'
+        },
+        {
+          trade: '163.7.49.3',
+          price: '木马植入',
+          riseFall: 'ertert07395656',
+          volume: '日本'
+        },
+        {
+          trade: '16.0.95.6',
+          price: '恶意文件攻击',
+          riseFall: 'nvbvd073sdf656',
+          volume: '亚洲'
+        },
+        {
+          trade: '46.54.67.34',
+          price: '恶意文件攻击',
+          riseFall: 'erwev07395656',
+          volume: '亚洲'
+        }
+      ],
+      items3: [
+        {
+          trade: '12.1.6.65',
+          price: 'union注入',
+          riseFall: 'uhgroi07395656',
+          volume: '亚洲'
+        },
+        {
+          trade: '16.3.9.65',
+          price: 'union注入',
+          riseFall: 'uhgroi07395656',
+          volume: '英国'
+        },
+        {
+          trade: '54.1.2.65',
+          price: '恶意文件攻击',
+          riseFall: 'uhgroi07395656',
+          volume: '亚洲'
+        },
+        {
+          trade: '3.3.9.62',
+          price: '恶意文件攻击',
+          riseFall: 'uhgroi07395656',
+          volume: '亚洲'
+        },
+        {
+          trade: '166.4.95.65',
+          price: '恶意文件攻击',
+          riseFall: 'uhgroi07395656',
+          volume: '亚洲'
+        },
+        {
+          trade: '12.0.9.65',
+          price: '恶意文件攻击',
+          riseFall: 'uhgroi07395656',
+          volume: '亚洲'
+        },
+        {
+          trade: '132.0.9.45',
+          price: '恶意文件攻击',
+          riseFall: 'uhgroi07395656',
+          volume: '韩国'
+        },
+        {
+          trade: '16.0.59.65',
+          price: 'xss注入攻击',
+          riseFall: 'kbhjn07395656',
+          volume: '日本'
+        }
+      ]
     }
-  },
-  // computed: {
-  //   top: function () {
-  //     return -this.id * 47 + 'px'
-  //   }
-  // },
-  methods: {
-    // forbidden: function () {
-    //   clearInterval(this.time)
-    // },
-    // start: function () {
-    //   this.time = setInterval(_ => {
-    //     console.log('d', this.id, this.num)
-    //     if (this.id < this.num) {
-    //       this.id += 1
-    //       this.items.push(this.items[this.id - 1])
-    //     } else {
-    //       for (let i = 0; i < this.items.length - 1; i++) {
-    //         this.items.splice(this.items[i], 1)
-    //       }
-    //       console.log('items:', this.items)
-    //       this.id = this.id
-    //     }
-    //   }, 1500)
-    // },
-    init () {
-      this.num = this.items.length
-      this.chart = echarts.init(this.$refs.pieChart1)
-      this.setOptions()
-    },
-    setOptions () {
-      this.chart.setOption(option)
-    }
-  },
-  mounted () {
-    this.init()
-    // this.time = setInterval(_ => {
-    //   console.log('d', this.id, this.num)
-    //   if (this.id < this.num) {
-    //     this.id += 1
-    //     this.items.push(this.items[this.id - 1])
-    //   } else {
-    //     for (let i = 0; i < this.items.length - 1; i++) {
-    //       this.items.splice(this.items[i], 1)
-    //     }
-    //     console.log('items:', this.items)
-    //     this.id = 0
-    //   }
-    // }, 1500)
-  },
-  destroyed () {
-    clearInterval(this.time)
-    this.time = null
   }
 }
 </script>
-<style lang="scss">
-  .el-card {
-    background-color: transparent;
-    .el-card__header {
-      border-bottom: none;
-    }
-  }
-  .card-content {
-    background-color: transparent;
-    .card-head {
-      overflow: hidden;
-      .card-tip1,.card-tip2 {
-        p:nth-child(1) {
-          padding: 5px 0;
-          font-weight: bold;
-          height: 30px;
-          line-height: 20px;
-          color: white;
-          border-bottom: 2px solid white;
-        }
-        p:nth-child(2) {
-          padding: 5px 0;
-          color: white;
-          text-align: right;
-        }
-      }
-      .card-tip1 {
-        float: left;
-      }
-      .card-tip2 {
-        float: right;
-      }
-    }
-    .card-list {
-      background-color: transparent;
-      .card-list-header {
-        height: 30px;
-        line-height: 30px;
-        font-weight: bold;
-        font-size: 20px;
-        color: #ffffff;
-        span {
-          border-bottom: 2px solid #15F0FA;
-        }
-      }
-      .card-list-content {
-        .header {
-          div {
-            color: #ffffff;
-            display: inline-block;
-            box-sizing: border-box;
-            width: 120px;
-            font-size: 16px;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-          }
-        }
-      }
-    }
-  }
-
-  .List {
-    width: 100%;
-    height: 329px;
-    overflow: hidden;
-    position: relative;
-    .allData {
-      transition: top 1.5s;
-      width: 100%;
-      position: absolute;
-      top: 0;
-      :hover {
-        background-color: #15F0FA;
-      }
-      ul {
-        width: 100%;
-        height: 46px;
-        border-bottom: 1px solid #15F0FA;
-        li {
-          color: #ffffff;
-          overflow:hidden;
-          text-overflow:ellipsis;
-          white-space:nowrap;
-          float: left;
-          width: 25%;
-          text-align: center;
-          font-size: 16px;
-          line-height: 46px;
-        }
-      }
-    }
-  }
-</style>

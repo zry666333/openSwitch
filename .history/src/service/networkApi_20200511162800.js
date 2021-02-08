@@ -97,10 +97,6 @@ const NETWORK_API = {
   system_monitoring: {
     method: 'get',
     url: '/system_monitoring/'
-  },
-  check_nf: {
-    method: 'post',
-    url: '/check_nf'
   }
 }
 export default NETWORK_API
