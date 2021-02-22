@@ -248,6 +248,7 @@ export default {
       // 读取网络功能节点
       let data = []
       const result = await this.getNetwork()
+      console.log('result:', result)
       if (result !== undefined) data = JSON.parse(JSON.stringify(result))
       data.forEach(item => {
         if (item.name === '路由器') {
@@ -329,6 +330,7 @@ export default {
       defaultData.nodeList = [...defaultData.nodeList, ...data]
       defaultData.lineList = [...linkRoute, ...linkBridge]
       this.data = defaultData
+      console.log('data:', this.data)
       this.$nextTick(() => {
         this.jsPlumbInit()
       })
